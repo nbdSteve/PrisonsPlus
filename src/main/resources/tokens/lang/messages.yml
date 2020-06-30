@@ -1,0 +1,49 @@
+balance:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7You current &a{token-type} &7balance is &a&l{amount} &7tokens.'
+
+pay-payer:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7You have payed &a{player} &a&l{amount} &a{token-type} &7tokens.'
+
+pay-receiver:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7You have received &a&l{amount} &a{token-type} &7tokens from &a{player}.'
+
+help:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7Please contact nbdSteve#0583 on discord for command, permission and configuration help.'
+
+insufficient-tokens:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7You do not have sufficient &a{token-type} &7tokens to complete that action.'
+
+balance-update-giver:
+  action-bar: true
+  text:
+    - "&b&lTokens &f» &7You have updated &a{player}&7's &a{token-type} &7balance, new balance: &a&l{amount}&7."
+
+balance-update-receiver:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7Your &a{token-type} &7balance has been updated, new balance: &a&l{amount}&7.'
+
+mine-add-tokens:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7You just found &a&l{found}x &a{token-type} &7while mining, new balance: &a&l{amount}&7.'
+
+tokenator-add-tokens:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &aTokenator &7has proced and doubled your found tokens, you found &a&l{found}x &a{token-type} &7while mining, new balance: &a&l{amount}&7.'
+
+balance-query:
+  action-bar: true
+  text:
+    - '&b&lTokens &f» &7The player &a{player} &7has a balance of &a&l{amount} &a{token-type} &7tokens.'

@@ -1,0 +1,10 @@
+name: PrisonsPlus
+version: ${project.version}
+main: gg.steve.mc.pp.PrisonsPlus
+api-version: 1.15
+prefix: Prisons+
+authors: [stevegoodhill]
+description: Custom server core designed for the Prisons gamemode in Minecraft.
+website: https://steve.gg/mc/prisonsplus
+depend: [Vault]
+softdepend: [PlaceholderAPI]

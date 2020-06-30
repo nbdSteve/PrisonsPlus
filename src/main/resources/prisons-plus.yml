@@ -1,0 +1,6 @@
+database:
+  host: 'localhost'
+  database: 'prisonsplus'
+  username: 'root'
+  password: ''
+  port: 3306

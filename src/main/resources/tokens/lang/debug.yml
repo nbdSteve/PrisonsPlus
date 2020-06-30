@@ -1,0 +1,23 @@
+only-players-accessible:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7Only players can use that command, please go in-game and try again.'
+
+insufficient-permission:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7You do not have permission (&a{node}&7) to use that.'
+
+target-not-online:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7The target player must be online in order to complete that action.'
+
+invalid-token-type:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7Please enter a valid token type, &7&o((&a&otoken&7&o, &a&oprestige&7&o)).'
+
+invalid-number-of-arguments:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7The number of arguments you entered is incorrect.'
+
+invalid-command:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7The command you entered does not exist.'
+
+invalid-amount:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7Please enter a valid integer amount.'
+
+target-can-not-be-self:
+  - '&b&lTokens &4(&c&lERROR&4) &f» &7You can not perform that action on yourself.'
