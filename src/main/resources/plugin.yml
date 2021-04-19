@@ -1,0 +1,10 @@
+name: PrisonsPlus
+version: ${project.version}
+main: gg.steve.mc.pp.PrisonsPlusPlugin
+api-version: 1.16
+prefix: Prisons+
+depend: [ Vault ]
+softdepend: [ PlaceholderAPI ]
+authors: [ stevegoodhill ]
+description: A comprehensive Prisons plugin developed for both production and casual servers focusing on efficiency and durability. Developed by Steve Goodhill for steve.gg development.
+website: https://steve.gg/mc/PrisonsPlus
