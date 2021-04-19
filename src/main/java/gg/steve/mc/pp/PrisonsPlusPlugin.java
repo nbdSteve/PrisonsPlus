@@ -25,4 +25,8 @@ public final class PrisonsPlusPlugin extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
+    public static PrisonsPlusPlugin getInstance() {
+        return instance;
+    }
 }
