@@ -1,5 +1,6 @@
 package gg.steve.mc.pp;
 
+import gg.steve.mc.pp.sapi.utils.LogUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.milkbowl.vault.economy.Economy;
@@ -14,6 +15,7 @@ public final class PrisonsPlusPlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+        LogUtil.setPluginInstance(instance);
     }
 
     @Override
