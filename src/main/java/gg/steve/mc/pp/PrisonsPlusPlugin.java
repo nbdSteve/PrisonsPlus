@@ -6,10 +6,9 @@ import lombok.EqualsAndHashCode;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 public final class PrisonsPlusPlugin extends JavaPlugin {
     private static PrisonsPlusPlugin instance;
+    private PrisonsPlus prisonsPlus;
     private Economy economy;
 
     @Override
@@ -21,10 +20,16 @@ public final class PrisonsPlusPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        this.prisonsPlus = new PrisonsPlus(this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        if (this.prisonsPlus != null) this.prisonsPlus.shutdownPluginCache();
+    }
+
+    public static PrisonsPlusPlugin getInstance() {
+        return instance;
     }
 }

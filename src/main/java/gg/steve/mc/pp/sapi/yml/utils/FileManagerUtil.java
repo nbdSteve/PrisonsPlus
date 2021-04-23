@@ -1,6 +1,6 @@
 package gg.steve.mc.pp.sapi.yml.utils;
 
-import gg.steve.mc.pp.framework.yml.PluginFile;
+import gg.steve.mc.pp.sapi.yml.PluginFile;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 

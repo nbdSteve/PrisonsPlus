@@ -1,13 +1,13 @@
 package gg.steve.mc.pp.sapi.yml;
 
-import gg.steve.mc.pp.framework.yml.utils.FileManagerUtil;
+import gg.steve.mc.pp.sapi.yml.utils.FileManagerUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
 public enum Files {
     // generic
-    CONFIG("config.yml"),
+    CONFIG("prisons+.yml"),
     // omni
     PERMISSIONS("permissions.yml"),
     // lang
