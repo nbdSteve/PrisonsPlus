@@ -1,17 +1,23 @@
-package gg.steve.mc.pp.db;
+package gg.steve.mc.pp.db.sql;
 
-import gg.steve.mc.pp.framework.yml.Files;
+import gg.steve.mc.pp.db.DatabaseImplementation;
+import gg.steve.mc.pp.sapi.yml.Files;
+import lombok.Data;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 
-public abstract class DatabaseInjector {
+@Data
+public abstract class AbstractDatabaseInjector {
     private Connection connection;
     private final DatabaseImplementation implementation;
+    private final JavaPlugin plugin;
     private final String host, port, database, user, password;
     private final boolean ssl;
 
-    public DatabaseInjector(DatabaseImplementation implementation) {
+    public AbstractDatabaseInjector(DatabaseImplementation implementation, JavaPlugin plugin) {
         this.implementation = implementation;
+        this.plugin = plugin;
         this.host = Files.CONFIG.get().getString("database.host");
         this.port = Files.CONFIG.get().getString("database.port");
         this.database = Files.CONFIG.get().getString("database.database");
@@ -35,34 +41,6 @@ public abstract class DatabaseInjector {
     public Connection getConnection() {
         ping();
         return connection;
-    }
-
-    public DatabaseImplementation getImplementation() {
-        return implementation;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public String getDatabase() {
-        return database;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public boolean isSsl() {
-        return ssl;
     }
 
     public void setConnection(Connection connection) {

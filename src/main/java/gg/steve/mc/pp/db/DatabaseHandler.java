@@ -6,11 +6,11 @@ public interface DatabaseHandler {
 
     ResultSet query(String sql);
 
-    boolean update(String sql);
+    void update(String sql);
 
-    boolean delete(String sql);
+    void delete(String sql);
 
-    boolean insert(String sql);
+    void insert(String sql);
 
-    boolean execute(String sql);
+    void execute(String sql);
 }

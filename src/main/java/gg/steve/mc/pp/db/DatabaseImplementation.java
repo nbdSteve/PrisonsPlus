@@ -1,7 +1,9 @@
 package gg.steve.mc.pp.db;
 
-import gg.steve.mc.pp.db.implementations.MySQLInjector;
-import gg.steve.mc.pp.db.implementations.SQLiteInjector;
+import gg.steve.mc.pp.db.sql.AbstractDatabaseInjector;
+import gg.steve.mc.pp.db.sql.MySQLInjector;
+import gg.steve.mc.pp.db.sql.SQLiteInjector;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
 
@@ -18,13 +20,13 @@ public enum DatabaseImplementation {
         }
     }
 
-    public static DatabaseInjector getInjectorInstanceForImplementation(DatabaseImplementation implementation) {
+    public static AbstractDatabaseInjector getInjectorInstanceForImplementation(DatabaseImplementation implementation, JavaPlugin plugin) {
         switch (implementation) {
             case MYSQL:
-                return new MySQLInjector();
+                return new MySQLInjector(plugin);
             case SQLITE:
-                return new SQLiteInjector();
+                return new SQLiteInjector(plugin);
         }
-        return new SQLiteInjector();
+        return new SQLiteInjector(plugin);
     }
 }

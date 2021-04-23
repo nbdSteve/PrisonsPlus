@@ -1,8 +1,11 @@
 package gg.steve.mc.pp.manager;
 
+import lombok.Data;
+
 import java.util.LinkedList;
 import java.util.List;
 
+@Data
 public abstract class AbstractManager implements Loadable {
     private static List<AbstractManager> managers;
 
