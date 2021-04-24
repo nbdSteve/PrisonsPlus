@@ -1,5 +1,6 @@
-package gg.steve.mc.pp;
+package gg.steve.mc.pp.setup;
 
+import gg.steve.mc.pp.addon.PrisonsAddonManager;
 import gg.steve.mc.pp.db.SQLDatabaseHandler;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.sapi.utils.LogUtil;
@@ -16,18 +17,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PrisonsPlus {
+public class SPlugin {
+    private static SPlugin instance;
     private final JavaPlugin plugin;
     private final FileManagerUtil fileManagerUtil;
     private List<PlaceholderExpansion> placeholderExpansions;
+    // Store manager instances to be accessed by addons
+    private final SQLDatabaseHandler sqlDatabaseHandler;
 
-    public PrisonsPlus(JavaPlugin plugin) {
+    public SPlugin(JavaPlugin plugin) {
+        instance = this;
         this.plugin = plugin;
         this.fileManagerUtil = new FileManagerUtil(plugin);
         setupFiles();
         registerCommands();
         registerEvents();
         loadPluginCache();
+        // register managers
+        this.sqlDatabaseHandler = new SQLDatabaseHandler(this.plugin);
+
     }
 
     /**
@@ -53,6 +61,7 @@ public class PrisonsPlus {
 
     public void registerManagers() {
         new SQLDatabaseHandler(this.plugin);
+        new PrisonsAddonManager(this.plugin);
     }
 
     public void registerPlaceholderExpansions() {
