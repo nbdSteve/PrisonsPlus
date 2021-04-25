@@ -1,14 +1,13 @@
 package gg.steve.mc.pp;
 
 import gg.steve.mc.pp.sapi.utils.LogUtil;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import gg.steve.mc.pp.setup.SPlugin;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PrisonsPlusPlugin extends JavaPlugin {
     private static PrisonsPlusPlugin instance;
-    private PrisonsPlus prisonsPlus;
+    private gg.steve.mc.pp.setup.SPlugin SPlugin;
     private Economy economy;
 
     @Override
@@ -20,13 +19,13 @@ public final class PrisonsPlusPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        this.prisonsPlus = new PrisonsPlus(this);
+        this.SPlugin = new SPlugin(this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        if (this.prisonsPlus != null) this.prisonsPlus.shutdownPluginCache();
+        if (this.SPlugin != null) this.SPlugin.shutdownPluginCache();
     }
 
     public static PrisonsPlusPlugin getInstance() {
