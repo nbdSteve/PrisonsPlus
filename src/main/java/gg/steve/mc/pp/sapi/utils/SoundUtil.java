@@ -4,6 +4,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+@UtilityClass
 public class SoundUtil {
 
     public static void playSound(ConfigurationSection section, String entry, Player player) {

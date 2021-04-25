@@ -1,8 +1,8 @@
-package gg.steve.mc.pp.setup;
+package gg.steve.mc.pp.economy;
 
 import gg.steve.mc.pp.manager.AbstractManager;
 
-public class PlaceholderManager extends AbstractManager {
+public class EconomyManager extends AbstractManager {
 
     @Override
     public void onLoad() {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+@UtilityClass
 public class FileClassUtil {
 
     public static List<Class<?>> getClasses(JavaPlugin plugin, String folder, Class<?> type) {

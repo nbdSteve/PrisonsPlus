@@ -3,9 +3,9 @@ package gg.steve.mc.pp.sapi.yml;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class PluginFile {
+public abstract class AbstractPluginFile {
 
-    public abstract PluginFile load(String fileName, JavaPlugin instance);
+    public abstract AbstractPluginFile load(String fileName, JavaPlugin instance);
 
     public abstract void save();
 
