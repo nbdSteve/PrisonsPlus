@@ -1,7 +1,7 @@
 package gg.steve.mc.pp.db;
 
 import gg.steve.mc.pp.db.sql.AbstractDatabaseInjector;
-import gg.steve.mc.pp.sapi.yml.Files;
+import gg.steve.mc.pp.file.PluginFile;
 import lombok.EqualsAndHashCode;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,9 +11,9 @@ public class SQLDatabaseHandler extends AbstractSQLHandler {
     private static AbstractDatabaseInjector dbInjector;
 
     public SQLDatabaseHandler(JavaPlugin plugin) {
-        super(DatabaseImplementation.getImplementationUsed(Files.CONFIG.get().getString("database.implementation")), plugin);
+        super(DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation")), plugin);
         instance = this;
-        DatabaseImplementation implementation = DatabaseImplementation.getImplementationUsed(Files.CONFIG.get().getString("database.implementation"));
+        DatabaseImplementation implementation = DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation"));
         dbInjector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, plugin);
     }
 

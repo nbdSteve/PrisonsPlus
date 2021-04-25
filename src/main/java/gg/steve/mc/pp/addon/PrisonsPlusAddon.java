@@ -30,12 +30,8 @@ public abstract class PrisonsPlusAddon implements Loadable {
 
     public void register() {
         this.onLoad();
-        this.commands.forEach((command, completer) -> {
-            this.getPrisonsPlusPlugin().getCommand(command).setTabCompleter(completer);
-        });
-        this.listeners.forEach(listener -> {
-            Bukkit.getServer().getPluginManager().registerEvents(listener, this.getPrisonsPlusPlugin());
-        });
+        this.commands.forEach((command, completer) -> this.getPrisonsPlusPlugin().getCommand(command).setTabCompleter(completer));
+        this.listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, this.getPrisonsPlusPlugin()));
     }
 
     public void unregister() {

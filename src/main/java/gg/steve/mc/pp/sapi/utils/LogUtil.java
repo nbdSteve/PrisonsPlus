@@ -2,6 +2,7 @@ package gg.steve.mc.pp.sapi.utils;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+@UtilityClass
 public class LogUtil {
     private static JavaPlugin plugin;
 

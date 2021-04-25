@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 /**
  * Handles colouring messages and other strings
  */
+@UtilityClass
 public class ColorUtil {
 
     /**

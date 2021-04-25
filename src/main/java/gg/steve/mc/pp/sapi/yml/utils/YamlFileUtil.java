@@ -1,6 +1,6 @@
 package gg.steve.mc.pp.sapi.yml.utils;
 
-import gg.steve.mc.pp.sapi.yml.PluginFile;
+import gg.steve.mc.pp.sapi.yml.AbstractPluginFile;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Class that handles creating or loading a plugin file from the resources folder
  */
-public class YamlFileUtil extends PluginFile {
+public class YamlFileUtil extends AbstractPluginFile {
     private Plugin instance;
     //YAML configuration for the file
     private YamlConfiguration yamlFile;
@@ -28,7 +28,7 @@ public class YamlFileUtil extends PluginFile {
      * @param fileName String, the name of the file to load
      */
     @Override
-    public PluginFile load(String fileName, JavaPlugin instance) {
+    public AbstractPluginFile load(String fileName, JavaPlugin instance) {
         this.instance = instance;
         this.fileName = fileName;
         this.file = new File(instance.getDataFolder(), fileName);
