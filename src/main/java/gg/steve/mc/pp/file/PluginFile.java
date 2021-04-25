@@ -1,11 +1,10 @@
-package gg.steve.mc.pp.sapi.yml;
+package gg.steve.mc.pp.file;
 
-import gg.steve.mc.pp.sapi.yml.utils.FileManagerUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-public enum Files {
+public enum PluginFile {
     // generic
     CONFIG("prisons+.yml"),
     // omni
@@ -16,23 +15,23 @@ public enum Files {
 
     private final String path;
 
-    Files(String path) {
+    PluginFile(String path) {
         this.path = path;
     }
 
-    public void load(FileManagerUtil fileManagerUtil) {
-        fileManagerUtil.add(name(), this.path);
+    public String getPath() {
+        return path;
     }
 
     public YamlConfiguration get() {
-        return FileManagerUtil.get(name());
+        return FileManager.getInstance().get(name());
     }
 
     public void save() {
-        FileManagerUtil.save(name());
+        FileManager.getInstance().save(name());
     }
 
     public static void reload() {
-        FileManagerUtil.reload();
+        FileManager.getInstance().reload();
     }
 }
