@@ -55,6 +55,11 @@ public class CommandManager extends AbstractManager {
         if (this.commands != null && !this.commands.isEmpty()) this.commands.clear();
     }
 
+    @Override
+    protected String getManagerName() {
+        return "Command";
+    }
+
     public boolean registerCommand(AbstractCommand command) {
         if (this.commandMap == null) return false;
         if (this.commands == null) this.commands = new HashMap<>();
@@ -73,10 +78,5 @@ public class CommandManager extends AbstractManager {
 
     public static CommandManager getInstance() {
         return instance;
-    }
-
-    @Override
-    protected String getManagerName() {
-        return "Command";
     }
 }

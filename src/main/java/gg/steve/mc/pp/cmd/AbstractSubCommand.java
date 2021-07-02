@@ -14,6 +14,7 @@ public abstract class AbstractSubCommand {
     private String command;
     private Permission permission;
     private int minArgLength, maxArgLength;
+    private boolean isNoArgCommand;
     private List<String> aliases;
 
     public AbstractSubCommand(AbstractCommand parent, String command, Permission permission, int minArgLength, int maxArgLength) {
@@ -22,6 +23,7 @@ public abstract class AbstractSubCommand {
         this.permission = permission;
         this.minArgLength = minArgLength;
         this.maxArgLength = maxArgLength;
+        if (this.minArgLength == 0) this.isNoArgCommand = true;
     }
 
     public void execute(CommandSender executor, String command, String[] arguments) {

@@ -3,14 +3,12 @@ package gg.steve.mc.pp.file;
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
-import lombok.Data;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-@Data
 @ManagerClass
 public class FileManager extends AbstractManager {
     private static FileManager instance;
@@ -26,15 +24,23 @@ public class FileManager extends AbstractManager {
 
     @Override
     public void onLoad() {
-        for (PluginFile file : PluginFile.values()) {
-            this.add(file.name(), file.getPath());
-        }
+//        for (PluginFile file : PluginFile.values()) {
+//            this.add(file.name(), file.getPath());
+//        }
     }
 
     @Override
     public void onShutdown() {
         if (this.files == null || this.files.isEmpty()) return;
         this.files.clear();
+    }
+
+    public boolean registerFile(String name, String path) {
+
+    }
+
+    public boolean registerFile(String name, File file) {
+
     }
 
     /**

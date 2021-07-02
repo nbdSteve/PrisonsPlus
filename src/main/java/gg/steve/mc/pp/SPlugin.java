@@ -10,6 +10,7 @@ import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.placeholder.PlaceholderManager;
 import gg.steve.mc.pp.utility.LogUtil;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -69,6 +70,10 @@ public class SPlugin {
 //            return valueMap;
 //        }));
 //    }
+
+    public static void disable() {
+        Bukkit.getPluginManager().disablePlugin(SPlugin.getSPluginInstance().getPlugin());
+    }
 
     public static SPlugin getSPluginInstance() {
         return instance;

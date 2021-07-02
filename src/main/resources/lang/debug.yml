@@ -1,0 +1,7 @@
+file-type: 'message'
+
+invalid-command:
+  unique-name: 'invalid-command'
+  action-bar: true
+  text:
+    - '&5[SPlugin] &7The command you entered is invalid.'
