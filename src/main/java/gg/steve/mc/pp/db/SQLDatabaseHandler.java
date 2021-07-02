@@ -1,20 +1,20 @@
 package gg.steve.mc.pp.db;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.sql.AbstractDatabaseInjector;
 import gg.steve.mc.pp.file.PluginFile;
 import lombok.EqualsAndHashCode;
-import org.bukkit.plugin.java.JavaPlugin;
 
 @EqualsAndHashCode(callSuper = true)
 public class SQLDatabaseHandler extends AbstractSQLHandler {
     private static SQLDatabaseHandler instance;
     private static AbstractDatabaseInjector dbInjector;
 
-    public SQLDatabaseHandler(JavaPlugin plugin) {
-        super(DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation")), plugin);
+    public SQLDatabaseHandler(SPlugin sPlugin) {
+        super(DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation")), sPlugin);
         instance = this;
         DatabaseImplementation implementation = DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation"));
-        dbInjector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, plugin);
+        dbInjector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, sPlugin);
     }
 
     @Override
@@ -33,5 +33,10 @@ public class SQLDatabaseHandler extends AbstractSQLHandler {
 
     public static AbstractDatabaseInjector getDbInjector() {
         return dbInjector;
+    }
+
+    @Override
+    protected String getManagerName() {
+        return "SQL";
     }
 }

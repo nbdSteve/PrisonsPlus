@@ -1,11 +1,15 @@
-package gg.steve.mc.pp.sapi.yml;
+package gg.steve.mc.pp.file;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public abstract class AbstractPluginFile {
 
-    public abstract AbstractPluginFile load(String fileName, JavaPlugin instance);
+    public abstract AbstractPluginFile loadFromPath(String fileName, JavaPlugin instance);
+
+    public abstract AbstractPluginFile loadFromFile(File file, JavaPlugin instance);
 
     public abstract void save();
 

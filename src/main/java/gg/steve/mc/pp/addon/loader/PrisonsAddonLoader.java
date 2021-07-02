@@ -1,30 +1,29 @@
 package gg.steve.mc.pp.addon.loader;
 
-import gg.steve.mc.pp.PrisonsPlusPlugin;
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.addon.PrisonsAddonManager;
 import gg.steve.mc.pp.addon.PrisonsPlusAddon;
-import gg.steve.mc.pp.sapi.utils.FileClassUtil;
-import gg.steve.mc.pp.sapi.utils.LogUtil;
-import org.bukkit.plugin.java.JavaPlugin;
+import gg.steve.mc.pp.utility.FileClassUtil;
+import gg.steve.mc.pp.utility.LogUtil;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
 public class PrisonsAddonLoader {
-    private final JavaPlugin plugin;
+    private final SPlugin sPlugin;
 
-    public PrisonsAddonLoader(JavaPlugin plugin) {
-        this.plugin = plugin;
-        File addonsFolder = new File(plugin.getDataFolder(), "addons");
+    public PrisonsAddonLoader(SPlugin sPlugin) {
+        this.sPlugin = sPlugin;
+        File addonsFolder = new File(this.sPlugin.getPlugin().getDataFolder(), "addons");
         if (!addonsFolder.exists()) {
             addonsFolder.mkdirs();
         }
     }
 
     public void registerAllAddons() {
-        if (this.plugin == null) return;
-        List<Class<?>> classes = FileClassUtil.getClasses(this.plugin, "addons", PrisonsPlusAddon.class);
+        if (this.sPlugin.getPlugin() == null) return;
+        List<Class<?>> classes = FileClassUtil.getClasses(this.sPlugin.getPlugin(), "addons", PrisonsPlusAddon.class);
         if (classes == null || classes.isEmpty()) return;
         classes.forEach(klass -> {
             PrisonsPlusAddon addon = this.createAddonInstance(klass);
@@ -34,7 +33,7 @@ public class PrisonsAddonLoader {
 
     public boolean registerAddon(String addonName) {
         String builder = addonName.toUpperCase().charAt(0) + addonName.substring(1).toLowerCase() + "Addon";
-        List<Class<?>> subs = FileClassUtil.getClasses(this.plugin, "addons", builder, PrisonsPlusAddon.class);
+        List<Class<?>> subs = FileClassUtil.getClasses(this.sPlugin.getPlugin(), "addons", builder, PrisonsPlusAddon.class);
         if (subs == null || subs.isEmpty()) {
             return false;
         }

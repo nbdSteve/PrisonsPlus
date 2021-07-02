@@ -8,10 +8,10 @@ public enum PluginFile {
     // generic
     CONFIG("prisons+.yml"),
     // omni
-    PERMISSIONS("permissions.yml"),
+    PERMISSIONS("permissions.yml");
     // lang
-    DEBUG("lang" + File.separator + "debug.yml"),
-    MESSAGES("lang" + File.separator + "messages.yml");;
+//    DEBUG("lang" + File.separator + "debug.yml"),
+//    MESSAGES("lang" + File.separator + "messages.yml");
 
     private final String path;
 

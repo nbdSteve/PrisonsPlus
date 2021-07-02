@@ -1,6 +1,6 @@
 package gg.steve.mc.pp;
 
-import gg.steve.mc.pp.sapi.utils.LogUtil;
+import gg.steve.mc.pp.utility.LogUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PrisonsPlusPlugin extends JavaPlugin {
@@ -16,7 +16,7 @@ public final class PrisonsPlusPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        this.SPlugin = new SPlugin(this);
+        this.SPlugin = new SPlugin(instance);
     }
 
     @Override

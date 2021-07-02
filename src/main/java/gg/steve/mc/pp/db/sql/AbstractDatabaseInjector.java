@@ -1,5 +1,6 @@
 package gg.steve.mc.pp.db.sql;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.DatabaseImplementation;
 import gg.steve.mc.pp.file.PluginFile;
 import lombok.Data;
@@ -11,13 +12,13 @@ import java.sql.Connection;
 public abstract class AbstractDatabaseInjector {
     private Connection connection;
     private final DatabaseImplementation implementation;
-    private final JavaPlugin plugin;
+    private final SPlugin sPlugin;
     private final String host, port, database, user, password;
     private final boolean ssl;
 
-    public AbstractDatabaseInjector(DatabaseImplementation implementation, JavaPlugin plugin) {
+    public AbstractDatabaseInjector(DatabaseImplementation implementation, SPlugin sPlugin) {
         this.implementation = implementation;
-        this.plugin = plugin;
+        this.sPlugin = sPlugin;
         this.host = PluginFile.CONFIG.get().getString("database.host");
         this.port = PluginFile.CONFIG.get().getString("database.port");
         this.database = PluginFile.CONFIG.get().getString("database.database");

@@ -1,4 +1,4 @@
-package gg.steve.mc.pp.sapi.utils;
+package gg.steve.mc.pp.utility;
 
 import org.bukkit.ChatColor;
 

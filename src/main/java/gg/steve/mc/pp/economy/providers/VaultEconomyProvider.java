@@ -2,11 +2,12 @@ package gg.steve.mc.pp.economy.providers;
 
 import gg.steve.mc.pp.economy.AbstractEconomyProvider;
 import gg.steve.mc.pp.economy.EconomyType;
-import gg.steve.mc.pp.sapi.utils.LogUtil;
-import gg.steve.mc.pp.sapi.utils.ServerUtil;
+import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.ServerUtil;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 
+@EconomyProviderClass
 public class VaultEconomyProvider extends AbstractEconomyProvider {
     private static VaultEconomyProvider instance;
     private Economy economy;

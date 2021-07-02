@@ -1,6 +1,5 @@
-package gg.steve.mc.pp.sapi.yml.utils;
+package gg.steve.mc.pp.file;
 
-import gg.steve.mc.pp.sapi.yml.AbstractPluginFile;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -13,13 +12,13 @@ import java.io.IOException;
 /**
  * Class that handles creating or loading a plugin file from the resources folder
  */
-public class YamlFileUtil extends AbstractPluginFile {
+public class ConfigurationFile extends AbstractPluginFile {
     private Plugin instance;
-    //YAML configuration for the file
+    // YAML configuration for the file
     private YamlConfiguration yamlFile;
-    //File to be created
+    // File to be created
     private File file;
-    //Store the name of the file
+    // Store the name of the file
     private String fileName;
 
     /**
@@ -28,7 +27,7 @@ public class YamlFileUtil extends AbstractPluginFile {
      * @param fileName String, the name of the file to load
      */
     @Override
-    public AbstractPluginFile load(String fileName, JavaPlugin instance) {
+    public AbstractPluginFile loadFromPath(String fileName, JavaPlugin instance) {
         this.instance = instance;
         this.fileName = fileName;
         this.file = new File(instance.getDataFolder(), fileName);
@@ -51,6 +50,15 @@ public class YamlFileUtil extends AbstractPluginFile {
                     " could not be loaded, please contact the developer. Disabling the plugin.");
             instance.getServer().getPluginManager().disablePlugin(instance);
         }
+        return this;
+    }
+
+    @Override
+    public AbstractPluginFile loadFromFile(File file, JavaPlugin instance) {
+        this.instance = instance;
+        this.fileName = file.getName();
+        this.file = file;
+        this.yamlFile = YamlConfiguration.loadConfiguration(file);
         return this;
     }
 

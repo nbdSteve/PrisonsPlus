@@ -1,32 +1,38 @@
 package gg.steve.mc.pp.addon;
 
+import gg.steve.mc.pp.SPlugin;
+import gg.steve.mc.pp.addon.exception.PrisonsPlusAddonNotFoundException;
 import gg.steve.mc.pp.addon.loader.PrisonsAddonLoader;
 import gg.steve.mc.pp.manager.AbstractManager;
+import gg.steve.mc.pp.manager.ManagerClass;
+import gg.steve.mc.pp.utility.LogUtil;
 import org.apache.commons.lang.Validate;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@ManagerClass
 public class PrisonsAddonManager extends AbstractManager {
     private static PrisonsAddonManager instance;
-    private JavaPlugin plugin;
+    private SPlugin sPlugin;
     private Map<String, PrisonsPlusAddon> addons;
     private PrisonsAddonLoader loader;
 
 
-    public PrisonsAddonManager(JavaPlugin plugin) {
-        super();
+    public PrisonsAddonManager(SPlugin sPlugin) {
         instance = this;
-        this.plugin = plugin;
+        this.sPlugin = sPlugin;
         this.addons = new HashMap<>();
-        this.loader = new PrisonsAddonLoader(this.plugin);
+        this.loader = new PrisonsAddonLoader(this.sPlugin);
+        AbstractManager.addManager(instance);
     }
 
     @Override
     public void onLoad() {
         this.loader.registerAllAddons();
+        LogUtil.warning("Registered addons: " + this.addons.keySet().toString());
     }
 
     @Override
@@ -53,8 +59,8 @@ public class PrisonsAddonManager extends AbstractManager {
         return this.addons.get(identifier) != null;
     }
 
-    public PrisonsPlusAddon getAddon(String identifier) {
-        if (!isRegistered(identifier)) return null;
+    public PrisonsPlusAddon getAddon(String identifier) throws PrisonsPlusAddonNotFoundException {
+        if (!isRegistered(identifier)) throw new PrisonsPlusAddonNotFoundException(identifier);
         return this.addons.get(identifier);
     }
 
@@ -67,14 +73,21 @@ public class PrisonsAddonManager extends AbstractManager {
 
     public void unregisterAllAddons() {
         if (this.addons != null && !this.addons.isEmpty()) {
-            this.addons.forEach((s, prisonsPlusAddon) -> {
-                prisonsPlusAddon.unregister();
-            });
+            this.addons.forEach((s, prisonsPlusAddon) -> prisonsPlusAddon.unregister());
             this.addons.clear();
         }
     }
 
+    public Collection<PrisonsPlusAddon> getRegisteredAddons() {
+        return this.addons.values();
+    }
+
     public static PrisonsAddonManager getInstance() {
         return instance;
+    }
+
+    @Override
+    protected String getManagerName() {
+        return "Addon";
     }
 }

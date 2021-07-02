@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public abstract class AbstractPlaceholderProvider {
-    private PlaceholderProvider placeholderProvider;
+    private PlaceholderProviderType placeholderProviderType;
 
-    public AbstractPlaceholderProvider(PlaceholderProvider placeholderProvider) {
-        this.placeholderProvider = placeholderProvider;
+    public AbstractPlaceholderProvider(PlaceholderProviderType placeholderProviderType) {
+        this.placeholderProviderType = placeholderProviderType;
     }
 
     public abstract boolean isUsingPlaceholderProvider();

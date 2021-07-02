@@ -1,25 +1,27 @@
 package gg.steve.mc.pp.file;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.manager.AbstractManager;
-import gg.steve.mc.pp.sapi.yml.AbstractPluginFile;
-import gg.steve.mc.pp.sapi.yml.utils.YamlFileUtil;
+import gg.steve.mc.pp.manager.ManagerClass;
 import lombok.Data;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
+@ManagerClass
 public class FileManager extends AbstractManager {
     private static FileManager instance;
-    private final JavaPlugin plugin;
+    private final SPlugin sPlugin;
     private Map<String, AbstractPluginFile> files;
 
-    public FileManager(JavaPlugin plugin) {
+    public FileManager(SPlugin sPlugin) {
         instance = this;
-        this.plugin = plugin;
+        this.sPlugin = sPlugin;
         this.files = new HashMap<>();
+        AbstractManager.addManager(instance);
     }
 
     @Override
@@ -35,10 +37,6 @@ public class FileManager extends AbstractManager {
         this.files.clear();
     }
 
-    public static FileManager getInstance() {
-        return instance;
-    }
-
     /**
      * Adds a plugin file to the map of loaded files
      *
@@ -47,7 +45,12 @@ public class FileManager extends AbstractManager {
      */
     public void add(String name, String path) {
         if (this.files == null) this.files = new HashMap<>();
-        this.files.put(name, new YamlFileUtil().load(path, this.plugin));
+        this.files.put(name, new ConfigurationFile().loadFromPath(path, this.sPlugin.getPlugin()));
+    }
+
+    public void add(String name, File file) {
+        if (this.files == null) this.files = new HashMap<>();
+        this.files.put(name, new ConfigurationFile().loadFromFile(file, this.sPlugin.getPlugin()));
     }
 
     /**
@@ -77,5 +80,14 @@ public class FileManager extends AbstractManager {
     public void reload() {
         if (this.files == null || this.files.isEmpty()) return;
         for (AbstractPluginFile file : files.values()) file.reload();
+    }
+
+    public static FileManager getInstance() {
+        return instance;
+    }
+
+    @Override
+    protected String getManagerName() {
+        return "File";
     }
 }
