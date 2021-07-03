@@ -23,13 +23,12 @@ public abstract class PrisonsPlusAddon implements Loadable {
     public PrisonsPlusAddon(String identifier) {
         this.identifier = identifier;
         this.sPlugin = SPlugin.getSPluginInstance();
-        this.name = name;
     }
 
     public void register() {
         this.onLoad();
         if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> this.sPlugin.getCommandManager().registerCommand(command));
-        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, this.sPlugin.getPlugin()));
+        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> this.sPlugin.getEventManager().registerListener(listener));
     }
 
     public void unregister() {

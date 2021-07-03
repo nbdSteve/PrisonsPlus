@@ -1,6 +1,6 @@
 package gg.steve.mc.pp.permission;
 
-import gg.steve.mc.pp.file.PluginFile;
+import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
@@ -22,7 +22,7 @@ public class PermissionManager extends AbstractManager {
 
     @Override
     public void onLoad() {
-        YamlConfiguration config = PluginFile.PERMISSIONS.get();
+        YamlConfiguration config = FileManager.CoreFiles.PERMISSIONS.get();
         for (String key : config.getKeys(false)) {
             PermissionType type = PermissionType.getPermissionTypeByIdentifier(key);
             if (type == PermissionType.DEFAULT) {

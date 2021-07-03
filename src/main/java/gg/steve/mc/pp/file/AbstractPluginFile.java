@@ -12,14 +12,20 @@ import java.io.IOException;
 
 @Data
 public abstract class AbstractPluginFile {
+    private String name;
     private String fileName;
     private File file;
     private SPlugin sPlugin;
     private PluginFileType fileType;
     private YamlConfiguration configuration;
 
-    public AbstractPluginFile(PluginFileType fileType) {
+    public AbstractPluginFile(String name, File file, PluginFileType fileType, SPlugin sPlugin) {
+        this.name = name;
+        this.file = file;
+        this.fileName = this.file.getName();
         this.fileType = fileType;
+        this.sPlugin = sPlugin;
+        this.loadFromFile(this.file, this.sPlugin);
     }
 
     /**

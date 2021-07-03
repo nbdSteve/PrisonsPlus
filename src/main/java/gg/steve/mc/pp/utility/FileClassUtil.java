@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.utility;
 
 import gg.steve.mc.pp.file.FileManager;
+import gg.steve.mc.pp.file.PluginFileType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -115,7 +116,9 @@ public class FileClassUtil {
                                 }
                             }
                             // Register the file and the yml config with the file manager
-                            FileManager.getInstance().add(name.replaceAll("/", "-").split(".yml")[0], file);
+                            YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+                            PluginFileType type = PluginFileType.getFileTypeFromString(configuration.getString("file-type"));
+                            FileManager.getInstance().registerFile(name.replaceAll("/", "-").split(".yml")[0], file, type);
                         } catch (IOException e) {
                         }
                     }

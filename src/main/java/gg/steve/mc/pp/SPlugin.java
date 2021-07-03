@@ -4,8 +4,10 @@ import gg.steve.mc.pp.addon.PrisonsAddonManager;
 import gg.steve.mc.pp.cmd.CommandManager;
 import gg.steve.mc.pp.db.SQLDatabaseHandler;
 import gg.steve.mc.pp.economy.EconomyManager;
+import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.manager.AbstractManager;
+import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.placeholder.PlaceholderManager;
 import gg.steve.mc.pp.utility.LogUtil;
@@ -26,11 +28,13 @@ public class SPlugin {
     // Store the name of the plugin
     private final String pluginName;
     // Store manager instances to be accessed by addons
+    private final MessageManager messageManager;
     private final FileManager fileManager;
     private final EconomyManager economyManager;
     private final PlaceholderManager placeholderManager;
     private final CommandManager commandManager;
     private final PermissionManager permissionManager;
+    private final EventManager eventManager;
     // Custom manager classes
     private final PrisonsAddonManager addonManager;
     // Any other handler classes which are not managers
@@ -42,13 +46,13 @@ public class SPlugin {
         // Name
         this.pluginName = "PrisonsPlus";
         // register managers
+        this.messageManager = new MessageManager();
         this.fileManager = new FileManager(instance);
-        // commands, events managers still needed
         this.economyManager = new EconomyManager(instance);
         this.placeholderManager = new PlaceholderManager();
         this.commandManager = new CommandManager(instance);
         this.permissionManager = new PermissionManager();
-        //
+        this.eventManager = new EventManager(instance);
         // Custom manager classes
         this.addonManager = new PrisonsAddonManager(instance);
         // load manager classes

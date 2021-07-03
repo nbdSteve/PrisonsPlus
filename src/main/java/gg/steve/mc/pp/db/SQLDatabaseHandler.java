@@ -2,7 +2,7 @@ package gg.steve.mc.pp.db;
 
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.sql.AbstractDatabaseInjector;
-import gg.steve.mc.pp.file.PluginFile;
+import gg.steve.mc.pp.file.FileManager;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
@@ -11,9 +11,9 @@ public class SQLDatabaseHandler extends AbstractSQLHandler {
     private static AbstractDatabaseInjector dbInjector;
 
     public SQLDatabaseHandler(SPlugin sPlugin) {
-        super(DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation")), sPlugin);
+        super(DatabaseImplementation.getImplementationUsed(FileManager.CoreFiles.CONFIG.get().getString("database.implementation")), sPlugin);
         instance = this;
-        DatabaseImplementation implementation = DatabaseImplementation.getImplementationUsed(PluginFile.CONFIG.get().getString("database.implementation"));
+        DatabaseImplementation implementation = DatabaseImplementation.getImplementationUsed(FileManager.CoreFiles.CONFIG.get().getString("database.implementation"));
         dbInjector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, sPlugin);
     }
 
