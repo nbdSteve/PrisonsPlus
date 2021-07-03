@@ -1,12 +1,10 @@
 package gg.steve.mc.pp.message;
 
-import gg.steve.mc.pp.file.AbstractPluginFile;
 import gg.steve.mc.pp.file.types.MessagePluginFile;
+import gg.steve.mc.pp.message.configurations.TitleMessageConfiguration;
 import gg.steve.mc.pp.utility.ColorUtil;
-import gg.steve.mc.pp.utility.actionbarapi.ActionBarAPI;
+import gg.steve.mc.pp.xseries.messages.ActionBar;
 import lombok.Data;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,6 +20,7 @@ public class PluginMessage {
     private String name;
     private List<String> text;
     private boolean isActionBar;
+    private TitleMessageConfiguration title;
     private List<String> placeholders;
 
     public PluginMessage(MessagePluginFile configuration, String path, String name) {
@@ -30,6 +29,11 @@ public class PluginMessage {
         this.name = name;
         this.text = new LinkedList<>(this.configuration.get().getStringList(this.path + ".text"));
         this.isActionBar = this.configuration.get().getBoolean(this.path + ".action-bar");
+        try {
+            this.title = new TitleMessageConfiguration(this, this.configuration.get().getConfigurationSection(this.path + ".title"));
+        } catch (NullPointerException e) {
+            this.title = null;
+        }
     }
 
     public boolean registerPlaceholder(String placeholder) {
@@ -50,10 +54,10 @@ public class PluginMessage {
                 for (int i = 0; i < this.placeholders.size(); i++) {
                     line = line.replace(this.placeholders.get(i), data.get(i));
                 }
-                if (!ActionBarAPI.sendActionBar(receiver, ColorUtil.colorize(line))) {
-                    receiver.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.colorize(line)));
-                }
+                ActionBar.sendActionBar(receiver, ColorUtil.colorize(line));
             }
+        } else if (this.title != null && this.title.isEnabled()) {
+            this.title.send(receiver, data);
         } else {
             for (String line : this.text) {
                 for (int i = 0; i < this.placeholders.size(); i++) {
@@ -71,10 +75,10 @@ public class PluginMessage {
                 for (int i = 0; i < this.placeholders.size(); i++) {
                     line = line.replace(this.placeholders.get(i), data.get(i));
                 }
-                if (!ActionBarAPI.sendActionBar((Player) receiver, ColorUtil.colorize(line))) {
-                    ((Player) receiver).spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.colorize(line)));
-                }
+                ActionBar.sendActionBar((Player) receiver, ColorUtil.colorize(line));
             }
+        } else if (this.title != null && this.title.isEnabled() && receiver instanceof Player) {
+            this.title.send((Player) receiver, data);
         } else {
             for (String line : this.text) {
                 for (int i = 0; i < this.placeholders.size(); i++) {

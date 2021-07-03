@@ -1,6 +1,5 @@
 package gg.steve.mc.pp.message;
 
-import gg.steve.mc.pp.file.AbstractPluginFile;
 import gg.steve.mc.pp.file.types.MessagePluginFile;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
@@ -15,7 +14,7 @@ public class MessageManager extends AbstractManager {
 
     public MessageManager() {
         instance = this;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

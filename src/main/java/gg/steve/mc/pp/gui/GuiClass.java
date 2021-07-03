@@ -1,2 +1,4 @@
-package gg.steve.mc.pp.gui;public @interface GuiClass {
+package gg.steve.mc.pp.gui;
+
+public @interface GuiClass {
 }

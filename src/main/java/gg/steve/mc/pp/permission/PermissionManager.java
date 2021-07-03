@@ -17,7 +17,7 @@ public class PermissionManager extends AbstractManager {
 
     public PermissionManager() {
         instance = this;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

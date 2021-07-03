@@ -15,7 +15,7 @@ public class PlaceholderManager extends AbstractManager {
 
     public PlaceholderManager() {
         instance = this;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

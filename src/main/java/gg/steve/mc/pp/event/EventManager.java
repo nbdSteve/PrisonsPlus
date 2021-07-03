@@ -14,7 +14,7 @@ public class EventManager extends AbstractManager {
     public EventManager(SPlugin sPlugin) {
         instance = this;
         this.sPlugin = sPlugin;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

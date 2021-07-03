@@ -5,13 +5,9 @@ import gg.steve.mc.pp.file.exception.ConfigurationFileNotFoundException;
 import gg.steve.mc.pp.file.types.*;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
-import gg.steve.mc.pp.utility.LogUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +21,7 @@ public class FileManager extends AbstractManager {
         instance = this;
         this.sPlugin = sPlugin;
         this.files = new HashMap<>();
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     /**

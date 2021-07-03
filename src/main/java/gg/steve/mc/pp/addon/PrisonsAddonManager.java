@@ -26,7 +26,7 @@ public class PrisonsAddonManager extends AbstractManager {
         this.sPlugin = sPlugin;
         this.addons = new HashMap<>();
         this.loader = new PrisonsAddonLoader(this.sPlugin);
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

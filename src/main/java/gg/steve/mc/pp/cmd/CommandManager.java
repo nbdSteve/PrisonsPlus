@@ -22,7 +22,7 @@ public class CommandManager extends AbstractManager {
     public CommandManager(SPlugin sPlugin) {
         instance = this;
         this.sPlugin = sPlugin;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override

@@ -8,12 +8,12 @@ import java.util.*;
 public abstract class AbstractManager implements Loadable {
     private static Map<String, AbstractManager> managers;
 
-    private static void initialiseManagerList() {
+    private static void initialiseManagerMap() {
         if (managers == null) managers = new LinkedHashMap<>();
     }
 
-    public static void addManager(AbstractManager manager) {
-        initialiseManagerList();
+    public static void registerManager(AbstractManager manager) {
+        initialiseManagerMap();
         if (managers.containsKey(manager.getManagerName())) return;
         managers.put(manager.getManagerName(), manager);
     }
@@ -35,7 +35,7 @@ public abstract class AbstractManager implements Loadable {
     }
 
     public static Collection<AbstractManager> getActiveManagers() {
-        initialiseManagerList();
+        initialiseManagerMap();
         return managers.values();
     }
 

@@ -18,7 +18,7 @@ public class EconomyManager extends AbstractManager {
     public EconomyManager(SPlugin sPlugin) {
         instance = this;
         this.sPlugin = sPlugin;
-        AbstractManager.addManager(instance);
+        AbstractManager.registerManager(instance);
     }
 
     @Override
