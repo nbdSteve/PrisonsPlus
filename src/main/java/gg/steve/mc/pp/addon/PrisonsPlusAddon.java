@@ -69,4 +69,8 @@ public abstract class PrisonsPlusAddon implements Loadable {
     public abstract void registerEvents();
 
     public abstract void registerFiles();
+
+    public abstract void registerGuis();
+
+    public abstract void registerClickActions();
 }

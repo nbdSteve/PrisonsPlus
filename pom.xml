@@ -150,13 +150,6 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>de.tr7zw.spigotmc.maven</groupId>
-            <artifactId>tr-spigotmc-maven-plugin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <!--used for deploying packages to the GitHub repository-->

@@ -12,5 +12,6 @@ public class GuiPluginFile extends AbstractPluginFile {
 
     public GuiPluginFile(String name, File file, SPlugin sPlugin) {
         super(name, file, PluginFileType.GUI, sPlugin);
+        // need to register the gui with the server
     }
 }

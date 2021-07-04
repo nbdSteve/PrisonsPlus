@@ -1,3 +1,5 @@
+file-type: 'configuration'
+
 database:
   implementation: 'sqlite'
   host: 'localhost'

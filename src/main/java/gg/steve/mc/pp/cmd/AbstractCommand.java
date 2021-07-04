@@ -1,6 +1,8 @@
 package gg.steve.mc.pp.cmd;
 
+import com.google.protobuf.Message;
 import gg.steve.mc.pp.SPlugin;
+import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.Permission;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,13 +24,30 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (!this.permission.hasPermission(sender)) {
-            // send the player a message
+        if (this.isPermissionRequired() && !this.permission.hasPermission(sender)) {
+            MessageManager.getInstance().sendMessage("no-permission", sender, this.permission.getPermission());
         } else {
             if (this.subCommands != null && !this.subCommands.isEmpty()) {
-
+                this.runOnNoArgsGiven(sender);
+                return true;
             }
-            run(sender, commandLabel, args);
+            if (args.length == 0) for (AbstractSubCommand subCommand : this.subCommands.values()) {
+                if (subCommand.isNoArgCommand()) {
+                    subCommand.execute(sender, args);
+                    return true;
+                }
+            }
+            if (args.length == 0) {
+                this.runOnNoArgsGiven(sender);
+                return true;
+            }
+            for (AbstractSubCommand subCommand : this.subCommands.values()) {
+                if (subCommand.isExecutor(args[0])) {
+                    subCommand.execute(sender, args);
+                    return true;
+                }
+            }
+            MessageManager.getInstance().sendMessage("invalid-command", sender);
         }
         return true;
     }
@@ -38,9 +57,9 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
         return SPlugin.getSPluginInstance().getPlugin();
     }
 
-    protected abstract void run(CommandSender executor, String command, String[] arguments);
-
     public abstract void registerAllSubCommands();
+
+    public abstract void runOnNoArgsGiven(CommandSender sender);
 
     public boolean registerSubCommand(AbstractSubCommand subCommand) {
         if (this.subCommands == null) this.subCommands = new HashMap<>();
@@ -51,6 +70,10 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
     public boolean unregisterSubCommand(String command) {
         if (this.subCommands == null || this.subCommands.isEmpty()) return true;
         return this.subCommands.remove(command) != null;
+    }
+
+    public boolean isPermissionRequired() {
+        return this.permission != null && !this.permission.getPermission().equalsIgnoreCase("");
     }
 
     public Map<String, AbstractSubCommand> getSubCommands() {

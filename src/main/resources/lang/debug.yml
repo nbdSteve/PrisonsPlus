@@ -2,6 +2,19 @@ file-type: 'message'
 
 invalid-command:
   unique-name: 'invalid-command'
-  action-bar: true
+  action-bar: false
   text:
-    - '&5[SPlugin] &7The command you entered is invalid.'
+    - '&d[&5&lSP&d] &c&lERROR &7The command you entered is invalid.'
+
+no-permission:
+  unique-name: 'no-permission'
+  action-bar: false
+  title:
+    enabled: true
+    text: '&c&lYOU DO NOT HAVE PERMISSION!'
+    subtitle: '&7Node required: &4&l{node}'
+    fade-in: 10
+    stay: 20
+    fade-out: 20
+  text:
+    - '&d[&5&lSPlugin&d] &c&lERROR &7You do not have permission (&6{node}&7) to use that.'

@@ -26,7 +26,7 @@ public abstract class AbstractSubCommand {
         if (this.minArgLength == 0) this.isNoArgCommand = true;
     }
 
-    public void execute(CommandSender executor, String command, String[] arguments) {
+    public void execute(CommandSender executor, String[] arguments) {
         if (!this.hasPermission(executor)) {
 
             return;
@@ -35,10 +35,10 @@ public abstract class AbstractSubCommand {
 
             return;
         }
-        this.run(executor, command, arguments);
+        this.run(executor, arguments);
     }
 
-    public abstract void run(CommandSender executor, String command, String[] arguments);
+    public abstract void run(CommandSender executor, String[] arguments);
 
     public boolean registerAlias(String alias) throws AliasAlreadyRegisteredException {
         if (this.aliases == null) this.aliases = new ArrayList<>();
@@ -62,5 +62,13 @@ public abstract class AbstractSubCommand {
 
     public boolean isValidArgs(String[] arguments) {
         return this.minArgLength <= arguments.length && this.maxArgLength >= arguments.length;
+    }
+
+    public boolean isExecutor(String command) {
+        if (this.command.equalsIgnoreCase(command)) return true;
+        for (String alias : this.aliases) {
+            if (alias.equalsIgnoreCase(command)) return true;
+        }
+        return false;
     }
 }

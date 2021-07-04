@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.permission;
 
 import gg.steve.mc.pp.file.FileManager;
+import gg.steve.mc.pp.file.types.PermissionPluginFile;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
@@ -22,21 +23,22 @@ public class PermissionManager extends AbstractManager {
 
     @Override
     public void onLoad() {
-        YamlConfiguration config = FileManager.CoreFiles.PERMISSIONS.get();
-        for (String key : config.getKeys(false)) {
-            PermissionType type = PermissionType.getPermissionTypeByIdentifier(key);
-            if (type == PermissionType.DEFAULT) {
-                LogUtil.warning("Unable to find permission type, " + key + ", setting to default");
-            }
-            for (String permission : config.getConfigurationSection(key).getKeys(false)) {
-                this.registerPermission(permission, config.getConfigurationSection(key).getString(permission), type);
-            }
-        }
     }
 
     @Override
     public void onShutdown() {
         if (permissions != null && !permissions.isEmpty()) permissions.clear();
+    }
+
+    public void registerPermissionsFromFile(PermissionPluginFile file) {
+        for (String key : file.get().getKeys(false)) {
+            if (key.equalsIgnoreCase("file-type")) continue;
+            PermissionType type = PermissionType.getPermissionTypeByIdentifier(key);
+            if (type == PermissionType.DEFAULT) LogUtil.warning("Unable to find permission type, " + key + ", setting to default");
+            for (String permission : file.get().getConfigurationSection(key).getKeys(false)) {
+                this.registerPermission(permission, file.get().getConfigurationSection(key).getString(permission), type);
+            }
+        }
     }
 
     public boolean registerPermission(String permission, String node, PermissionType type) {

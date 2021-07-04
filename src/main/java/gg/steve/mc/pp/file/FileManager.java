@@ -5,6 +5,7 @@ import gg.steve.mc.pp.file.exception.ConfigurationFileNotFoundException;
 import gg.steve.mc.pp.file.types.*;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
+import gg.steve.mc.pp.utility.LogUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -129,6 +130,7 @@ public class FileManager extends AbstractManager {
                 throw new ConfigurationFileNotFoundException(name);
             }
         } catch (ConfigurationFileNotFoundException e) {
+            LogUtil.warning(e.getDebugMessage());
             e.printStackTrace();
         }
         return this.files.get(name).get();

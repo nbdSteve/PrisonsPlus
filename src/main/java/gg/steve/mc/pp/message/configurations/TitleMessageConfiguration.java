@@ -38,7 +38,7 @@ public class TitleMessageConfiguration {
         if (stay < 1) stay = 20;
         if (fadeOut < 1) fadeOut = 10;
 
-        for (int i = 0; i < this.parent.getPlaceholders().size(); i++) {
+        if (this.parent.getPlaceholders() != null) for (int i = 0; i < this.parent.getPlaceholders().size(); i++) {
             title = title.replace(this.parent.getPlaceholders().get(i), replacements.get(i));
             subtitle = subtitle.replace(this.parent.getPlaceholders().get(i), replacements.get(i));
         }
