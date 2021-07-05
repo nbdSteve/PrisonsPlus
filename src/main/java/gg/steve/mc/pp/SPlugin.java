@@ -10,8 +10,10 @@ import gg.steve.mc.pp.gui.GuiManager;
 import gg.steve.mc.pp.gui.action.InventoryClickActionManager;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.message.MessageManager;
+import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.placeholder.PlaceholderManager;
+import gg.steve.mc.pp.utility.LogUtil;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,14 +47,14 @@ public class SPlugin {
         this.pluginName = "PrisonsPlus";
         // register managers
         this.messageManager = new MessageManager();
-        this.commandManager = new CommandManager(instance);
-        this.permissionManager = new PermissionManager();
         this.economyManager = new EconomyManager(instance);
         this.placeholderManager = new PlaceholderManager();
         this.eventManager = new EventManager(instance);
         this.inventoryClickActionManager = new InventoryClickActionManager();
         this.guiManager = new GuiManager();
         this.fileManager = new FileManager(instance);
+        this.permissionManager = new PermissionManager();
+        this.commandManager = new CommandManager(instance);
         // Custom manager classes
         this.addonManager = new PrisonsAddonManager(instance);
         // load manager classes

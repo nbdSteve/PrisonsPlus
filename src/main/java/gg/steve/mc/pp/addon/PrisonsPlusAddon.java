@@ -2,6 +2,8 @@ package gg.steve.mc.pp.addon;
 
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.cmd.AbstractCommand;
+import gg.steve.mc.pp.cmd.CommandManager;
+import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.manager.Loadable;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -27,8 +29,8 @@ public abstract class PrisonsPlusAddon implements Loadable {
 
     public void register() {
         this.onLoad();
-        if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> this.sPlugin.getCommandManager().registerCommand(command));
-        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> this.sPlugin.getEventManager().registerListener(listener));
+        if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> CommandManager.getInstance().registerCommand(command));
+        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> EventManager.getInstance().registerListener(listener));
     }
 
     public void unregister() {

@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.gui;
 
 import gg.steve.mc.pp.SPlugin;
+import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.file.AbstractPluginFile;
 import gg.steve.mc.pp.file.PluginFileType;
 import gg.steve.mc.pp.gui.component.GuiComponent;
@@ -54,7 +55,7 @@ public abstract class AbstractGui implements Loadable {
         this.components = new HashMap<>();
         this.viewers = new HashMap<>();
         this.listener = new GuiEventListener(this);
-        this.sPlugin.getEventManager().registerListener(this.listener);
+        EventManager.getInstance().registerListener(this.listener);
     }
 
     abstract void refreshInventoryContents();

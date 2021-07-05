@@ -1,1 +1,9 @@
 file-type: 'message'
+
+help:
+  unique-name: 'help'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lSP&d] &7Default help message for Prisons+, you should change this!'

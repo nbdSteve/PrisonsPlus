@@ -8,10 +8,12 @@ invalid-command:
 
 no-permission:
   unique-name: 'no-permission'
+  placeholders:
+    - '{node}'
   action-bar: false
   title:
     enabled: true
-    text: '&c&lYOU DO NOT HAVE PERMISSION!'
+    text: '&c&lNO PERMISSION!'
     subtitle: '&7Node required: &4&l{node}'
     fade-in: 10
     stay: 20

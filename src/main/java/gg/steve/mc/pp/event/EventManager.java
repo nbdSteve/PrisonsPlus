@@ -35,4 +35,8 @@ public class EventManager extends AbstractManager {
     public void registerListener(Listener listener) {
         Bukkit.getServer().getPluginManager().registerEvents(listener, this.sPlugin.getPlugin());
     }
+
+    public static EventManager getInstance() {
+        return instance;
+    }
 }

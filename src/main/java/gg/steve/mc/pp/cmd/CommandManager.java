@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.cmd;
 
 import gg.steve.mc.pp.SPlugin;
+import gg.steve.mc.pp.cmd.prison.PrisonsCommand;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.LogUtil;
@@ -43,6 +44,8 @@ public class CommandManager extends AbstractManager {
             LogUtil.warning("Exception thrown whilst trying to assign command map, unable to register custom plugin commands.");
             e.printStackTrace();
         }
+        // Register plugin commands
+        this.registerCommand(new PrisonsCommand());
     }
 
     @Override
