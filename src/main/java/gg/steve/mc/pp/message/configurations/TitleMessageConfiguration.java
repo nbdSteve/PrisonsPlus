@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.message.configurations;
 
 import gg.steve.mc.pp.message.PluginMessage;
+import gg.steve.mc.pp.utility.ColorUtil;
 import gg.steve.mc.pp.xseries.messages.Titles;
 import lombok.Data;
 import org.bukkit.configuration.ConfigurationSection;
@@ -43,6 +44,6 @@ public class TitleMessageConfiguration {
             subtitle = subtitle.replace(this.parent.getPlaceholders().get(i), replacements.get(i));
         }
 
-        Titles.sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
+        Titles.sendTitle(player, fadeIn, stay, fadeOut, ColorUtil.colorize(title), ColorUtil.colorize(subtitle));
     }
 }

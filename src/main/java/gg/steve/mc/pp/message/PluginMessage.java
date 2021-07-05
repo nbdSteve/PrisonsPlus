@@ -51,12 +51,10 @@ public class PluginMessage {
     }
 
     public void send(Player receiver, String... replacements) {
-        LogUtil.warning("getting here 6");
         List<String> data = null;
         if (replacements != null) {
             data = Arrays.asList(replacements);
         }
-        LogUtil.warning("getting here 4");
         if (this.isActionBar) {
             for (String line : this.text) {
                 if (placeholders != null && data != null) for (int i = 0; i < this.placeholders.size(); i++) {
@@ -68,12 +66,10 @@ public class PluginMessage {
         } else if (this.title != null && this.title.isEnabled()) {
             this.title.send(receiver, data);
         } else {
-            LogUtil.warning("getting here 5");
             for (String line : this.text) {
                 if (placeholders != null && data != null) for (int i = 0; i < this.placeholders.size(); i++) {
                     line = line.replace(this.placeholders.get(i), data.get(i));
                 }
-                LogUtil.warning("getting here");
                 receiver.sendMessage(ColorUtil.colorize(line));
             }
         }

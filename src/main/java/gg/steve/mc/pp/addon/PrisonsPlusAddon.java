@@ -30,7 +30,7 @@ public abstract class PrisonsPlusAddon implements Loadable {
     public void register() {
         this.onLoad();
         if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> CommandManager.getInstance().registerCommand(command));
-        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> EventManager..registerListener(listener));
+        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> EventManager.getInstance().registerListener(listener));
     }
 
     public void unregister() {

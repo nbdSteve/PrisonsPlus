@@ -2,6 +2,9 @@ package gg.steve.mc.pp.cmd;
 
 import gg.steve.mc.pp.cmd.exception.AliasAlreadyRegisteredException;
 import gg.steve.mc.pp.permission.Permission;
+import gg.steve.mc.pp.permission.PermissionManager;
+import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
+import gg.steve.mc.pp.utility.LogUtil;
 import lombok.Data;
 import org.bukkit.command.CommandSender;
 
@@ -10,17 +13,24 @@ import java.util.List;
 
 @Data
 public abstract class AbstractSubCommand {
-    private AbstractCommand parent;
-    private String command;
+    private final AbstractCommand parent;
+    private final String command;
     private Permission permission;
-    private int minArgLength, maxArgLength;
+    private final int minArgLength, maxArgLength;
     private boolean isNoArgCommand;
     private List<String> aliases;
 
-    public AbstractSubCommand(AbstractCommand parent, String command, Permission permission, int minArgLength, int maxArgLength) {
+    public AbstractSubCommand(AbstractCommand parent, String command, String permissionKey, int minArgLength, int maxArgLength) {
         this.parent = parent;
         this.command = command;
-        this.permission = permission;
+        try {
+            this.permission = PermissionManager.getInstance().getPermissionByKey(permissionKey);
+        } catch (PermissionNotFoundException e) {
+            LogUtil.warning(e.getDebugMessage());
+            LogUtil.warning("Setting permission for command, " + this.command + " to default (no permission required)!");
+            this.permission = PermissionManager.getInstance().getDefaultPermission();
+            e.printStackTrace();
+        }
         this.minArgLength = minArgLength;
         this.maxArgLength = maxArgLength;
         if (this.minArgLength == 0) this.isNoArgCommand = true;
