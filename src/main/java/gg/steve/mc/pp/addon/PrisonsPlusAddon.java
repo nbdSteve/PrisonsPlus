@@ -1,10 +1,10 @@
 package gg.steve.mc.pp.addon;
 
-import gg.steve.mc.pp.PrisonsPlusPlugin;
+import gg.steve.mc.pp.SPlugin;
+import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.manager.Loadable;
 import lombok.Data;
 import org.bukkit.Bukkit;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
@@ -15,23 +15,20 @@ import java.util.Map;
 @Data
 public abstract class PrisonsPlusAddon implements Loadable {
     private final String identifier;
-    private final PrisonsPlusPlugin prisonsPlusPlugin;
+    private final SPlugin sPlugin;
     private String name;
     private List<Listener> listeners;
-    private Map<String, TabCompleter> commands;
+    private Map<String, AbstractCommand> commands;
 
     public PrisonsPlusAddon(String identifier) {
         this.identifier = identifier;
-        this.prisonsPlusPlugin = PrisonsPlusPlugin.getInstance();
-        this.listeners = new ArrayList<>();
-        this.commands = new HashMap<>();
-        this.name = name;
+        this.sPlugin = SPlugin.getSPluginInstance();
     }
 
     public void register() {
         this.onLoad();
-        this.commands.forEach((command, completer) -> this.getPrisonsPlusPlugin().getCommand(command).setTabCompleter(completer));
-        this.listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, this.getPrisonsPlusPlugin()));
+        if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> this.sPlugin.getCommandManager().registerCommand(command));
+        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> this.sPlugin.getEventManager().registerListener(listener));
     }
 
     public void unregister() {
@@ -40,28 +37,40 @@ public abstract class PrisonsPlusAddon implements Loadable {
         if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.clear();
     }
 
-    public void addCommand(String command, TabCompleter completer) {
+    public boolean registerCommand(AbstractCommand command) {
         if (this.commands == null) this.commands = new HashMap<>();
-        this.commands.put(command, completer);
+        if (this.commands.containsKey(command.getName())) return false;
+        return this.commands.put(command.getName(), command) != null;
     }
 
-    public void removeCommand(String command) {
-        if (this.commands == null || this.commands.isEmpty()) return;
-        this.commands.remove(command);
+    public boolean unregisterCommand(String command) {
+        if (this.commands == null || this.commands.isEmpty()) return true;
+        if (!this.commands.containsKey(command)) return false;
+        return this.commands.remove(command) != null;
     }
 
-    public void addListener(Listener listener) {
+    public boolean registerListener(Listener listener) {
         if (this.listeners == null) this.listeners = new ArrayList<>();
-        if (this.listeners.contains(listener)) return;
-        this.listeners.add(listener);
+        if (this.listeners.contains(listener)) return false;
+        return this.listeners.add(listener);
     }
 
-    public void removeListener(Listener listener) {
-        if (this.listeners == null || this.listeners.isEmpty()) return;
-        this.listeners.remove(listener);
+    public boolean unregisterListener(Listener listener) {
+        if (this.listeners == null || this.listeners.isEmpty()) return true;
+        return this.listeners.remove(listener);
     }
 
     public abstract String getVersion();
 
     public abstract String getAuthor();
+
+    public abstract void registerCommands();
+
+    public abstract void registerEvents();
+
+    public abstract void registerFiles();
+
+    public abstract void registerGuis();
+
+    public abstract void registerClickActions();
 }

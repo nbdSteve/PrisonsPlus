@@ -1,28 +1,29 @@
 package gg.steve.mc.pp.db.sql;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.DatabaseImplementation;
-import gg.steve.mc.pp.sapi.utils.LogUtil;
-import org.bukkit.plugin.java.JavaPlugin;
+import gg.steve.mc.pp.utility.LogUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@DatabaseInjectorClass
 public class SQLiteInjector extends AbstractDatabaseInjector {
 
-    public SQLiteInjector(JavaPlugin plugin) {
-        super(DatabaseImplementation.SQLITE, plugin);
+    public SQLiteInjector(SPlugin sPlugin) {
+        super(DatabaseImplementation.SQLITE, sPlugin);
     }
 
     @Override
     public void connect() {
         try {
-            File dataFolder = new File(super.getPlugin().getDataFolder(), "data");
+            File dataFolder = new File(super.getSPlugin().getPlugin().getDataFolder(), "data");
             if (!dataFolder.exists()) {
                 dataFolder.mkdirs();
             }
-            File folder = new File(super.getPlugin().getDataFolder() + File.separator + "data", super.getDatabase() + ".db");
+            File folder = new File(super.getSPlugin().getPlugin().getDataFolder() + File.separator + "data", super.getDatabase() + ".db");
             if (!folder.exists()) {
                 try {
                     folder.createNewFile();

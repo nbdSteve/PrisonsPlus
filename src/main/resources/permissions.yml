@@ -1,0 +1,4 @@
+file-type: 'permission'
+
+command:
+  reload: 'p+.cmd.reload'
