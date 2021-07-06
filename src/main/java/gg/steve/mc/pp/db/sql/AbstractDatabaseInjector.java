@@ -1,9 +1,9 @@
 package gg.steve.mc.pp.db.sql;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.DatabaseImplementation;
-import gg.steve.mc.pp.sapi.yml.Files;
+import gg.steve.mc.pp.file.FileManager;
 import lombok.Data;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 
@@ -11,19 +11,19 @@ import java.sql.Connection;
 public abstract class AbstractDatabaseInjector {
     private Connection connection;
     private final DatabaseImplementation implementation;
-    private final JavaPlugin plugin;
+    private final SPlugin sPlugin;
     private final String host, port, database, user, password;
     private final boolean ssl;
 
-    public AbstractDatabaseInjector(DatabaseImplementation implementation, JavaPlugin plugin) {
+    public AbstractDatabaseInjector(DatabaseImplementation implementation, SPlugin sPlugin) {
         this.implementation = implementation;
-        this.plugin = plugin;
-        this.host = Files.CONFIG.get().getString("database.host");
-        this.port = Files.CONFIG.get().getString("database.port");
-        this.database = Files.CONFIG.get().getString("database.database");
-        this.user = Files.CONFIG.get().getString("database.username");
-        this.password = Files.CONFIG.get().getString("database.password");
-        this.ssl = Files.CONFIG.get().getBoolean("database.ssl");
+        this.sPlugin = sPlugin;
+        this.host = FileManager.CoreFiles.CONFIG.get().getString("database.host");
+        this.port = FileManager.CoreFiles.CONFIG.get().getString("database.port");
+        this.database = FileManager.CoreFiles.CONFIG.get().getString("database.database");
+        this.user = FileManager.CoreFiles.CONFIG.get().getString("database.username");
+        this.password = FileManager.CoreFiles.CONFIG.get().getString("database.password");
+        this.ssl =FileManager.CoreFiles.CONFIG.get().getBoolean("database.ssl");
     }
 
     public abstract void connect();

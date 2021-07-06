@@ -1,0 +1,95 @@
+file-type: 'message'
+
+invalid-command:
+  unique-name: 'invalid-command'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7The command you entered is invalid.'
+
+invalid-command-arguments:
+  unique-name: 'invalid-command-arguments'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7The command arguments you entered are incorrect.'
+
+no-permission:
+  unique-name: 'no-permission'
+  placeholders:
+    - '{node}'
+  action-bar: 'false'
+  title:
+    enabled: 'true'
+    text: '&c&lNO PERMISSION!'
+    subtitle: '&7Node required: &4&l{node}'
+    fade-in: 10
+    stay: 20
+    fade-out: 20
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7You do not have permission (&6{node}&7) to use that.'
+
+addon-already-registered:
+  unique-name: 'addon-already-registered'
+  placeholders:
+    - '{identifier}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7That addon with identifier: &6{identifier}&7, is already registered with the plugin.'
+
+error-registering-addon:
+  unique-name: 'error-registering-addon'
+  placeholders:
+    - '{identifier}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7An error occurred trying to register the addon with identifier: &6{identifier}&7, check your console for any errors.'
+
+addon-already-unregistered:
+  unique-name: 'addon-already-unregistered'
+  placeholders:
+    - '{identifier}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7That addon with identifier: &6{identifier}&7, is already unregistered with the plugin.'
+
+error-unregistering-addon:
+  unique-name: 'error-unregistering-addon'
+  placeholders:
+    - '{identifier}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7An error occurred trying to unregister the addon with identifier: &6{identifier}&7, check your console for any errors.'
+
+error-reloading-addon:
+  unique-name: 'error-reloading-addon'
+  placeholders:
+    - '{identifier}'
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7An error occurred trying to reload the addon with identifier: &6{identifier}&7, check your console for any errors.'
+
+addon-not-found:
+  unique-name: 'addon-not-found'
+  placeholders:
+    - '{identifier}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7Unable to find the addon with identifier: &6{identifier}&7, check your identifier.'

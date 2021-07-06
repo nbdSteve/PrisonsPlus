@@ -1,12 +1,12 @@
 package gg.steve.mc.pp.db;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.sql.AbstractDatabaseInjector;
 import gg.steve.mc.pp.manager.AbstractManager;
-import gg.steve.mc.pp.sapi.utils.LogUtil;
+import gg.steve.mc.pp.utility.LogUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,18 +17,18 @@ import java.sql.SQLException;
 @Data
 public abstract class AbstractSQLHandler extends AbstractManager implements DatabaseHandler {
     private final AbstractDatabaseInjector injector;
-    private final JavaPlugin plugin;
+    private final SPlugin sPlugin;
 
-    public AbstractSQLHandler(DatabaseImplementation implementation, JavaPlugin plugin) {
-        this.injector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, plugin);
-        this.plugin = plugin;
+    public AbstractSQLHandler(DatabaseImplementation implementation, SPlugin sPlugin) {
+        this.injector = DatabaseImplementation.getInjectorInstanceForImplementation(implementation, sPlugin);
+        this.sPlugin = sPlugin;
     }
 
     @Override
     public ResultSet query(String sql) {
         Connection connection = injector.getConnection();
         ResultSet result = null;
-        synchronized (plugin) {
+        synchronized (this.sPlugin.getPlugin()) {
             try {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 result = statement.executeQuery();
@@ -43,7 +43,7 @@ public abstract class AbstractSQLHandler extends AbstractManager implements Data
     @Override
     public void update(String sql) {
         Connection connection = injector.getConnection();
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(this.sPlugin.getPlugin(), () -> {
             try {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.executeUpdate();
@@ -57,7 +57,7 @@ public abstract class AbstractSQLHandler extends AbstractManager implements Data
     @Override
     public void delete(String sql) {
         Connection connection = injector.getConnection();
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(this.sPlugin.getPlugin(), () -> {
             try {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.executeUpdate();
@@ -71,7 +71,7 @@ public abstract class AbstractSQLHandler extends AbstractManager implements Data
     @Override
     public void insert(String sql) {
         Connection connection = injector.getConnection();
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(this.sPlugin.getPlugin(), () -> {
             try {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.executeUpdate();
@@ -85,7 +85,7 @@ public abstract class AbstractSQLHandler extends AbstractManager implements Data
     @Override
     public void execute(String sql) {
         Connection connection = injector.getConnection();
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(this.sPlugin.getPlugin(), () -> {
             try {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.execute();

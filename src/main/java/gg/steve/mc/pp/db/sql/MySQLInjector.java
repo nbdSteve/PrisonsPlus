@@ -1,16 +1,17 @@
 package gg.steve.mc.pp.db.sql;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.DatabaseImplementation;
-import gg.steve.mc.pp.sapi.utils.LogUtil;
-import org.bukkit.plugin.java.JavaPlugin;
+import gg.steve.mc.pp.utility.LogUtil;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@DatabaseInjectorClass
 public class MySQLInjector extends AbstractDatabaseInjector {
 
-    public MySQLInjector(JavaPlugin plugin) {
-        super(DatabaseImplementation.MYSQL, plugin);
+    public MySQLInjector(SPlugin sPlugin) {
+        super(DatabaseImplementation.MYSQL, sPlugin);
     }
 
     @Override

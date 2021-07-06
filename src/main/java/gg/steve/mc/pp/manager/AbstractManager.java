@@ -2,44 +2,42 @@ package gg.steve.mc.pp.manager;
 
 import lombok.Data;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Data
 public abstract class AbstractManager implements Loadable {
-    private static List<AbstractManager> managers;
+    private static Map<String, AbstractManager> managers;
 
-    private static void initialiseManagerList() {
-        if (managers == null) managers = new LinkedList<>();
+    private static void initialiseManagerMap() {
+        if (managers == null) managers = new LinkedHashMap<>();
     }
 
-    private static void addManager(AbstractManager manager) {
-        initialiseManagerList();
-        if (managers.contains(manager)) return;
-        managers.add(manager);
+    public static void registerManager(AbstractManager manager) {
+        initialiseManagerMap();
+        if (managers.containsKey(manager.getManagerName())) return;
+        managers.put(manager.getManagerName(), manager);
     }
 
     public static void loadManagers() {
         if (managers == null || managers.isEmpty()) return;
-        for (AbstractManager manager : managers) {
+        for (AbstractManager manager : managers.values()) {
             manager.onLoad();
         }
     }
 
     public static void shutdownManagers() {
         if (managers == null || managers.isEmpty()) return;
+        List<AbstractManager> reverse = new LinkedList<>(managers.values());
         for (int i = managers.size() - 1; i >= 0; i--) {
-            managers.get(i).onShutdown();
+            reverse.get(i).onShutdown();
         }
         managers.clear();
     }
 
-    public static List<AbstractManager> getActiveManagers() {
-        initialiseManagerList();
-        return managers;
+    public static Collection<AbstractManager> getActiveManagers() {
+        initialiseManagerMap();
+        return managers.values();
     }
 
-    public AbstractManager() {
-        addManager(this);
-    }
+    protected abstract String getManagerName();
 }

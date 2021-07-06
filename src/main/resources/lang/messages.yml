@@ -1,0 +1,65 @@
+file-type: 'message'
+
+help:
+  unique-name: 'help'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7Default help message for Prisons+, you should change this!'
+
+reload:
+  unique-name: 'reload'
+  placeholders:
+    - '{status}'
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d]'
+    - ' &7- &fReload Status: &a&l{status}'
+    - ' &7- &fAddons Loaded: &e&l{number of addons}'
+
+register-addon:
+  unique-name: 'register-addon'
+  placeholders:
+    - '{identifier}'
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7You have registered the addon with identifier: &6{identifier}&7, you have &6{number of addons} &7addons registered.'
+
+unregister-addon:
+  unique-name: 'unregister-addon'
+  placeholders:
+    - '{identifier}'
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7You have unregistered the addon with identifier: &6{identifier}&7, you have &6{number of addons} &7addons registered.'
+
+reload-single-addon:
+  unique-name: 'reload-single-addon'
+  placeholders:
+    - '{identifier}'
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7You have reloaded the addon with identifier: &6{identifier}&7, you have &6{number of addons} &7addons registered.'
+
+reload-all-addons:
+  unique-name: 'reload-all-addons'
+  placeholders:
+    - '{number of addons}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7You have reloaded all of the registered addons, you have &6{number of addons} &7addons registered.'

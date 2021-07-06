@@ -1,0 +1,7 @@
+file-type: 'permission'
+
+command:
+  prison: 'prisons.cmd.prison'
+  reload: 'prisons.cmd.reload'
+  help: 'prisons.cmd.help'
+  addon: 'prisons.cmd.addon'
