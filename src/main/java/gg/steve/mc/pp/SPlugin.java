@@ -1,7 +1,8 @@
 package gg.steve.mc.pp;
 
-import gg.steve.mc.pp.addon.PrisonsAddonManager;
+import gg.steve.mc.pp.addon.PrisonAddonManager;
 import gg.steve.mc.pp.cmd.CommandManager;
+import gg.steve.mc.pp.cmd.listener.TabCompleteListener;
 import gg.steve.mc.pp.db.SQLDatabaseHandler;
 import gg.steve.mc.pp.economy.EconomyManager;
 import gg.steve.mc.pp.event.EventManager;
@@ -10,7 +11,6 @@ import gg.steve.mc.pp.gui.GuiManager;
 import gg.steve.mc.pp.gui.action.InventoryClickActionManager;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.message.MessageManager;
-import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.placeholder.PlaceholderManager;
 import gg.steve.mc.pp.utility.LogUtil;
@@ -36,7 +36,7 @@ public class SPlugin {
     private final GuiManager guiManager;
     private final FileManager fileManager;
     // Custom manager classes
-    private final PrisonsAddonManager addonManager;
+    private final PrisonAddonManager addonManager;
     // Any other handler classes which are not managers
     private final SQLDatabaseHandler sqlDatabaseHandler;
 
@@ -44,7 +44,7 @@ public class SPlugin {
         instance = this;
         this.plugin = plugin;
         // Name
-        this.pluginName = "PrisonsPlus";
+        this.pluginName = this.plugin.getName();
         // register managers
         this.messageManager = new MessageManager();
         this.economyManager = new EconomyManager(instance);
@@ -56,11 +56,16 @@ public class SPlugin {
         this.permissionManager = new PermissionManager();
         this.commandManager = new CommandManager(instance);
         // Custom manager classes
-        this.addonManager = new PrisonsAddonManager(instance);
+        this.addonManager = new PrisonAddonManager(instance);
         // load manager classes
         AbstractManager.loadManagers();
         // set up remaining core
         this.sqlDatabaseHandler = new SQLDatabaseHandler(instance);
+        this.doLoadDebug();
+    }
+
+    public void enable() {
+        AbstractManager.loadManagers();
     }
 
     public void shutdown() {
@@ -77,11 +82,29 @@ public class SPlugin {
 //        }));
 //    }
 
+    public void reload() {
+        shutdown();
+    }
+
     public static void disable() {
         Bukkit.getPluginManager().disablePlugin(SPlugin.getSPluginInstance().getPlugin());
     }
 
     public static SPlugin getSPluginInstance() {
         return instance;
+    }
+
+    private void doLoadDebug() {
+        this.eventManager.registerListener(new TabCompleteListener());
+        LogUtil.severe("<-------------------------------=+=-------------------------------->");
+        for(String line : FileManager.CoreFiles.CONFIG.get().getStringList("logo")){
+            LogUtil.severe(line);
+        }
+        LogUtil.severe(" ");
+        LogUtil.severe("Messages loaded: " + this.messageManager.getMessages().size());
+        LogUtil.severe("Files loaded: " + this.fileManager.getFiles().size());
+        LogUtil.severe("Addons loaded: " + this.addonManager.getRegisteredAddons().size());
+        LogUtil.severe("SQL Connected: " + (this.sqlDatabaseHandler.getInjector().getConnection() != null));
+        LogUtil.severe("<-------------------------------=+=-------------------------------->");
     }
 }

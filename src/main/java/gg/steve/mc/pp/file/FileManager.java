@@ -6,12 +6,14 @@ import gg.steve.mc.pp.file.types.*;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.LogUtil;
+import lombok.Data;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @ManagerClass
 public class FileManager extends AbstractManager {
     private static FileManager instance;
@@ -33,6 +35,8 @@ public class FileManager extends AbstractManager {
         CONFIG("prisons+.yml"),
         // permissions
         PERMISSIONS("permissions.yml"),
+        // addon data
+        ADDON_DATA("data" + File.separator + "addons.yml"),
         // lang
         MESSAGES("lang" + File.separator + "messages.yml"),
         DEBUG("lang" + File.separator + "debug.yml");

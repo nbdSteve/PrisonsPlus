@@ -9,7 +9,6 @@ import gg.steve.mc.pp.utility.LogUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractCommand extends Command implements PluginIdentifiableCommand, TabCompleter {
+public abstract class AbstractCommand extends Command implements PluginIdentifiableCommand {
     private Permission permission;
     private final String name;
     private Map<String, AbstractSubCommand> subCommands;
@@ -65,7 +64,7 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
                     return true;
                 }
             }
-            MessageManager.getInstance().sendMessage("invalid-command", sender);
+            this.doInvalidCommandMessage(sender);
         }
         return true;
     }
@@ -73,6 +72,17 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
     @Override
     public Plugin getPlugin() {
         return SPlugin.getSPluginInstance().getPlugin();
+    }
+
+
+    public List<String> onTabComplete(CommandSender executor, String[] arguments) {
+        List<String> options = new ArrayList<>();
+        if (this.getSubCommands() != null && !this.getSubCommands().isEmpty()) {
+            for (AbstractSubCommand subCommand : this.getSubCommands().values()) {
+                options.add(subCommand.getCommand());
+            }
+        }
+        return options;
     }
 
     public abstract void registerAllSubCommands();
@@ -106,14 +116,11 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
         return subCommands;
     }
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List<String> options = new ArrayList<>();
-        if (this.subCommands != null && !this.subCommands.isEmpty()) {
-            for (AbstractSubCommand subCommand : this.subCommands.values()) {
-                options.add(subCommand.getCommand());
-            }
-        }
-        return options;
+    public void doInvalidCommandMessage(CommandSender executor) {
+        MessageManager.getInstance().sendMessage("invalid-command", executor);
+    }
+
+    public void doInvalidArgumentsMessage(CommandSender executor) {
+        MessageManager.getInstance().sendMessage("invalid-command-arguments", executor);
     }
 }
