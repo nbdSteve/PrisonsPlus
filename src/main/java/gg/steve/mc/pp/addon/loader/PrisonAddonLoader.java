@@ -1,7 +1,7 @@
 package gg.steve.mc.pp.addon.loader;
 
 import gg.steve.mc.pp.SPlugin;
-import gg.steve.mc.pp.addon.PrisonsAddonManager;
+import gg.steve.mc.pp.addon.PrisonAddonManager;
 import gg.steve.mc.pp.addon.PrisonsPlusAddon;
 import gg.steve.mc.pp.utility.FileClassUtil;
 import gg.steve.mc.pp.utility.LogUtil;
@@ -10,10 +10,10 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-public class PrisonsAddonLoader {
+public class PrisonAddonLoader {
     private final SPlugin sPlugin;
 
-    public PrisonsAddonLoader(SPlugin sPlugin) {
+    public PrisonAddonLoader(SPlugin sPlugin) {
         this.sPlugin = sPlugin;
         File addonsFolder = new File(this.sPlugin.getPlugin().getDataFolder(), "addons");
         if (!addonsFolder.exists()) {
@@ -27,7 +27,7 @@ public class PrisonsAddonLoader {
         if (classes == null || classes.isEmpty()) return;
         classes.forEach(klass -> {
             PrisonsPlusAddon addon = this.createAddonInstance(klass);
-            this.registerAddon(addon);
+            if (PrisonAddonManager.getInstance().isUnregistered(addon.getIdentifier())) this.registerAddon(addon);
         });
     }
 
@@ -44,7 +44,7 @@ public class PrisonsAddonLoader {
 
     public void registerAddon(PrisonsPlusAddon addon) {
         addon.register();
-        PrisonsAddonManager.getInstance().registerAddon(addon);
+        PrisonAddonManager.getInstance().registerAddon(addon);
     }
 
     private PrisonsPlusAddon createAddonInstance(Class<?> klass) {
