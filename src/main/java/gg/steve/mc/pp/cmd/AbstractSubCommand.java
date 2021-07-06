@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.cmd;
 
 import gg.steve.mc.pp.cmd.exception.AliasAlreadyRegisteredException;
+import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
@@ -38,11 +39,11 @@ public abstract class AbstractSubCommand {
 
     public void execute(CommandSender executor, String[] arguments) {
         if (!this.hasPermission(executor)) {
-
+            MessageManager.getInstance().sendMessage("no-permission", executor, this.permission.getPermission());
             return;
         }
         if (!this.isValidArgs(arguments)) {
-
+            this.getParent().doInvalidArgumentsMessage(executor);
             return;
         }
         this.run(executor, arguments);
@@ -50,13 +51,18 @@ public abstract class AbstractSubCommand {
 
     public abstract void run(CommandSender executor, String[] arguments);
 
-    public boolean registerAlias(String alias) throws AliasAlreadyRegisteredException {
+    public boolean registerAlias(String alias) {
         if (this.aliases == null) this.aliases = new ArrayList<>();
         if (this.aliases.contains(alias)) return false;
         // Stops people from adding duplicate aliases
         for (AbstractSubCommand subCommand : this.parent.getSubCommands().values()) {
             if (subCommand.getCommand().equalsIgnoreCase(this.command)) continue;
-            if (subCommand.getAliases().contains(alias)) throw new AliasAlreadyRegisteredException(alias, this);
+            try {
+                if (subCommand.getAliases().contains(alias)) throw new AliasAlreadyRegisteredException(alias, this);
+            } catch (AliasAlreadyRegisteredException e) {
+                LogUtil.warning(e.getDebugMessage());
+                e.printStackTrace();
+            }
         }
         return this.aliases.add(alias);
     }
@@ -67,6 +73,7 @@ public abstract class AbstractSubCommand {
     }
 
     public boolean hasPermission(CommandSender executor) {
+        if (this.permission == null) return true;
         return executor.hasPermission(this.permission.getPermission());
     }
 

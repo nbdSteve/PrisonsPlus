@@ -17,4 +17,8 @@ public class LogUtil {
     public static void warning(String message) {
         plugin.getLogger().warning(message);
     }
+
+    public static void severe(String message) {
+        plugin.getLogger().severe(message);
+    }
 }

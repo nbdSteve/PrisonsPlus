@@ -1,10 +1,11 @@
 package gg.steve.mc.pp.cmd;
 
 import gg.steve.mc.pp.SPlugin;
-import gg.steve.mc.pp.cmd.prison.PrisonsCommand;
+import gg.steve.mc.pp.cmd.prison.PrisonCommand;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.LogUtil;
+import lombok.Data;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.SimplePluginManager;
 
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Data
 @ManagerClass
 public class CommandManager extends AbstractManager {
     private static CommandManager instance;
@@ -45,7 +47,7 @@ public class CommandManager extends AbstractManager {
             e.printStackTrace();
         }
         // Register plugin commands
-        this.registerCommand(new PrisonsCommand());
+        this.registerCommand(new PrisonCommand());
     }
 
     @Override
@@ -68,7 +70,9 @@ public class CommandManager extends AbstractManager {
         if (this.commands == null) this.commands = new HashMap<>();
         if (this.commands.containsKey(command.getName())) return false;
         this.commands.put(command.getName(), command);
-        return this.commandMap.register(this.sPlugin.getPluginName(), command);
+        this.commandMap.register(this.sPlugin.getPluginName(), command);
+//        this.sPlugin.getPlugin().getCommand(command.getName()).setTabCompleter(command);
+        return true;
     }
 
     public boolean unregisterCommand(String command) {
