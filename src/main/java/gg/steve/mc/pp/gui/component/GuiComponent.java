@@ -5,7 +5,7 @@ import gg.steve.mc.pp.gui.Clickable;
 import gg.steve.mc.pp.gui.action.AbstractInventoryClickAction;
 import gg.steve.mc.pp.gui.action.InventoryClickActionManager;
 import gg.steve.mc.pp.gui.exception.InventoryClickActionNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,10 +25,10 @@ public class GuiComponent implements Clickable {
         this.section = section;
         this.slot = slot;
         try {
-            this.clickAction = InventoryClickActionManager.getInstance().getClickActionByUniqueName(section.getString("action"));
+            this.clickAction = InventoryClickActionManager.getInstance().getClickActionByUniqueName(section.getString("action").split(":")[0]);
         } catch (InventoryClickActionNotFoundException e) {
             this.item = new ItemStack(Material.STONE);
-            LogUtil.warning(e.getDebugMessage());
+            Log.warning(e.getDebugMessage());
             e.printStackTrace();
         }
     }

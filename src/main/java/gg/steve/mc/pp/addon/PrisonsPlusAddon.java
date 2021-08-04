@@ -17,7 +17,6 @@ import java.util.Map;
 public abstract class PrisonsPlusAddon implements Loadable {
     private final String identifier;
     private final SPlugin sPlugin;
-    private String name;
     private List<Listener> listeners;
     private Map<String, AbstractCommand> commands;
 
@@ -66,6 +65,8 @@ public abstract class PrisonsPlusAddon implements Loadable {
     public abstract String getVersion();
 
     public abstract String getAuthor();
+
+    public abstract String getAddonName();
 
     public abstract void registerCommands();
 

@@ -94,7 +94,7 @@ public class FileClassUtil {
                                 for (int i = 0; i < folders.length; i++) {
                                     if (folders[i].endsWith(".yml")) {
                                         file = new File(plugin.getDataFolder() + File.separator + dataFolderName + File.separator + path, folders[i]);
-                                        if (!file.exists()) file.createNewFile();
+//                                        if (!file.exists()) file.createNewFile();
                                     } else {
 //                                        LogUtil.warning(path.toString());
                                         File dir = new File(plugin.getDataFolder() + File.separator + dataFolderName + File.separator + path);
@@ -104,9 +104,10 @@ public class FileClassUtil {
                                 }
                             } else {
                                 file = new File(plugin.getDataFolder() + File.separator + dataFolderName, name);
-                                if (!file.exists()) file.createNewFile();
+//                                if (!file.exists()) file.createNewFile();
                             }
-                            if (file != null) {
+                            if (file != null && !file.exists()) {
+                                file.createNewFile();
                                 FileOutputStream output = new FileOutputStream(file);
                                 int length;
                                 byte[] bytes = new byte[1024];

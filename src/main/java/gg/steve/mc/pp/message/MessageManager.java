@@ -4,12 +4,11 @@ import gg.steve.mc.pp.file.types.MessagePluginFile;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.message.exception.PluginMessageNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +83,7 @@ public class MessageManager extends AbstractManager {
         try {
             message = this.getMessageByKey(messageKey);
         } catch (PluginMessageNotFoundException e) {
-            LogUtil.warning(e.getDebugMessage());
+            Log.warning(e.getDebugMessage());
             e.printStackTrace();
         }
         return message;

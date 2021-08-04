@@ -3,11 +3,8 @@ package gg.steve.mc.pp.message;
 import gg.steve.mc.pp.file.types.MessagePluginFile;
 import gg.steve.mc.pp.message.configurations.TitleMessageConfiguration;
 import gg.steve.mc.pp.utility.ColorUtil;
-import gg.steve.mc.pp.utility.LogUtil;
 import gg.steve.mc.pp.xseries.messages.ActionBar;
 import lombok.Data;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

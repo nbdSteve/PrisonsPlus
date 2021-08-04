@@ -10,14 +10,17 @@ import java.sql.Connection;
 @Data
 public abstract class AbstractDatabaseInjector {
     private Connection connection;
-    private final DatabaseImplementation implementation;
     private final SPlugin sPlugin;
-    private final String host, port, database, user, password;
-    private final boolean ssl;
+    private final DatabaseImplementation implementation;
+    private String host, port, database, user, password;
+    private boolean ssl;
 
     public AbstractDatabaseInjector(DatabaseImplementation implementation, SPlugin sPlugin) {
         this.implementation = implementation;
         this.sPlugin = sPlugin;
+    }
+
+    public void setDatabaseCredentials() {
         this.host = FileManager.CoreFiles.CONFIG.get().getString("database.host");
         this.port = FileManager.CoreFiles.CONFIG.get().getString("database.port");
         this.database = FileManager.CoreFiles.CONFIG.get().getString("database.database");

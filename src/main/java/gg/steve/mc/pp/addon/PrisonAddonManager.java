@@ -6,7 +6,6 @@ import gg.steve.mc.pp.addon.loader.PrisonAddonLoader;
 import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
-import gg.steve.mc.pp.utility.LogUtil;
 import lombok.Data;
 import org.apache.commons.lang.Validate;
 
@@ -41,6 +40,7 @@ public class PrisonAddonManager extends AbstractManager {
     }
 
     public boolean registerAddon(String identifier) {
+        identifier = identifier.toUpperCase(Locale.ROOT);
         if (this.addons == null) this.addons = new HashMap<>();
         if (this.addons.containsKey(identifier.toUpperCase(Locale.ROOT))) return false;
         if (this.unregisteredAddonIdentifiers != null && this.unregisteredAddonIdentifiers.contains(identifier)) {
@@ -60,12 +60,14 @@ public class PrisonAddonManager extends AbstractManager {
     }
 
     public boolean isRegistered(String identifier) {
+        identifier = identifier.toUpperCase(Locale.ROOT);
         if (this.addons == null || this.addons.isEmpty()) return false;
         return this.addons.get(identifier) != null;
     }
 
     public PrisonsPlusAddon getAddon(String identifier) throws PrisonsPlusAddonNotFoundException {
-        if (!isRegistered(identifier)) throw new PrisonsPlusAddonNotFoundException(identifier);
+        identifier = identifier.toUpperCase(Locale.ROOT);
+        if (!isRegistered(identifier) && !isUnregistered(identifier)) throw new PrisonsPlusAddonNotFoundException(identifier);
         return this.addons.get(identifier);
     }
 
@@ -74,6 +76,7 @@ public class PrisonAddonManager extends AbstractManager {
     }
 
     public boolean unregisterAddon(String identifier) {
+        identifier = identifier.toUpperCase(Locale.ROOT);
         if (this.addons == null || this.addons.isEmpty()) return false;
         if (!this.addons.containsKey(identifier)) return false;
         this.addons.get(identifier).unregister();
@@ -111,11 +114,13 @@ public class PrisonAddonManager extends AbstractManager {
     }
 
     public boolean isUnregistered(String identifier) {
+        identifier = identifier.toUpperCase(Locale.ROOT);
         if (this.unregisteredAddonIdentifiers == null || this.unregisteredAddonIdentifiers.isEmpty()) return false;
         return this.unregisteredAddonIdentifiers.contains(identifier);
     }
 
     public boolean reloadAddon(String identifier) {
+        identifier = identifier.toUpperCase(Locale.ROOT);
         if (this.isRegistered(identifier)) {
             if (this.addons == null || this.addons.isEmpty()) return false;
             if (!this.addons.containsKey(identifier)) return false;

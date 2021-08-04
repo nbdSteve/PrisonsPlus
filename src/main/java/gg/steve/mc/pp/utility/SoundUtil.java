@@ -11,7 +11,7 @@ public class SoundUtil {
         if (section.getBoolean(entry + ".sound.enabled")) {
             String sound = section.getString(entry + ".sound.type").toUpperCase();
             if (!XSound.matchXSound(sound).isPresent()) {
-                LogUtil.warning("Unable to find sound, " + sound + ", please check your configuration.");
+                Log.warning("Unable to find sound, " + sound + ", please check your configuration.");
                 return;
             }
             XSound xSound = XSound.matchXSound(sound).get();

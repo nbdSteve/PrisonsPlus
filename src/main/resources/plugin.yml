@@ -1,7 +1,7 @@
 name: PrisonsPlus
 version: ${project.version}
 main: gg.steve.mc.pp.PrisonsPlusPlugin
-api-version: 1.16
+api-version: 1.13
 prefix: Prisons+
 depend: [ Vault ]
 softdepend: [ PlaceholderAPI ]

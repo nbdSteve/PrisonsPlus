@@ -70,6 +70,7 @@ addon-info:
     - '{identifier}'
     - '{name}'
     - '{version}'
+    - '{author}'
   action-bar: 'false'
   title:
     enabled: 'false'

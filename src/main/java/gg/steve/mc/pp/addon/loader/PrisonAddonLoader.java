@@ -4,7 +4,7 @@ import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.addon.PrisonAddonManager;
 import gg.steve.mc.pp.addon.PrisonsPlusAddon;
 import gg.steve.mc.pp.utility.FileClassUtil;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -27,7 +27,7 @@ public class PrisonAddonLoader {
         if (classes == null || classes.isEmpty()) return;
         classes.forEach(klass -> {
             PrisonsPlusAddon addon = this.createAddonInstance(klass);
-            if (PrisonAddonManager.getInstance().isUnregistered(addon.getIdentifier())) this.registerAddon(addon);
+            if (!PrisonAddonManager.getInstance().isUnregistered(addon.getIdentifier())) this.registerAddon(addon);
         });
     }
 
@@ -64,8 +64,8 @@ public class PrisonAddonLoader {
                 }
             }
         } catch (Throwable t) {
-            LogUtil.warning(t.getMessage());
-            LogUtil.warning("Failed to init Prisons+ addon from class: " + klass.getName());
+            Log.warning(t.getMessage());
+            Log.warning("Failed to init Prisons+ addon from class: " + klass.getName());
         }
         return addon;
     }

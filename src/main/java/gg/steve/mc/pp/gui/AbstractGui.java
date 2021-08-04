@@ -10,10 +10,11 @@ import gg.steve.mc.pp.gui.exception.UnableToCreateBukkitInventoryException;
 import gg.steve.mc.pp.gui.listener.GuiEventListener;
 import gg.steve.mc.pp.manager.Loadable;
 import gg.steve.mc.pp.utility.ColorUtil;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.SoundUtil;
 import lombok.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -29,7 +30,7 @@ public abstract class AbstractGui implements Loadable {
     private Inventory inventory;
     private InventoryType type;
     private Map<Integer, GuiComponent> components;
-    private Map<UUID, UUID> viewers;
+    private List<UUID> viewers;
     private AbstractPluginFile configuration;
     private Player owner;
     private SPlugin sPlugin;
@@ -53,12 +54,12 @@ public abstract class AbstractGui implements Loadable {
         this.inventoryName = ColorUtil.colorize(this.configuration.get().getString("inventory-name"));
         this.playersCanTakeItems = this.configuration.get().getBoolean("players-can-take-items");
         this.components = new HashMap<>();
-        this.viewers = new HashMap<>();
+        this.viewers = new ArrayList<>();
         this.listener = new GuiEventListener(this);
         EventManager.getInstance().registerListener(this.listener);
     }
 
-    abstract void refreshInventoryContents();
+    public abstract void refreshInventoryContents();
 
     public abstract AbstractGui createDuplicateGui();
 
@@ -69,12 +70,6 @@ public abstract class AbstractGui implements Loadable {
 
     public void applyComponentsToInventory(Player viewer) {
         if (this.inventory == null) return;
-        try {
-            if (!this.createBukkitInventory()) return;
-        } catch (UnableToCreateBukkitInventoryException e) {
-            LogUtil.warning("Error applying components to the custom gui: " + this.guiUniqueName + ", the plugin was unable to create the Bukkit inventory.");
-            return;
-        }
         this.inventory.clear();
         for (int slot : this.components.keySet()) {
             this.inventory.setItem(slot, this.components.get(slot).getRenderedItem(viewer));
@@ -92,7 +87,7 @@ public abstract class AbstractGui implements Loadable {
             try {
                 replacements.get(i);
             } catch (IndexOutOfBoundsException e) {
-                LogUtil.warning("Unable to perform replacement for placeholder: " + placeholders.get(i) + ", because the replacement does not exist.");
+                Log.warning("Unable to perform replacement for placeholder: " + placeholders.get(i) + ", because the replacement does not exist.");
                 break;
             }
             name.replaceAll(placeholders.get(i), replacements.get(i));
@@ -107,14 +102,17 @@ public abstract class AbstractGui implements Loadable {
     }
 
     public void open(Player player) {
-        if (this.inventory == null) return;
-        try {
-            if (!this.createBukkitInventory()) return;
-        } catch (UnableToCreateBukkitInventoryException e) {
-            LogUtil.warning("Error opening the custom gui: " + this.guiUniqueName + ", the plugin was unable to create the Bukkit inventory.");
-            return;
+        if (this.inventory == null) {
+            try {
+                this.createInventory();
+            } catch (UnableToCreateBukkitInventoryException e) {
+                e.printStackTrace();
+            }
         }
+        this.applyComponentsToInventory(player);
+        this.viewers.add(player.getUniqueId());
         player.openInventory(this.inventory);
+        SoundUtil.playSound(this.configuration.get().getConfigurationSection("sounds"), "open", player);
     }
 
     public void close(Player player) {
@@ -127,12 +125,23 @@ public abstract class AbstractGui implements Loadable {
         if (this.owner != null && this.owner.isOnline()) this.close(this.owner);
     }
 
-    public boolean createBukkitInventory() throws UnableToCreateBukkitInventoryException {
+    public boolean createInventory() throws UnableToCreateBukkitInventoryException {
         try {
             this.type = InventoryType.valueOf(this.configuration.get().getString("type").toUpperCase(Locale.ROOT));
             this.inventory = Bukkit.createInventory(null, this.type, this.inventoryName);
         } catch (Exception e) {
             this.inventory = Bukkit.createInventory(null, this.size, this.inventoryName);
+        }
+        for (String key : this.configuration.get().getKeys(false)) {
+            try {
+                Integer.parseInt(key);
+            } catch (NumberFormatException e) {
+                continue;
+            }
+            ConfigurationSection section = this.configuration.get().getConfigurationSection(key);
+            for (int slot : section.getIntegerList("slots")) {
+                this.setComponentInSlot(slot, new GuiComponent(this, section, slot));
+            }
         }
         return true;
     }
@@ -154,12 +163,13 @@ public abstract class AbstractGui implements Loadable {
     }
 
     @Override
-    public void onLoad() {}
+    public void onLoad() {
+    }
 
     @Override
     public void onShutdown() {
         if (this.viewers != null && !this.viewers.isEmpty()) {
-            this.viewers.keySet().forEach(uuid -> Bukkit.getPlayer(uuid).closeInventory());
+            this.viewers.forEach(uuid -> Bukkit.getPlayer(uuid).closeInventory());
             this.viewers.clear();
         }
         if (this.components != null && !this.components.isEmpty()) this.components.clear();

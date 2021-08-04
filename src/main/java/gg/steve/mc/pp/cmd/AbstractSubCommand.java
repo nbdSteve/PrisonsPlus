@@ -5,7 +5,7 @@ import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.command.CommandSender;
 
@@ -27,8 +27,8 @@ public abstract class AbstractSubCommand {
         try {
             this.permission = PermissionManager.getInstance().getPermissionByKey(permissionKey);
         } catch (PermissionNotFoundException e) {
-            LogUtil.warning(e.getDebugMessage());
-            LogUtil.warning("Setting permission for command, " + this.command + " to default (no permission required)!");
+            Log.warning(e.getDebugMessage());
+            Log.warning("Setting permission for command, " + this.command + " to default (no permission required)!");
             this.permission = PermissionManager.getInstance().getDefaultPermission();
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public abstract class AbstractSubCommand {
             try {
                 if (subCommand.getAliases().contains(alias)) throw new AliasAlreadyRegisteredException(alias, this);
             } catch (AliasAlreadyRegisteredException e) {
-                LogUtil.warning(e.getDebugMessage());
+                Log.warning(e.getDebugMessage());
                 e.printStackTrace();
             }
         }
@@ -83,7 +83,7 @@ public abstract class AbstractSubCommand {
 
     public boolean isExecutor(String command) {
         if (this.command.equalsIgnoreCase(command)) return true;
-        for (String alias : this.aliases) {
+        if (this.aliases != null && !this.aliases.isEmpty()) for (String alias : this.aliases) {
             if (alias.equalsIgnoreCase(command)) return true;
         }
         return false;
