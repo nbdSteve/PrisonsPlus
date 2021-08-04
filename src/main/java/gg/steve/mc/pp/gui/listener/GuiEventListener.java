@@ -3,7 +3,7 @@ package gg.steve.mc.pp.gui.listener;
 import gg.steve.mc.pp.gui.AbstractGui;
 import gg.steve.mc.pp.gui.GuiManager;
 import gg.steve.mc.pp.gui.exception.AbstractGuiNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,9 +21,7 @@ public class GuiEventListener implements Listener {
     @EventHandler
     public void guiItemClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (this.gui.getViewers().containsKey(player.getUniqueId())
-                && this.gui.getViewers().get(player.getUniqueId()).equals(this.gui.getGuiId())
-                && event.getRawSlot() < this.gui.getSize()) {
+        if (this.gui.getViewers().contains(player.getUniqueId()) && event.getRawSlot() < this.gui.getSize()) {
             event.setCancelled(true);
             if (!this.gui.getComponents().containsKey(event.getSlot())) return;
             this.gui.getComponents().get(event.getSlot()).onClick(player);
@@ -33,13 +31,13 @@ public class GuiEventListener implements Listener {
     @EventHandler
     public void guiClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
-        if (this.gui.getViewers().containsKey(player.getUniqueId()) &&
+        if (this.gui.getViewers().contains(player.getUniqueId()) &&
                 this.gui.isHasParentGui()) {
             this.gui.close(player);
             try {
                 GuiManager.getInstance().openGui(player, this.gui.getParentGuiUniqueName());
             } catch (AbstractGuiNotFoundException e) {
-                LogUtil.warning(e.getDebugMessage());
+                Log.warning(e.getDebugMessage());
                 e.printStackTrace();
             }
         } else {

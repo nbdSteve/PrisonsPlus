@@ -6,7 +6,7 @@ import gg.steve.mc.pp.addon.exception.PrisonsPlusAddonNotFoundException;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
 import gg.steve.mc.pp.message.MessageManager;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.command.CommandSender;
 
@@ -60,13 +60,13 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
         String identifier = null;
         PrisonsPlusAddon addon = null;
         if (arguments.length == 3) {
-            identifier = arguments[2].toLowerCase(Locale.ROOT);
+            identifier = arguments[2].toUpperCase(Locale.ROOT);
             try {
-                addon = PrisonAddonManager.getInstance().getAddon(identifier);
-                if (addon == null) throw new PrisonsPlusAddonNotFoundException(identifier);
+                addon = PrisonAddonManager.getInstance().getAddon(identifier.toUpperCase(Locale.ROOT));
+                if (addon == null && !PrisonAddonManager.getInstance().isUnregistered(identifier)) throw new PrisonsPlusAddonNotFoundException(identifier);
             } catch (PrisonsPlusAddonNotFoundException e) {
                 MessageManager.getInstance().sendMessage("addon-not-found", executor, identifier);
-                LogUtil.warning(e.getDebugMessage());
+                Log.warning(e.getDebugMessage());
                 e.printStackTrace();
                 return;
             }
@@ -142,6 +142,10 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
     }
 
     private void info(CommandSender executor, PrisonsPlusAddon addon) {
-        MessageManager.getInstance().sendMessage("addon-info", executor, addon.getIdentifier(), addon.getName(), addon.getVersion(), addon.getAuthor());
+        if (addon == null) {
+            // message to say that its null
+            return;
+        }
+        MessageManager.getInstance().sendMessage("addon-info", executor, addon.getIdentifier(), addon.getAddonName(), addon.getVersion(), addon.getAuthor());
     }
 }

@@ -5,7 +5,7 @@ import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
@@ -28,8 +28,8 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
         try {
             this.permission = PermissionManager.getInstance().getPermissionByKey(permissionKey);
         } catch (PermissionNotFoundException e) {
-            LogUtil.warning(e.getDebugMessage());
-            LogUtil.warning("Setting permission for command, " + name + " to default (no permission required)!");
+            Log.warning(e.getDebugMessage());
+            Log.warning("Setting permission for command, " + name + " to default (no permission required)!");
             this.permission = PermissionManager.getInstance().getDefaultPermission();
             e.printStackTrace();
         }
@@ -73,7 +73,6 @@ public abstract class AbstractCommand extends Command implements PluginIdentifia
     public Plugin getPlugin() {
         return SPlugin.getSPluginInstance().getPlugin();
     }
-
 
     public List<String> onTabComplete(CommandSender executor, String[] arguments) {
         List<String> options = new ArrayList<>();

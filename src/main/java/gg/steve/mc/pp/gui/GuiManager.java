@@ -1,7 +1,9 @@
 package gg.steve.mc.pp.gui;
 
+import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.file.types.GuiPluginFile;
 import gg.steve.mc.pp.gui.exception.AbstractGuiNotFoundException;
+import gg.steve.mc.pp.gui.exception.InvalidConfigurationFileTypeException;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import org.bukkit.entity.Player;
@@ -11,8 +13,8 @@ import java.util.*;
 @ManagerClass
 public class GuiManager extends AbstractManager {
     private static GuiManager instance;
-    private Map<String, AbstractGui> guis;
-    private Map<UUID, List<AbstractGui>> playerGuis;
+    private Map<String, gg.steve.mc.pp.gui.AbstractGui> guis;
+    private Map<UUID, List<gg.steve.mc.pp.gui.AbstractGui>> playerGuis;
 
     public GuiManager() {
         instance = this;
@@ -21,7 +23,7 @@ public class GuiManager extends AbstractManager {
 
     @Override
     public void onLoad() {
-
+        this.playerGuis = new HashMap<>();
     }
 
     @Override
@@ -43,7 +45,19 @@ public class GuiManager extends AbstractManager {
         return guis.containsKey(guiUniqueName);
     }
 
-    public boolean registerGui(AbstractGui gui) {
+    public boolean registerGuiFromFile(GuiPluginFile file) {
+        String unique = file.get().getString("unique-name");
+        gg.steve.mc.pp.gui.AbstractGui gui = null;
+        try {
+            gui = new gg.steve.mc.pp.gui.SGui(unique, file, SPlugin.getSPluginInstance());
+        } catch (InvalidConfigurationFileTypeException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return this.registerGui(gui);
+    }
+
+    public boolean registerGui(gg.steve.mc.pp.gui.AbstractGui gui) {
         if (this.guis == null) this.guis = new HashMap<>();
         if (this.guis.containsKey(gui.getGuiUniqueName())) return false;
         return this.guis.put(gui.getGuiUniqueName(), gui) != null;
@@ -63,7 +77,7 @@ public class GuiManager extends AbstractManager {
     public void openGui(Player player, String guiUniqueName) throws AbstractGuiNotFoundException {
         if (!this.guiExists(guiUniqueName)) throw new AbstractGuiNotFoundException(guiUniqueName);
         if (this.playerGuis.containsKey(player.getUniqueId())) {
-            for (AbstractGui gui : this.playerGuis.get(player.getUniqueId())) {
+            for (gg.steve.mc.pp.gui.AbstractGui gui : this.playerGuis.get(player.getUniqueId())) {
                 if (gui.getGuiUniqueName().equalsIgnoreCase(guiUniqueName)) {
                     gui.open();
                     return;
@@ -72,7 +86,7 @@ public class GuiManager extends AbstractManager {
         } else {
             this.playerGuis.put(player.getUniqueId(), new ArrayList<>());
         }
-        AbstractGui gui = this.guis.get(guiUniqueName).createDuplicateGui();
+        gg.steve.mc.pp.gui.AbstractGui gui = this.guis.get(guiUniqueName).createDuplicateGui();
         gui.setOwner(player);
         this.playerGuis.get(player.getUniqueId()).add(gui);
         gui.open();

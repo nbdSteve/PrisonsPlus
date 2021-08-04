@@ -2,7 +2,7 @@ package gg.steve.mc.pp.economy.providers;
 
 import gg.steve.mc.pp.economy.AbstractEconomyProvider;
 import gg.steve.mc.pp.economy.EconomyType;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.ServerUtil;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -27,7 +27,7 @@ public class VaultEconomyProvider extends AbstractEconomyProvider {
         try {
             this.economy = Bukkit.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         } catch (NullPointerException e) {
-            LogUtil.warning("Tried to hook into Vault but failed, please install an economy plugin e.g. EssentialsX.");
+            Log.warning("Tried to hook into Vault but failed, please install an economy plugin e.g. EssentialsX.");
         }
     }
 
