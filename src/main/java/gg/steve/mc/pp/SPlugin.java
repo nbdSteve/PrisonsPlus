@@ -13,7 +13,7 @@ import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.PermissionManager;
 import gg.steve.mc.pp.placeholder.PlaceholderManager;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +25,8 @@ public class SPlugin {
     private final JavaPlugin plugin;
     // Store the name of the plugin
     private final String pluginName;
+    // Store if the plugin is in debug mode
+    private final boolean debugMode;
     // Store manager instances to be accessed by addons
     private final MessageManager messageManager;
     private final CommandManager commandManager;
@@ -45,7 +47,9 @@ public class SPlugin {
         this.plugin = plugin;
         // Name
         this.pluginName = this.plugin.getName();
-        // register managers
+        // Set debug mode
+        this.debugMode = true;
+        // Register managers
         this.messageManager = new MessageManager();
         this.economyManager = new EconomyManager(instance);
         this.placeholderManager = new PlaceholderManager();
@@ -55,12 +59,12 @@ public class SPlugin {
         this.fileManager = new FileManager(instance);
         this.permissionManager = new PermissionManager();
         this.commandManager = new CommandManager(instance);
+        this.sqlDatabaseHandler = new SQLDatabaseHandler(instance);
         // Custom manager classes
         this.addonManager = new PrisonAddonManager(instance);
         // load manager classes
-        AbstractManager.loadManagers();
+        this.enable();
         // set up remaining core
-        this.sqlDatabaseHandler = new SQLDatabaseHandler(instance);
         this.doLoadDebug();
     }
 
@@ -96,15 +100,15 @@ public class SPlugin {
 
     private void doLoadDebug() {
         this.eventManager.registerListener(new TabCompleteListener());
-        LogUtil.severe("<-------------------------------=+=-------------------------------->");
+        Log.info("<-------------------------------=+=-------------------------------->");
         for(String line : FileManager.CoreFiles.CONFIG.get().getStringList("logo")){
-            LogUtil.severe(line);
+            Log.info(line);
         }
-        LogUtil.severe(" ");
-        LogUtil.severe("Messages loaded: " + this.messageManager.getMessages().size());
-        LogUtil.severe("Files loaded: " + this.fileManager.getFiles().size());
-        LogUtil.severe("Addons loaded: " + this.addonManager.getRegisteredAddons().size());
-        LogUtil.severe("SQL Connected: " + (this.sqlDatabaseHandler.getInjector().getConnection() != null));
-        LogUtil.severe("<-------------------------------=+=-------------------------------->");
+        Log.info(" ");
+        Log.info("Messages loaded: " + this.messageManager.getMessages().size());
+        Log.info("Files loaded: " + this.fileManager.getFiles().size());
+        Log.info("Addons loaded: " + this.addonManager.getRegisteredAddons().size());
+        Log.info("SQL Connected: " + (this.sqlDatabaseHandler.getInjector().getConnection() != null));
+        Log.info("<-------------------------------=+=-------------------------------->");
     }
 }

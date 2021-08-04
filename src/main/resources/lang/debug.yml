@@ -33,6 +33,24 @@ no-permission:
   text:
     - '&d[&5&lPrisons&d] &c&lERROR &7You do not have permission (&6{node}&7) to use that.'
 
+invalid-amount:
+  unique-name: 'invalid-amount'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7Please enter a valid amount, an integer that is greater than 0.'
+
+insufficient:
+  unique-name: 'insufficient'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &c&lERROR &7You do not have sufficient funds to complete that action.'
+
 addon-already-registered:
   unique-name: 'addon-already-registered'
   placeholders:

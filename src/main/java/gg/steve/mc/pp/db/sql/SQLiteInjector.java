@@ -2,7 +2,7 @@ package gg.steve.mc.pp.db.sql;
 
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.db.DatabaseImplementation;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,25 +28,25 @@ public class SQLiteInjector extends AbstractDatabaseInjector {
                 try {
                     folder.createNewFile();
                 } catch (IOException e) {
-                    LogUtil.warning("Error creating the Prisons+ SQLite db file");
+                    Log.warning("Error creating the Prisons+ SQLite db file");
                 }
             }
             Class.forName("org.sqlite.JDBC");
             super.setConnection(DriverManager.getConnection("jdbc:sqlite:" + folder));
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtil.info("There was an error connecting to the Prisons+ SQLite database: " + e.getMessage());
+            Log.debug("There was an error connecting to the Prisons+ SQLite database: " + e.getMessage());
         }
-        LogUtil.info("Successfully connected to the Prisons+ SQLite database.");
+        Log.debug("Successfully connected to the Prisons+ SQLite database.");
     }
 
     @Override
     public void disconnect() {
         try {
             if (super.getConnection() != null && !super.getConnection().isClosed()) super.getConnection().close();
-            LogUtil.info("Successfully disconnected from the Prisons+ SQLite database.");
+            Log.debug("Successfully disconnected from the Prisons+ SQLite database.");
         } catch (SQLException e) {
-            LogUtil.info("There was an error disconnecting from the Prisons+ SQLite database: " + e.getMessage());
+            Log.debug("There was an error disconnecting from the Prisons+ SQLite database: " + e.getMessage());
         }
     }
 }

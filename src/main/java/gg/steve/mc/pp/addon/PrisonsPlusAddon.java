@@ -6,7 +6,6 @@ import gg.steve.mc.pp.cmd.CommandManager;
 import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.manager.Loadable;
 import lombok.Data;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.Map;
 public abstract class PrisonsPlusAddon implements Loadable {
     private final String identifier;
     private final SPlugin sPlugin;
-    private String name;
     private List<Listener> listeners;
     private Map<String, AbstractCommand> commands;
 
@@ -29,8 +27,10 @@ public abstract class PrisonsPlusAddon implements Loadable {
 
     public void register() {
         this.onLoad();
-        if (this.commands != null && !this.commands.isEmpty()) this.commands.forEach((s, command) -> CommandManager.getInstance().registerCommand(command));
-        if (this.listeners != null && !this.listeners.isEmpty()) this.listeners.forEach(listener -> EventManager.getInstance().registerListener(listener));
+        if (this.commands != null && !this.commands.isEmpty())
+            this.commands.forEach((s, command) -> CommandManager.getInstance().registerCommand(command));
+        if (this.listeners != null && !this.listeners.isEmpty())
+            this.listeners.forEach(listener -> EventManager.getInstance().registerListener(listener));
     }
 
     public void unregister() {
@@ -65,6 +65,8 @@ public abstract class PrisonsPlusAddon implements Loadable {
     public abstract String getVersion();
 
     public abstract String getAuthor();
+
+    public abstract String getAddonName();
 
     public abstract void registerCommands();
 

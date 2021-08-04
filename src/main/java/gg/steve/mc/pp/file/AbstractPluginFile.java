@@ -1,7 +1,7 @@
 package gg.steve.mc.pp.file;
 
 import gg.steve.mc.pp.SPlugin;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,14 +44,14 @@ public abstract class AbstractPluginFile {
         try {
             this.configuration.load(file);
         } catch (InvalidConfigurationException e) {
-            LogUtil.warning("The supplied file " + fileName + " is not in the correct format, please check your YAML syntax.");
+            Log.warning("The supplied file " + fileName + " is not in the correct format, please check your YAML syntax.");
             return false;
         } catch (FileNotFoundException e) {
-            LogUtil.warning("The supplied file " + fileName + " was not found, please contact the developer. Disabling the plugin.");
+            Log.warning("The supplied file " + fileName + " was not found, please contact the developer. Disabling the plugin.");
             SPlugin.disable();
             return false;
         } catch (IOException e) {
-            LogUtil.warning("The supplied file " + fileName + " could not be loaded, please contact the developer. Disabling the plugin.");
+            Log.warning("The supplied file " + fileName + " could not be loaded, please contact the developer. Disabling the plugin.");
             SPlugin.disable();
             return false;
         }
@@ -73,7 +73,7 @@ public abstract class AbstractPluginFile {
         try {
             this.configuration.save(file);
         } catch (IOException e) {
-            LogUtil.warning("Error saving the supplied file: " + this.fileName + ", please contact the developer.");
+            Log.warning("Error saving the supplied file: " + this.fileName + ", please contact the developer.");
             return false;
         }
         return true;
@@ -86,14 +86,14 @@ public abstract class AbstractPluginFile {
         try {
             this.configuration.load(file);
         } catch (InvalidConfigurationException e) {
-            LogUtil.warning("The supplied file " + this.fileName + " is not in the correct format, please check your YAML syntax.");
+            Log.warning("The supplied file " + this.fileName + " is not in the correct format, please check your YAML syntax.");
             return false;
         } catch (FileNotFoundException e) {
-            LogUtil.warning("The supplied file " + this.fileName + " was not found, please contact the developer. Disabling the plugin.");
+            Log.warning("The supplied file " + this.fileName + " was not found, please contact the developer. Disabling the plugin.");
             SPlugin.disable();
             return false;
         } catch (IOException e) {
-            LogUtil.warning("The supplied file " + this.fileName + " could not be loaded, please contact the developer. Disabling the plugin.");
+            Log.warning("The supplied file " + this.fileName + " could not be loaded, please contact the developer. Disabling the plugin.");
             SPlugin.disable();
             return false;
         }

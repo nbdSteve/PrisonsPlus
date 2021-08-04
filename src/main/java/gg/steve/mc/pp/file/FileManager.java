@@ -5,7 +5,7 @@ import gg.steve.mc.pp.file.exception.ConfigurationFileNotFoundException;
 import gg.steve.mc.pp.file.types.*;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -104,7 +104,7 @@ public class FileManager extends AbstractManager {
 
     public boolean registerFile(String name, File file, PluginFileType type) {
         if (this.files == null) this.files = new HashMap<>();
-        if (this.files.containsKey(name)) return false;
+        this.files.remove(name);
         switch (type) {
             case GUI:
                 return this.files.put(name, new GuiPluginFile(name, file, this.sPlugin)) != null;
@@ -134,7 +134,7 @@ public class FileManager extends AbstractManager {
                 throw new ConfigurationFileNotFoundException(name);
             }
         } catch (ConfigurationFileNotFoundException e) {
-            LogUtil.warning(e.getDebugMessage());
+            Log.warning(e.getDebugMessage());
             e.printStackTrace();
         }
         return this.files.get(name).get();

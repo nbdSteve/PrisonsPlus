@@ -63,3 +63,19 @@ reload-all-addons:
     enabled: 'false'
   text:
     - '&d[&5&lPrisons&d] &7You have reloaded all of the registered addons, you have &6{number of addons} &7addons registered.'
+
+addon-info:
+  unique-name: 'addon-info'
+  placeholders:
+    - '{identifier}'
+    - '{name}'
+    - '{version}'
+    - '{author}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &7Information about: &e{identifier}'
+    - ' &7- &fName&7: &a&l{name}'
+    - ' &7- &fVersion&7: &e&l{version}'
+    - ' &7- &fAuthor&7: &e&l{author}'

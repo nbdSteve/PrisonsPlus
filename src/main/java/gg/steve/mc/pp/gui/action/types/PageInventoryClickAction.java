@@ -2,7 +2,7 @@ package gg.steve.mc.pp.gui.action.types;
 
 import gg.steve.mc.pp.gui.AbstractGui;
 import gg.steve.mc.pp.gui.action.AbstractInventoryClickAction;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -37,7 +37,7 @@ public class PageInventoryClickAction extends AbstractInventoryClickAction {
         try {
             return Direction.valueOf(actionFromConfig.split(":")[1].toUpperCase(Locale.ROOT));
         } catch (Exception e) {
-            LogUtil.warning("Tried to determine page direction but the entry was invalid, defaulting to doing nothing.");
+            Log.warning("Tried to determine page direction but the entry was invalid, defaulting to doing nothing.");
             return null;
         }
     }

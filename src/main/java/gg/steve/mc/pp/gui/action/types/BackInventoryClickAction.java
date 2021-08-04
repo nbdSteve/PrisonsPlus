@@ -4,7 +4,7 @@ import gg.steve.mc.pp.gui.AbstractGui;
 import gg.steve.mc.pp.gui.GuiManager;
 import gg.steve.mc.pp.gui.action.AbstractInventoryClickAction;
 import gg.steve.mc.pp.gui.exception.AbstractGuiNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -21,7 +21,7 @@ public class BackInventoryClickAction extends AbstractInventoryClickAction {
         try {
             GuiManager.getInstance().openGui(player, gui.getParentGuiUniqueName());
         } catch (AbstractGuiNotFoundException e) {
-            LogUtil.warning(e.getDebugMessage());
+            Log.warning(e.getDebugMessage());
             e.printStackTrace();
         }
     }

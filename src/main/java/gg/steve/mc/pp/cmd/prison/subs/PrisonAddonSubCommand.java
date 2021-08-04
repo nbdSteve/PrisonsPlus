@@ -5,14 +5,12 @@ import gg.steve.mc.pp.addon.PrisonsPlusAddon;
 import gg.steve.mc.pp.addon.exception.PrisonsPlusAddonNotFoundException;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
-import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.message.MessageManager;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 public class PrisonAddonSubCommand extends AbstractSubCommand {
@@ -26,9 +24,10 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
     public enum Argument {
         REGISTER(new String[]{"register", "load"}),
         RELOAD(new String[]{"reload", "r"}),
-        UNREGISTER(new String[]{"unregister", "unload"});
+        UNREGISTER(new String[]{"unregister", "unload"}),
+        INFO(new String[]{"info", "i"});
 
-        private String[] aliases;
+        private final String[] aliases;
 
         Argument(String[] aliases) {
             this.aliases = aliases;
@@ -52,23 +51,26 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
         // p addon reload
         // p addon reload addon
         // p addon unregister addon
+        // p addon info
         Argument argument = Argument.getArgumentFromString(arguments[1]);
         if (argument == null) {
-            this.getParent().doInvalidCommandMessage(executor);
+            this.getParent().doInvalidArgumentsMessage(executor);
             return;
         }
         String identifier = null;
+        PrisonsPlusAddon addon = null;
         if (arguments.length == 3) {
-            identifier = arguments[2].toLowerCase(Locale.ROOT);
+            identifier = arguments[2].toUpperCase(Locale.ROOT);
             try {
-                PrisonAddonManager.getInstance().getAddon(identifier);
-            } catch (PrisonsPlusAddonNotFoundException e){
+                addon = PrisonAddonManager.getInstance().getAddon(identifier.toUpperCase(Locale.ROOT));
+                if (addon == null && !PrisonAddonManager.getInstance().isUnregistered(identifier)) throw new PrisonsPlusAddonNotFoundException(identifier);
+            } catch (PrisonsPlusAddonNotFoundException e) {
                 MessageManager.getInstance().sendMessage("addon-not-found", executor, identifier);
-                LogUtil.warning(e.getDebugMessage());
+                Log.warning(e.getDebugMessage());
                 e.printStackTrace();
                 return;
             }
-        } else if (argument == Argument.REGISTER || argument == Argument.UNREGISTER) {
+        } else if (argument == Argument.REGISTER || argument == Argument.UNREGISTER || argument == Argument.INFO) {
             this.getParent().doInvalidCommandMessage(executor);
         }
         switch (argument) {
@@ -86,6 +88,9 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
                 break;
             case UNREGISTER:
                 this.unregister(executor, identifier);
+                break;
+            case INFO:
+                this.info(executor, addon);
                 break;
             default:
                 this.getParent().doInvalidCommandMessage(executor);
@@ -134,5 +139,13 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
         } else {
             MessageManager.getInstance().sendMessage("unregister-addon", executor, identifier, NumberFormatUtil.format(PrisonAddonManager.getInstance().getRegisteredAddons().size()));
         }
+    }
+
+    private void info(CommandSender executor, PrisonsPlusAddon addon) {
+        if (addon == null) {
+            // message to say that its null
+            return;
+        }
+        MessageManager.getInstance().sendMessage("addon-info", executor, addon.getIdentifier(), addon.getAddonName(), addon.getVersion(), addon.getAuthor());
     }
 }

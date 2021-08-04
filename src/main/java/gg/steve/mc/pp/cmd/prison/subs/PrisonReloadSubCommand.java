@@ -1,5 +1,6 @@
 package gg.steve.mc.pp.cmd.prison.subs;
 
+import gg.steve.mc.pp.PrisonsPlusPlugin;
 import gg.steve.mc.pp.addon.PrisonAddonManager;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
@@ -16,6 +17,9 @@ public class PrisonReloadSubCommand extends AbstractSubCommand {
 
     @Override
     public void run(CommandSender executor, String[] arguments) {
+        PrisonsPlusPlugin.getInstance().onDisable();
+        PrisonsPlusPlugin.getInstance().onLoad();
+        PrisonsPlusPlugin.getInstance().onEnable();
         MessageManager.getInstance().sendMessage("reload", executor, "SUCCESS", NumberFormatUtil.format(PrisonAddonManager.getInstance().getRegisteredAddons().size()));
     }
 }
