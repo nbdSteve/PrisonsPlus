@@ -1,0 +1,6 @@
+file-type: 'permission'
+
+command:
+  token: 'prison.cmd.token'
+  token-help: 'prison.cmd.token-help'
+  token-admin: 'prison.cmd.token.admin'

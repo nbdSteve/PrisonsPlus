@@ -1,0 +1,44 @@
+file-type: 'message'
+
+update-player-token-balance:
+  unique-name: 'update-player-token-balance'
+  placeholders:
+    - '{player}'
+    - '{type}'
+    - '{amount}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - "&d[&5&lPrisons&d] &eTokens&7| You have successfully updated &6{player}&7's &e{type} &7token balance to &a{amount}&7."
+
+get-player-token-balance:
+  unique-name: 'get-player-token-balance'
+  placeholders:
+    - '{player}'
+    - '{type}'
+    - '{amount}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - "&d[&5&lPrisons&d] &eTokens&7| &6{player}&7's &e{type} &7token balance is &a{amount}&7."
+
+reset-all-player-token-balances:
+  unique-name: 'reset-all-player-token-balances'
+  placeholders:
+    - '{player}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - "&d[&5&lPrisons&d] &eTokens&7| You have successfully reset &6{player}&7's entire token account."
+
+tokens-help:
+  unique-name: 'tokens-help'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens&7| Default help message for the tokens module.'
