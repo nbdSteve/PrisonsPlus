@@ -13,7 +13,7 @@ public class TabCompleteListener implements Listener {
         String current = event.getBuffer().substring(1, event.getBuffer().length() - 1);
         String[] arguments = current.split(" ");
         for (AbstractCommand command : CommandManager.getInstance().getCommands().values()) {
-            if (arguments[0].equalsIgnoreCase(current))
+            if (command.getAliases().contains(arguments[0]))
                 event.setCompletions(command.onTabComplete(event.getSender(), arguments));
         }
     }

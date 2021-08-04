@@ -18,5 +18,17 @@ logo:
   - '$$ |      $$ |      $$ |$$$$$$$  |\$$$$$$  |$$ |  $$ |$$$$$$$  |   \__|'
   - '\__|      \__|      \__|\_______/  \______/ \__|  \__|\_______/'
 
-
-
+# xseries config
+test-item:
+  material: 'diamond'
+  amount: '1'
+  damage: '0'
+  name: '&c&lTest Diamond'
+  lore:
+    - ''
+    - '&7This is a test item'
+    - ''
+  enchants:
+    dig_speed: '5'
+  flags:
+  unbreakable: 'true'

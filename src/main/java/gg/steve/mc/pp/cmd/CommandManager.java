@@ -4,7 +4,7 @@ import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.cmd.prison.PrisonCommand;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.SimplePluginManager;
@@ -35,7 +35,7 @@ public class CommandManager extends AbstractManager {
         try {
             map = pluginManager.getClass().getDeclaredField("commandMap");
         } catch (NoSuchFieldException e) {
-            LogUtil.warning("Unable to locate command map class, unable to register custom plugin commands.");
+            Log.warning("Unable to locate command map class, unable to register custom plugin commands.");
             e.printStackTrace();
             return;
         }
@@ -43,7 +43,7 @@ public class CommandManager extends AbstractManager {
         try {
             this.commandMap = (SimpleCommandMap) map.get(pluginManager);
         } catch (IllegalAccessException e) {
-            LogUtil.warning("Exception thrown whilst trying to assign command map, unable to register custom plugin commands.");
+            Log.warning("Exception thrown whilst trying to assign command map, unable to register custom plugin commands.");
             e.printStackTrace();
         }
         // Register plugin commands

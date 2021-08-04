@@ -4,7 +4,7 @@ import gg.steve.mc.pp.file.types.PermissionPluginFile;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
-import gg.steve.mc.pp.utility.LogUtil;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class PermissionManager extends AbstractManager {
             if (key.equalsIgnoreCase("file-type")) continue;
             PermissionType type = PermissionType.getPermissionTypeByIdentifier(key);
             if (type == PermissionType.DEFAULT)
-                LogUtil.warning("Unable to find permission type, " + key + ", setting to default");
+                Log.warning("Unable to find permission type, " + key + ", setting to default");
             for (String permission : file.get().getConfigurationSection(key).getKeys(false)) {
                 this.registerPermission(permission, file.get().getConfigurationSection(key).getString(permission), type);
             }
