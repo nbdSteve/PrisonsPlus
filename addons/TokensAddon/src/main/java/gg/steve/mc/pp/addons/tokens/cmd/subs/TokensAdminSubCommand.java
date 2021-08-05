@@ -5,6 +5,7 @@ import gg.steve.mc.pp.addons.tokens.core.TokenType;
 import gg.steve.mc.pp.addons.tokens.events.TokenBalanceUpdateMethod;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 import java.util.Locale;
 
+@SubCommandClass
 public class TokensAdminSubCommand extends AbstractSubCommand {
 
     public TokensAdminSubCommand(AbstractCommand parent) {

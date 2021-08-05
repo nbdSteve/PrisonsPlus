@@ -3,13 +3,16 @@ package gg.steve.mc.pp.addons.tokens.db;
 import gg.steve.mc.pp.db.SQLDatabaseHandler;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ManagerClass
-public class TokenDatabaseManager extends AbstractManager {
+public final class TokenDatabaseManager extends AbstractManager {
     private static TokenDatabaseManager instance;
-
 
     public TokenDatabaseManager() {
         instance = this;

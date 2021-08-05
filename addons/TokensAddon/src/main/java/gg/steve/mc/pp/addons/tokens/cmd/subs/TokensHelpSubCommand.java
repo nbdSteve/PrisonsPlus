@@ -2,9 +2,11 @@ package gg.steve.mc.pp.addons.tokens.cmd.subs;
 
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import org.bukkit.command.CommandSender;
 
+@SubCommandClass
 public class TokensHelpSubCommand extends AbstractSubCommand {
 
     public TokensHelpSubCommand(AbstractCommand parent) {
