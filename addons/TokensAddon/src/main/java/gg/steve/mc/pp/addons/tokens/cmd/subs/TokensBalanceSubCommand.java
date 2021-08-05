@@ -4,6 +4,7 @@ import gg.steve.mc.pp.addons.tokens.core.TokenPlayerManager;
 import gg.steve.mc.pp.addons.tokens.core.TokenType;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.permission.Permission;
 import gg.steve.mc.pp.permission.PermissionManager;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
+@SubCommandClass
 public class TokensBalanceSubCommand extends AbstractSubCommand {
 
     public TokensBalanceSubCommand(AbstractCommand parent) {

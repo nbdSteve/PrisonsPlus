@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
-public class TokensAddonApi {
+public final class TokensAddonApi {
 
     public static int giveTokensToPlayer(UUID playerId, TokenType tokenType, int amount, TokenBalanceUpdateMethod updateMethod) {
         TokenBalanceUpdateEvent event = new TokenBalanceUpdateEvent(playerId, tokenType, amount, PlayerTokenBalances.Query.INCREMENT, updateMethod);

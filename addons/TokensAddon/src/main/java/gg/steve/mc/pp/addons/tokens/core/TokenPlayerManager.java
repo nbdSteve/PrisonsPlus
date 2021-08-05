@@ -4,6 +4,7 @@ import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -11,9 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class TokenPlayerManager extends AbstractManager {
+public final class TokenPlayerManager extends AbstractManager {
     private static TokenPlayerManager instance;
     private Map<UUID, TokenPlayer> tokenPlayers;
 
