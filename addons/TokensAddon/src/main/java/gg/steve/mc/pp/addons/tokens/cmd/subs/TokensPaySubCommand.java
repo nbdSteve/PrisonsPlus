@@ -1,11 +1,10 @@
 package gg.steve.mc.pp.addons.tokens.cmd.subs;
 
-import com.mysql.jdbc.log.LogUtils;
 import gg.steve.mc.pp.addons.tokens.api.TokensAddonApi;
 import gg.steve.mc.pp.addons.tokens.core.TokenType;
-import gg.steve.mc.pp.addons.tokens.events.PlayerTokenPayEvent;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.utility.Log;
 import org.bukkit.Bukkit;
@@ -15,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
+@SubCommandClass
 public class TokensPaySubCommand extends AbstractSubCommand {
 
     public TokensPaySubCommand(AbstractCommand parent) {
@@ -46,9 +46,10 @@ public class TokensPaySubCommand extends AbstractSubCommand {
             return;
         }
         OfflinePlayer to = Bukkit.getOfflinePlayer(arguments[1]);
-        if (TokensAddonApi.payTokensFromPlayerToPlayer(from.getUniqueId(), to.getUniqueId(), tokenType, amount)){
+        if (TokensAddonApi.payTokensFromPlayerToPlayer(from.getUniqueId(), to.getUniqueId(), tokenType, amount)) {
             from.sendMessage("You have paid " + to.getName() + " " + amount + " " + tokenType.getNiceName() + " tokens.");
-            if (to.isOnline()) ((Player) to).sendMessage("You have received a payment of " + amount + " " + tokenType.getNiceName() + " tokens from " + from.getName() + ".");
+            if (to.isOnline())
+                ((Player) to).sendMessage("You have received a payment of " + amount + " " + tokenType.getNiceName() + " tokens from " + from.getName() + ".");
         } else {
             MessageManager.getInstance().sendMessage("insufficient", from);
         }

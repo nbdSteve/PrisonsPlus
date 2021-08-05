@@ -6,16 +6,17 @@ import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
-import org.bukkit.OfflinePlayer;
+import lombok.EqualsAndHashCode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class PermissionManager extends AbstractManager {
+public final class PermissionManager extends AbstractManager {
     private static PermissionManager instance;
     private Map<String, Permission> permissions;
     private final String defaultPermissionKey;

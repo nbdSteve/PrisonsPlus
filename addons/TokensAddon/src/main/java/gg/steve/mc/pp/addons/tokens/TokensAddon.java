@@ -7,7 +7,7 @@ import gg.steve.mc.pp.addons.tokens.db.TokenDatabaseManager;
 import gg.steve.mc.pp.addons.tokens.listener.PlayerJoinListener;
 import gg.steve.mc.pp.addons.tokens.listener.TokenListener;
 
-public class TokensAddon extends PrisonsPlusAddon {
+public final class TokensAddon extends PrisonsPlusAddon {
     private final TokenDatabaseManager tokenDatabaseManager;
     private final TokenPlayerManager tokenPlayerManager;
 

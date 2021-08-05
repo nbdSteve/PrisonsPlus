@@ -3,10 +3,10 @@ package gg.steve.mc.pp.db;
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.manager.AbstractManager;
-import lombok.EqualsAndHashCode;
+import gg.steve.mc.pp.manager.ManagerClass;
 
-@EqualsAndHashCode(callSuper = true)
-public class SQLDatabaseHandler extends AbstractSQLHandler {
+@ManagerClass
+public final class SQLDatabaseHandler extends AbstractSQLHandler {
     private static SQLDatabaseHandler instance;
 
     public SQLDatabaseHandler(SPlugin sPlugin) {
@@ -24,7 +24,8 @@ public class SQLDatabaseHandler extends AbstractSQLHandler {
     }
 
     @Override
-    public void onShutdown() { this.getInjector().disconnect();
+    public void onShutdown() {
+        this.getInjector().disconnect();
     }
 
     public static SQLDatabaseHandler getInstance() {

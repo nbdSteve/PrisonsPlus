@@ -2,8 +2,10 @@ package gg.steve.mc.pp.addons.tokens.cmd;
 
 import gg.steve.mc.pp.addons.tokens.cmd.subs.*;
 import gg.steve.mc.pp.cmd.AbstractCommand;
+import gg.steve.mc.pp.cmd.CommandClass;
 import org.bukkit.command.CommandSender;
 
+@CommandClass
 public class TokensCommand extends AbstractCommand {
 
     public TokensCommand() {

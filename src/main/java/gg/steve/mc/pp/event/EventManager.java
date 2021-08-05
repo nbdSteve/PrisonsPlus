@@ -3,11 +3,15 @@ package gg.steve.mc.pp.event;
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ManagerClass
-public class EventManager extends AbstractManager {
+public final class EventManager extends AbstractManager {
     private static EventManager instance;
     private SPlugin sPlugin;
 
