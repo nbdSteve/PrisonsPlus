@@ -1,11 +1,17 @@
 package gg.steve.mc.pp.addons.mines;
 
 import gg.steve.mc.pp.addon.PrisonsPlusAddon;
+import gg.steve.mc.pp.addons.mines.cmd.MinesCommand;
+import gg.steve.mc.pp.addons.mines.create.CreationStateManager;
+import gg.steve.mc.pp.addons.mines.listener.CreationToolInteractionListener;
+import gg.steve.mc.pp.addons.mines.tool.CreationTool;
 
-public class MinesAddon extends PrisonsPlusAddon {
+public final class MinesAddon extends PrisonsPlusAddon {
+    private final CreationStateManager creationStateManager;
 
     public MinesAddon() {
         super(Config.IDENTIFIER.getValue());
+        this.creationStateManager = new CreationStateManager();
     }
 
     public enum Config {
@@ -42,12 +48,12 @@ public class MinesAddon extends PrisonsPlusAddon {
 
     @Override
     public void registerCommands() {
-
+        this.registerCommand(new MinesCommand());
     }
 
     @Override
     public void registerEvents() {
-
+        this.registerListener(new CreationToolInteractionListener());
     }
 
     @Override
@@ -67,11 +73,14 @@ public class MinesAddon extends PrisonsPlusAddon {
 
     @Override
     public void onLoad() {
-
+        this.registerCommands();
+        this.registerEvents();
+        new CreationTool();
+        this.creationStateManager.onLoad();
     }
 
     @Override
     public void onShutdown() {
-
+        this.creationStateManager.onShutdown();
     }
 }

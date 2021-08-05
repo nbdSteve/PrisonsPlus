@@ -1,5 +1,6 @@
 package gg.steve.mc.pp.addons.mines.location;
 
+import gg.steve.mc.pp.addons.mines.coords.Coordinate;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,14 +11,12 @@ import org.bukkit.entity.Player;
 @Data
 public abstract class AbstractLocation {
     private Location location;
-    private double x, y, z;
+    private Coordinate coordinate;
     private String world;
 
     public AbstractLocation(Location location) {
         this.location = location;
-        this.x = this.location.getX();
-        this.y = this.location.getY();
-        this.z = this.location.getZ();
+        this.coordinate = new Coordinate(this.location.getX(), this.location.getY(), this.location.getZ());
         this.world = this.location.getWorld().getName();
     }
 
@@ -25,11 +24,11 @@ public abstract class AbstractLocation {
         StringBuilder builder = new StringBuilder();
         builder.append(this.world);
         builder.append(":");
-        builder.append(this.x);
+        builder.append(this.coordinate.getX());
         builder.append("-");
-        builder.append(this.y);
+        builder.append(this.coordinate.getY());
         builder.append("-");
-        builder.append(this.z);
+        builder.append(this.coordinate.getZ());
         return builder.toString();
     }
 

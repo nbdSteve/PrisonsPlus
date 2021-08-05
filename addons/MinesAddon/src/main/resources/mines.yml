@@ -1,0 +1,21 @@
+file-type: 'configuration'
+
+# Cooldown in ticks
+mine-warp-cooldown: 100
+
+creation-tool:
+  material: 'blaze_rod'
+  amount: '1'
+  damage: '0'
+  name: '&d[&5&lPrisons&d] &eMine Creation Tool'
+  lore:
+    - ''
+    - '&7&o((Left click with this tool on the outer bounds corner'
+    - ' &7&oto initiate the mine creation process.))'
+    - ''
+    - "&c&lNOTE: &7Type 'exit' at any time to cancel creation."
+  enchants:
+    dig_speed: 5
+  flags:
+    - 'hide-enchants'
+  unbreakable: 'true'
