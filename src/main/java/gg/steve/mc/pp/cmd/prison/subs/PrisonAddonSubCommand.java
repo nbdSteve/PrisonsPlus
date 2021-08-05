@@ -5,6 +5,7 @@ import gg.steve.mc.pp.addon.PrisonsPlusAddon;
 import gg.steve.mc.pp.addon.exception.PrisonsPlusAddonNotFoundException;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
@@ -13,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 import java.util.Locale;
 
+@SubCommandClass
 public class PrisonAddonSubCommand extends AbstractSubCommand {
 
     public PrisonAddonSubCommand(AbstractCommand parent) {

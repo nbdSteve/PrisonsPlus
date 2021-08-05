@@ -19,7 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Data
-public class SPlugin {
+public final class SPlugin {
     private static SPlugin instance;
     // Store the main instance of the plugin
     private final JavaPlugin plugin;
@@ -51,7 +51,7 @@ public class SPlugin {
         this.debugMode = true;
         // Register managers
         this.messageManager = new MessageManager();
-        this.economyManager = new EconomyManager(instance);
+        this.economyManager = new EconomyManager();
         this.placeholderManager = new PlaceholderManager();
         this.eventManager = new EventManager(instance);
         this.inventoryClickActionManager = new InventoryClickActionManager();
@@ -85,10 +85,6 @@ public class SPlugin {
 //            return valueMap;
 //        }));
 //    }
-
-    public void reload() {
-        shutdown();
-    }
 
     public static void disable() {
         Bukkit.getPluginManager().disablePlugin(SPlugin.getSPluginInstance().getPlugin());

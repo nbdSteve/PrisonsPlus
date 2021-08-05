@@ -4,12 +4,16 @@ import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.placeholder.providers.PAPIPlaceholderProvider;
 import gg.steve.mc.pp.utility.ServerUtil;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ManagerClass
-public class PlaceholderManager extends AbstractManager {
+public final class PlaceholderManager extends AbstractManager {
     private static PlaceholderManager instance;
     private Map<String, AbstractPlaceholderProvider> providers;
 

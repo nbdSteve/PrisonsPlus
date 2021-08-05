@@ -4,6 +4,7 @@ import gg.steve.mc.pp.addon.PrisonAddonManager;
 import gg.steve.mc.pp.addon.PrisonsPlusAddon;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
+import gg.steve.mc.pp.cmd.CommandClass;
 import gg.steve.mc.pp.cmd.prison.subs.PrisonAddonSubCommand;
 import gg.steve.mc.pp.cmd.prison.subs.PrisonHelpSubCommand;
 import gg.steve.mc.pp.cmd.prison.subs.PrisonReloadSubCommand;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@CommandClass
 public class PrisonCommand extends AbstractCommand {
 
     public PrisonCommand() {

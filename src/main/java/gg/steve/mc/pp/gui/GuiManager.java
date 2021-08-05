@@ -6,12 +6,16 @@ import gg.steve.mc.pp.gui.exception.AbstractGuiNotFoundException;
 import gg.steve.mc.pp.gui.exception.InvalidConfigurationFileTypeException;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ManagerClass
-public class GuiManager extends AbstractManager {
+public final class GuiManager extends AbstractManager {
     private static GuiManager instance;
     private Map<String, gg.steve.mc.pp.gui.AbstractGui> guis;
     private Map<UUID, List<gg.steve.mc.pp.gui.AbstractGui>> playerGuis;

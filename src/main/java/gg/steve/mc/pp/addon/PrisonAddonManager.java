@@ -7,13 +7,15 @@ import gg.steve.mc.pp.file.FileManager;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang.Validate;
 
 import java.util.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class PrisonAddonManager extends AbstractManager {
+public final class PrisonAddonManager extends AbstractManager {
     private static PrisonAddonManager instance;
     private SPlugin sPlugin;
     private Map<String, PrisonsPlusAddon> addons;

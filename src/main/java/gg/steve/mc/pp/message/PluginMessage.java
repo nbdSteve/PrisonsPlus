@@ -57,7 +57,6 @@ public class PluginMessage {
                 if (placeholders != null && data != null) for (int i = 0; i < this.placeholders.size(); i++) {
                     line = line.replace(this.placeholders.get(i), data.get(i));
                 }
-//                receiver.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.colorize(line)));
                 ActionBar.sendActionBar(receiver, ColorUtil.colorize(line));
             }
         } else if (this.title != null && this.title.isEnabled()) {
@@ -82,7 +81,6 @@ public class PluginMessage {
                 if (placeholders != null && data != null) for (int i = 0; i < this.placeholders.size(); i++) {
                     line = line.replace(this.placeholders.get(i), data.get(i));
                 }
-//                ((Player) receiver).spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.colorize(line)));
                 ActionBar.sendActionBar((Player) receiver, ColorUtil.colorize(line));
             }
         } else if (this.title != null && this.title.isEnabled() && receiver instanceof Player) {

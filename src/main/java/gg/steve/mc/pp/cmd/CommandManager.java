@@ -6,6 +6,7 @@ import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.SimplePluginManager;
 
@@ -14,9 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class CommandManager extends AbstractManager {
+public final class CommandManager extends AbstractManager {
     private static CommandManager instance;
     private SPlugin sPlugin;
     private SimpleCommandMap commandMap;
