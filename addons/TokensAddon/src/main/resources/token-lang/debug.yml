@@ -1,0 +1,10 @@
+file-type: 'message'
+
+invalid-token-type:
+  unique-name: 'invalid-token-type'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens &c&lERROR&7| Please enter a valid token type.'
