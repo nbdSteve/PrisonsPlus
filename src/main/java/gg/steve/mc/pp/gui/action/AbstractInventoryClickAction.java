@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.gui.action;
 
 import gg.steve.mc.pp.gui.AbstractGui;
+import gg.steve.mc.pp.xseries.XItemStack;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,7 +19,11 @@ public abstract class AbstractInventoryClickAction {
     }
 
     public ItemStack getRenderedItem(Player player, ConfigurationSection section) {
-        return new ItemStack(Material.STONE);
+        try {
+            return XItemStack.deserialize(section);
+        } catch (Exception e) {
+            return new ItemStack(Material.STONE);
+        }
     }
 
     public abstract void onClick(AbstractGui gui, Player player, ConfigurationSection section, int slot);

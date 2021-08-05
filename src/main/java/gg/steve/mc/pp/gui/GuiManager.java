@@ -92,6 +92,10 @@ public class GuiManager extends AbstractManager {
         gui.open();
     }
 
+    public Map<String, AbstractGui> getGuis() {
+        return this.guis;
+    }
+
     public static GuiManager getInstance() {
         return instance;
     }

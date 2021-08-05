@@ -6,6 +6,9 @@ import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.permission.exceptions.PermissionNotFoundException;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,6 +79,14 @@ public class PermissionManager extends AbstractManager {
 
     public Permission getDefaultPermission() {
         return this.defaultPermission;
+    }
+
+    public boolean hasPermission(Player player, String permissionKey) throws PermissionNotFoundException {
+        return player.hasPermission(this.getPermissionByKey(permissionKey).getPermission());
+    }
+
+    public boolean hasPermission(CommandSender executor, String permissionKey) throws PermissionNotFoundException {
+        return executor.hasPermission(this.getPermissionByKey(permissionKey).getPermission());
     }
 
     public static PermissionManager getInstance() {
