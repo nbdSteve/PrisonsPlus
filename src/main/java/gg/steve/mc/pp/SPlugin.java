@@ -107,6 +107,7 @@ public class SPlugin {
         Log.info(" ");
         Log.info("Messages loaded: " + this.messageManager.getMessages().size());
         Log.info("Files loaded: " + this.fileManager.getFiles().size());
+        Log.info("Guis loaded: " + this.guiManager.getGuis().size());
         Log.info("Addons loaded: " + this.addonManager.getRegisteredAddons().size());
         Log.info("SQL Connected: " + (this.sqlDatabaseHandler.getInjector().getConnection() != null));
         Log.info("<-------------------------------=+=-------------------------------->");

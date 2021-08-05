@@ -22,7 +22,6 @@ public abstract class AbstractManager implements Loadable {
     public static void loadManagers() {
         if (managers == null || managers.isEmpty()) return;
         for (AbstractManager manager : managers.values()) {
-            Log.warning(manager.getManagerName());
             manager.onLoad();
         }
     }

@@ -4,6 +4,7 @@ import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.file.AbstractPluginFile;
 import gg.steve.mc.pp.file.PluginFileClass;
 import gg.steve.mc.pp.file.PluginFileType;
+import gg.steve.mc.pp.gui.GuiManager;
 
 import java.io.File;
 
@@ -13,5 +14,6 @@ public class GuiPluginFile extends AbstractPluginFile {
     public GuiPluginFile(String name, File file, SPlugin sPlugin) {
         super(name, file, PluginFileType.GUI, sPlugin);
         // need to register the gui with the server
+        GuiManager.getInstance().registerGuiFromFile(this);
     }
 }
