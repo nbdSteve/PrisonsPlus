@@ -1,23 +1,24 @@
 package gg.steve.mc.pp.economy;
 
-import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.economy.providers.VaultEconomyProvider;
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.ServerUtil;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ManagerClass
-public class EconomyManager extends AbstractManager {
+public final class EconomyManager extends AbstractManager {
     private static EconomyManager instance;
-    private SPlugin sPlugin;
     private Map<EconomyType, AbstractEconomyProvider> economies;
 
-    public EconomyManager(SPlugin sPlugin) {
+    public EconomyManager() {
         instance = this;
-        this.sPlugin = sPlugin;
         AbstractManager.registerManager(instance);
     }
 

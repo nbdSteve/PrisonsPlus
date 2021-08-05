@@ -7,15 +7,17 @@ import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class FileManager extends AbstractManager {
+public final class FileManager extends AbstractManager {
     private static FileManager instance;
     private final SPlugin sPlugin;
     private Map<String, AbstractPluginFile> files;

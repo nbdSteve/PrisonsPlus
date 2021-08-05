@@ -6,6 +6,7 @@ import gg.steve.mc.pp.manager.ManagerClass;
 import gg.steve.mc.pp.message.exception.PluginMessageNotFoundException;
 import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,9 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ManagerClass
-public class MessageManager extends AbstractManager {
+public final class MessageManager extends AbstractManager {
     private static MessageManager instance;
     private Map<String, PluginMessage> messages;
 
