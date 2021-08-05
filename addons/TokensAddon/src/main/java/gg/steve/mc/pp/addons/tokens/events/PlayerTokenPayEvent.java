@@ -11,23 +11,24 @@ import org.bukkit.event.HandlerList;
 import java.util.UUID;
 
 @Data
-public class TokenBalanceUpdateEvent extends Event implements Cancellable {
+public class PlayerTokenPayEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-    private UUID playerId;
+    private UUID fromPlayerId, toPlayerId;
     private TokenType tokenType;
-    private int change, openingBalance, closingBalance;
+    private int amount, fromOpeningBalance, fromClosingBalance, toOpeningBalance, toClosingBalance;
     private PlayerTokenBalances.Query query;
     private TokenBalanceUpdateMethod updateMethod;
-    private boolean cancelled;
+    private boolean cancelled, successfullTransfer;
 
-    public TokenBalanceUpdateEvent(UUID playerId, TokenType tokenType, int change, PlayerTokenBalances.Query query, TokenBalanceUpdateMethod updateMethod) {
-        this.playerId = playerId;
+    public PlayerTokenPayEvent(UUID fromPlayerId, UUID toPlayerId, TokenType tokenType, int amount) {
+        this.fromPlayerId = fromPlayerId;
+        this.toPlayerId = toPlayerId;
         this.tokenType = tokenType;
-        this.change = change;
-        this.query = query;
-        this.updateMethod = updateMethod;
-        this.openingBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(playerId, tokenType);
+        this.amount = amount;
+        this.updateMethod = TokenBalanceUpdateMethod.PAYMENT;
+        this.fromOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(fromPlayerId, tokenType);
+        this.toOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(toPlayerId, tokenType);
     }
 
     public static HandlerList getHandlerList() {

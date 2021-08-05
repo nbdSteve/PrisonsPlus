@@ -4,3 +4,7 @@ command:
   token: 'prison.cmd.token'
   token-help: 'prison.cmd.token-help'
   token-admin: 'prison.cmd.token.admin'
+  token-pay: 'prison.cmd.token.pay'
+  token-balance: 'prison.cmd.token.balance'
+  token-balance-other: 'prison.cmd.token.balance.other'
+  token-shop: 'prison.cmd.token.shop'

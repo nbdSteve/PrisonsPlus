@@ -24,6 +24,24 @@ get-player-token-balance:
   text:
     - "&d[&5&lPrisons&d] &eTokens&7| &6{player}&7's &e{type} &7token balance is &a{amount}&7."
 
+get-player-token-all-balances:
+  unique-name: 'get-player-token-all-balances'
+  placeholders:
+    - '{player}'
+    - '{mine}'
+    - '{pvp}'
+    - '{mob}'
+    - '{prestige}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - "&d[&5&lPrisons&d] &eTokens&7| &6{player}&7's token balances:"
+    - ' &7- &eMine&7: &6{mine}'
+    - ' &7- &ePVP&7: &6{pvp}'
+    - ' &7- &eMob&7: &6{mob}'
+    - ' &7- &ePrestige&7: &6{prestige}'
+
 reset-all-player-token-balances:
   unique-name: 'reset-all-player-token-balances'
   placeholders:

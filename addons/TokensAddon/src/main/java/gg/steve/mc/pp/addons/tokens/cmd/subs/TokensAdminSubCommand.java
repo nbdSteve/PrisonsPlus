@@ -1,7 +1,8 @@
 package gg.steve.mc.pp.addons.tokens.cmd.subs;
 
-import gg.steve.mc.pp.addons.tokens.core.TokenPlayerManager;
+import gg.steve.mc.pp.addons.tokens.api.TokensAddonApi;
 import gg.steve.mc.pp.addons.tokens.core.TokenType;
+import gg.steve.mc.pp.addons.tokens.events.TokenBalanceUpdateMethod;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
 import gg.steve.mc.pp.message.MessageManager;
@@ -9,7 +10,6 @@ import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import sun.util.resources.cldr.sg.CurrencyNames_sg;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -18,13 +18,14 @@ public class TokensAdminSubCommand extends AbstractSubCommand {
 
     public TokensAdminSubCommand(AbstractCommand parent) {
         super(parent, "admin", "token-admin", 3, 5);
+        this.registerAlias("a");
     }
 
     protected enum Argument {
         GIVE(new String[]{"give", "add"}),
         REMOVE(new String[]{"remove", "take"}),
         SET(new String[]{"set"}),
-        GET(new String[]{"get", "g"}),
+        GET(new String[]{"get", "g", "balance", "bal"}),
         RESET(new String[]{"reset"}),
         RESET_ALL(new String[]{"reset-all"});
 
@@ -81,23 +82,23 @@ public class TokensAdminSubCommand extends AbstractSubCommand {
         int balance;
         switch (argument) {
             case GIVE:
-                balance = TokenPlayerManager.getInstance().give(offlinePlayer.getUniqueId(), type, amount);
+                balance = TokensAddonApi.giveTokensToPlayer(offlinePlayer.getUniqueId(), type, amount, TokenBalanceUpdateMethod.COMMAND);
                 break;
             case REMOVE:
-                balance = TokenPlayerManager.getInstance().remove(offlinePlayer.getUniqueId(), type, amount);
+                balance = TokensAddonApi.removeTokensFromPlayer(offlinePlayer.getUniqueId(), type, amount, TokenBalanceUpdateMethod.COMMAND);
                 break;
             case SET:
-                balance = TokenPlayerManager.getInstance().set(offlinePlayer.getUniqueId(), type, amount);
+                balance = TokensAddonApi.setTokenBalanceForPlayer(offlinePlayer.getUniqueId(), type, amount, TokenBalanceUpdateMethod.COMMAND);
                 break;
             case GET:
-                balance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(offlinePlayer.getUniqueId(), type);
+                balance = TokensAddonApi.getTokenBalanceForPlayer(offlinePlayer.getUniqueId(), type);
                 MessageManager.getInstance().sendMessage("get-player-token-balance", executor, offlinePlayer.getName(), type.getNiceName(), NumberFormatUtil.format(balance));
                 return;
             case RESET:
-                balance = TokenPlayerManager.getInstance().reset(offlinePlayer.getUniqueId(), type);
+                balance = TokensAddonApi.resetTokenBalanceForPlayer(offlinePlayer.getUniqueId(), type, TokenBalanceUpdateMethod.COMMAND);
                 break;
             case RESET_ALL:
-                TokenPlayerManager.getInstance().resetAll(offlinePlayer.getUniqueId());
+                TokensAddonApi.resetAllTokenBalancesForPlayer(offlinePlayer.getUniqueId(), TokenBalanceUpdateMethod.COMMAND);
                 MessageManager.getInstance().sendMessage("reset-all-player-token-balances", executor, offlinePlayer.getName());
                 return;
             default:

@@ -2,6 +2,7 @@ package gg.steve.mc.pp.addons.tokens.core;
 
 import gg.steve.mc.pp.manager.AbstractManager;
 import gg.steve.mc.pp.manager.ManagerClass;
+import gg.steve.mc.pp.utility.Log;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -29,7 +30,11 @@ public class TokenPlayerManager extends AbstractManager {
     @Override
     public void onShutdown() {
         if (this.tokenPlayers == null || this.tokenPlayers.isEmpty()) return;
-        this.unregisterOnlineTokenPlayers();
+        //this.unregisterOnlineTokenPlayers();
+        for (UUID playerId : this.tokenPlayers.keySet()) {
+            Log.debug("Saving player token balance for player: " + playerId);
+            this.tokenPlayers.get(playerId).save();
+        }
         this.tokenPlayers.clear();
     }
 
@@ -79,12 +84,12 @@ public class TokenPlayerManager extends AbstractManager {
         return this.getTokenPlayer(playerId).getTokenBalances().get(type);
     }
 
-    public void pay(UUID from, UUID to, TokenType type, int amount) {
-        TokenPlayer payer = this.getTokenPlayer(from);
-        TokenPlayer payee = this.getTokenPlayer(to);
-        payer.getTokenBalances().update(type, PlayerTokenBalances.Query.DECREMENT, amount);
-        payee.getTokenBalances().update(type, PlayerTokenBalances.Query.INCREMENT, amount);
-    }
+//    public boolean pay(UUID from, UUID to, TokenType type, int amount) {
+//        if (this.getTokenBalanceForPlayer(from, type) < amount) return false;
+//        this.remove(from, type, amount);
+//        this.give(to, type, amount);
+//        return true;
+//    }
 
     public int give(UUID playerId, TokenType type, int amount) {
         return this.getTokenPlayer(playerId).getTokenBalances().update(type, PlayerTokenBalances.Query.INCREMENT, amount);
