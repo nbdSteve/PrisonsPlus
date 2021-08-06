@@ -19,13 +19,24 @@ public class PlayerTokenPayEvent extends Event implements Cancellable {
     private int amount, fromOpeningBalance, fromClosingBalance, toOpeningBalance, toClosingBalance;
     private PlayerTokenBalances.Query query;
     private TokenBalanceUpdateMethod updateMethod;
-    private boolean cancelled, successfullTransfer;
+    private boolean cancelled, successfullTransfer, sendEventMessage;
 
     public PlayerTokenPayEvent(UUID fromPlayerId, UUID toPlayerId, TokenType tokenType, int amount) {
         this.fromPlayerId = fromPlayerId;
         this.toPlayerId = toPlayerId;
         this.tokenType = tokenType;
         this.amount = amount;
+        this.updateMethod = TokenBalanceUpdateMethod.PAYMENT;
+        this.fromOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(fromPlayerId, tokenType);
+        this.toOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(toPlayerId, tokenType);
+    }
+
+    public PlayerTokenPayEvent(UUID fromPlayerId, UUID toPlayerId, TokenType tokenType, int amount, boolean sendEventMessage) {
+        this.fromPlayerId = fromPlayerId;
+        this.toPlayerId = toPlayerId;
+        this.tokenType = tokenType;
+        this.amount = amount;
+        this.sendEventMessage = sendEventMessage;
         this.updateMethod = TokenBalanceUpdateMethod.PAYMENT;
         this.fromOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(fromPlayerId, tokenType);
         this.toOpeningBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(toPlayerId, tokenType);

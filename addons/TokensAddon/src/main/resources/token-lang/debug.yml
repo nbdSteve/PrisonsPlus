@@ -8,3 +8,12 @@ invalid-token-type:
     enabled: 'false'
   text:
     - '&d[&5&lPrisons&d] &eTokens &c&lERROR&7| Please enter a valid token type.'
+
+unable-to-pay-self:
+  unique-name: 'unable-to-pay-self'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens &c&lERROR&7| You are not able to pay yourself, get a job.'

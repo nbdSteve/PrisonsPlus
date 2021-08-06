@@ -7,6 +7,7 @@ import gg.steve.mc.pp.cmd.AbstractSubCommand;
 import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.utility.Log;
+import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -46,10 +47,14 @@ public class TokensPaySubCommand extends AbstractSubCommand {
             return;
         }
         OfflinePlayer to = Bukkit.getOfflinePlayer(arguments[1]);
-        if (TokensAddonApi.payTokensFromPlayerToPlayer(from.getUniqueId(), to.getUniqueId(), tokenType, amount)) {
-            from.sendMessage("You have paid " + to.getName() + " " + amount + " " + tokenType.getNiceName() + " tokens.");
+        if (from.getUniqueId().equals(to.getUniqueId())) {
+            MessageManager.getInstance().sendMessage("unable-to-pay-self", from);
+            return;
+        }
+        if (TokensAddonApi.payTokensFromPlayerToPlayer(from.getUniqueId(), to.getUniqueId(), tokenType, amount, false)) {
+            MessageManager.getInstance().sendMessage("pay-token-payer", from, to.getName(), NumberFormatUtil.format(amount), tokenType.getNiceName());
             if (to.isOnline())
-                ((Player) to).sendMessage("You have received a payment of " + amount + " " + tokenType.getNiceName() + " tokens from " + from.getName() + ".");
+                MessageManager.getInstance().sendMessage("pay-token-receiver", to.getPlayer(), from.getName(), NumberFormatUtil.format(amount), tokenType.getNiceName());
         } else {
             MessageManager.getInstance().sendMessage("insufficient", from);
         }
