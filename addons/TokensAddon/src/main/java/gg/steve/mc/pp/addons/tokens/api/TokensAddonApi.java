@@ -12,6 +12,10 @@ import java.util.UUID;
 
 public final class TokensAddonApi {
 
+    private TokensAddonApi() throws IllegalAccessException {
+        throw new IllegalAccessException("Unable to instantiate API class.");
+    }
+
     public static int giveTokensToPlayer(UUID playerId, TokenType tokenType, int amount, TokenBalanceUpdateMethod updateMethod) {
         TokenBalanceUpdateEvent event = new TokenBalanceUpdateEvent(playerId, tokenType, amount, PlayerTokenBalances.Query.INCREMENT, updateMethod);
         Bukkit.getPluginManager().callEvent(event);
@@ -51,8 +55,8 @@ public final class TokensAddonApi {
         return TokenPlayerManager.getInstance().getTokenBalanceForPlayer(playerId, tokenType);
     }
 
-    public static boolean payTokensFromPlayerToPlayer(UUID fromPlayerId, UUID toPlayerId, TokenType tokenType, int amount) {
-        PlayerTokenPayEvent event = new PlayerTokenPayEvent(fromPlayerId, toPlayerId, tokenType, amount);
+    public static boolean payTokensFromPlayerToPlayer(UUID fromPlayerId, UUID toPlayerId, TokenType tokenType, int amount, boolean sendEventMessage) {
+        PlayerTokenPayEvent event = new PlayerTokenPayEvent(fromPlayerId, toPlayerId, tokenType, amount, sendEventMessage);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
         return event.isSuccessfullTransfer();
