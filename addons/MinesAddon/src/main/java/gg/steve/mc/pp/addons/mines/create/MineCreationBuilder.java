@@ -3,9 +3,12 @@ package gg.steve.mc.pp.addons.mines.create;
 import gg.steve.mc.pp.addons.mines.box.BorderBoundingBox;
 import gg.steve.mc.pp.addons.mines.box.MiningAreaBoundingBox;
 import gg.steve.mc.pp.addons.mines.coords.Coordinate;
+import gg.steve.mc.pp.addons.mines.core.Mine;
+import gg.steve.mc.pp.addons.mines.core.MiningAreaBlockConfiguration;
 import gg.steve.mc.pp.addons.mines.location.MineSpawnLocation;
 import lombok.Data;
 import org.bukkit.Location;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -19,10 +22,12 @@ public class MineCreationBuilder {
     private MineSpawnLocation mineSpawnLocation;
     private MineCreationState currentState;
     // vars
+    private String worldName;
     private Coordinate borderPosition1;
     private Coordinate borderPosition2;
     private Coordinate miningPosition1;
     private Coordinate miningPosition2;
+    private Inventory blockConfigurationInventory;
 
     public MineCreationBuilder(UUID creatorId, Coordinate borderPosition1) {
         this.creatorId = creatorId;
@@ -58,6 +63,11 @@ public class MineCreationBuilder {
         this.progressCreationState();
     }
 
+    public void doBlockConfigurationSelection(Inventory blockConfigurationInventory) {
+        this.blockConfigurationInventory = blockConfigurationInventory;
+        this.progressCreationState();
+    }
+
     public void undoSelection() {
         switch (this.currentState) {
             case SELECTING_BORDER_POS_1:
@@ -71,6 +81,9 @@ public class MineCreationBuilder {
                 break;
             case SELECTING_MINING_POS_2:
                 this.miningPosition2 = null;
+                break;
+            case SELECTING_MINING_AREA_BLOCKS_CHEST:
+                this.blockConfigurationInventory = null;
                 break;
             case SELECTING_SPAWN_LOCATION:
                 this.spawnLocation = null;
@@ -94,8 +107,14 @@ public class MineCreationBuilder {
         return this.currentState == MineCreationState.SELECTION_COMPLETE;
     }
 
-    public boolean create() {
+    public Mine create() {
         // handle actual logic for creating the mine & files n shit
-        return false;
+        this.borderBoundingBox = new BorderBoundingBox(this.worldName, this.borderPosition1, this.borderPosition2);
+        this.miningArea = new MiningAreaBoundingBox(this.worldName, this.miningPosition1, this.miningPosition2);
+        MiningAreaBlockConfiguration miningAreaBlockConfiguration = new MiningAreaBlockConfiguration();
+        miningAreaBlockConfiguration.convertContainerToItemsMap(this.blockConfigurationInventory);
+        this.miningArea.setMiningBlockConfiguration(miningAreaBlockConfiguration);
+        Mine mine = new Mine(this.name, this.spawnLocation, this.borderBoundingBox, this.miningArea);
+        return mine;
     }
 }

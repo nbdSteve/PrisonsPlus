@@ -23,10 +23,9 @@ public abstract class AbstractBoundingBox {
         this.pos1 = pos1;
         this.pos2 = pos2;
         this.coordinates = new LinkedHashMap<>();
-        this.generateCoordinateLocations(this.world, this.pos1, this.pos2);
     }
 
-    private void generateCoordinateLocations(String world, Coordinate pos1, Coordinate pos2) {
+    protected void generateCoordinateLocations(String world, Coordinate pos1, Coordinate pos2) {
         Bukkit.getScheduler().runTaskAsynchronously(SPlugin.getSPluginInstance().getPlugin(), () -> {
             World world1 = Bukkit.getWorld(world);
             int maxX = (int) Math.ceil(Math.max(pos1.getX(), pos2.getX()));
@@ -37,7 +36,7 @@ public abstract class AbstractBoundingBox {
             int minZ = (int) Math.ceil(Math.min(pos1.getZ(), pos2.getZ()));
             for (int x = minX; x <= maxX; x++) {
                 for (int y = minY; y <= maxY; y++) {
-                    for (int z = minZ; y <= maxZ; z++) {
+                    for (int z = minZ; z <= maxZ; z++) {
                         this.coordinates.put(new Coordinate(x, y, z), new Location(world1, x, y, z));
                     }
                 }

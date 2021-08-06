@@ -1,0 +1,43 @@
+file-type: 'message'
+
+enter-mine-creation-state:
+  unique-name: 'enter-mine-creation-state'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eMine&7| Creation Mode'
+    - ' &f- &7The block you just clicked has been selected as the border position 1 coordinate.'
+    - ' &f- &7Left click on another block to select the other corner of the border box.'
+    - ' &f- &7Right click with the tool in hand to revert the previous selection.'
+    - " &f- &7Type 'exit' in chat to exit mine creation mode, all selections will be cleared."
+
+exit-mine-creation-state:
+  unique-name: 'exit-mine-creation-state'
+  placeholders:
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eMine&7| You have exited mine creation mode.'
+
+progress-mine-creation-state:
+  unique-name: 'progress-mine-creation-state'
+  placeholders:
+    - '{creation-state}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eMine&7| You have made a successful selection and have progressed to the next state; &e{creation-state}&7.'
+
+revert-selection:
+  unique-name: 'revert-selection'
+  placeholders:
+    - '{creation-state}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eMine&7| You have cleared the previous selection and have reverted to the previous state; &e{creation-state}&7.'

@@ -5,6 +5,7 @@ import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
 import gg.steve.mc.pp.cmd.SubCommandClass;
 import gg.steve.mc.pp.utility.Log;
+import gg.steve.mc.pp.xseries.XItemStack;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -24,6 +25,6 @@ public class GiveToolSubCommand extends AbstractSubCommand {
             Log.info("Only players are able to make selections, please go in-game to use this feature.");
             return;
         }
-        ((Player) executor).getInventory().addItem(CreationTool.getTool());
+        XItemStack.giveOrDrop((Player) executor, CreationTool.getTool());
     }
 }
