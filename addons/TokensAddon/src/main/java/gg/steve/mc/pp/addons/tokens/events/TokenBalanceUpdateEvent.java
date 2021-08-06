@@ -19,7 +19,8 @@ public class TokenBalanceUpdateEvent extends Event implements Cancellable {
     private int change, openingBalance, closingBalance;
     private PlayerTokenBalances.Query query;
     private TokenBalanceUpdateMethod updateMethod;
-    private boolean cancelled;
+    private boolean cancelled, sendBalanceUpdateMessage;
+    private String customBalanceUpdateMessage;
 
     public TokenBalanceUpdateEvent(UUID playerId, TokenType tokenType, int change, PlayerTokenBalances.Query query, TokenBalanceUpdateMethod updateMethod) {
         this.playerId = playerId;
@@ -28,6 +29,30 @@ public class TokenBalanceUpdateEvent extends Event implements Cancellable {
         this.query = query;
         this.updateMethod = updateMethod;
         this.openingBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(playerId, tokenType);
+        this.sendBalanceUpdateMessage = true;
+        this.customBalanceUpdateMessage = "";
+    }
+
+    public TokenBalanceUpdateEvent(UUID playerId, TokenType tokenType, int change, PlayerTokenBalances.Query query, TokenBalanceUpdateMethod updateMethod, boolean sendBalanceUpdateMessage) {
+        this.playerId = playerId;
+        this.tokenType = tokenType;
+        this.change = change;
+        this.query = query;
+        this.updateMethod = updateMethod;
+        this.openingBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(playerId, tokenType);
+        this.sendBalanceUpdateMessage = sendBalanceUpdateMessage;
+        this.customBalanceUpdateMessage = "";
+    }
+
+    public TokenBalanceUpdateEvent(UUID playerId, TokenType tokenType, int change, PlayerTokenBalances.Query query, TokenBalanceUpdateMethod updateMethod, boolean sendBalanceUpdateMessage, String customBalanceUpdateMessage) {
+        this.playerId = playerId;
+        this.tokenType = tokenType;
+        this.change = change;
+        this.query = query;
+        this.updateMethod = updateMethod;
+        this.openingBalance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(playerId, tokenType);
+        this.sendBalanceUpdateMessage = sendBalanceUpdateMessage;
+        this.customBalanceUpdateMessage = customBalanceUpdateMessage;
     }
 
     public static HandlerList getHandlerList() {
@@ -47,5 +72,9 @@ public class TokenBalanceUpdateEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
+    }
+
+    public boolean isCustomBalanceUpdateMessage() {
+        return !this.customBalanceUpdateMessage.equalsIgnoreCase("");
     }
 }

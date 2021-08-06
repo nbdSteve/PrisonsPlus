@@ -4,25 +4,25 @@ update-player-token-balance:
   unique-name: 'update-player-token-balance'
   placeholders:
     - '{player}'
-    - '{type}'
+    - '{token-type}'
     - '{amount}'
   action-bar: 'false'
   title:
     enabled: 'false'
   text:
-    - "&d[&5&lPrisons&d] &eTokens&7| You have successfully updated &6{player}&7's &e{type} &7token balance to &a{amount}&7."
+    - "&d[&5&lPrisons&d] &eTokens&7| You have successfully updated &6{player}&7's &e{token-type} &7token balance to &a{amount}&7."
 
 get-player-token-balance:
   unique-name: 'get-player-token-balance'
   placeholders:
     - '{player}'
-    - '{type}'
+    - '{token-type}'
     - '{amount}'
   action-bar: 'false'
   title:
     enabled: 'false'
   text:
-    - "&d[&5&lPrisons&d] &eTokens&7| &6{player}&7's &e{type} &7token balance is &a{amount}&7."
+    - "&d[&5&lPrisons&d] &eTokens&7| &6{player}&7's &e{token-type} &7token balance is &a{amount}&7."
 
 get-player-token-all-balances:
   unique-name: 'get-player-token-all-balances'
@@ -60,3 +60,39 @@ tokens-help:
     enabled: 'false'
   text:
     - '&d[&5&lPrisons&d] &eTokens&7| Default help message for the tokens module.'
+
+pay-token-payer:
+  unique-name: 'pay-token-payer'
+  placeholders:
+    - '{receiver}'
+    - '{amount}'
+    - '{token-type}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens&7| You have paid &6{receiver} &a{amount} &e{token-type} &7tokens.'
+
+pay-token-receiver:
+  unique-name: 'pay-token-receiver'
+  placeholders:
+    - '{payer}'
+    - '{amount}'
+    - '{token-type}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens&7| &6{payer} &7has paid you &a{amount} &e{token-type} &7tokens.'
+
+receive-token-update-balance:
+  unique-name: 'receive-token-update-balance'
+  placeholders:
+    - '{token-type}'
+    - '{amount}'
+    - '{update-method}'
+  action-bar: 'false'
+  title:
+    enabled: 'false'
+  text:
+    - '&d[&5&lPrisons&d] &eTokens&7| &7Your &e{token-type} &7balance has been updated to &a{amount} &7tokens by method; &6{update-method}&7.'
