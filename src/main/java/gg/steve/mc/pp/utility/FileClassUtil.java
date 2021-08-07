@@ -1,7 +1,6 @@
 package gg.steve.mc.pp.utility;
 
 import gg.steve.mc.pp.file.FileManager;
-import gg.steve.mc.pp.file.PluginFileType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,8 +40,7 @@ public class FileClassUtil {
                 return list;
             }
             for (File file : jars) {
-                String dataFolderName = file.getName().split("Addon.jar")[0].toLowerCase(Locale.ROOT);
-                list = gather(plugin, file.toURI().toURL(), list, type, dataFolderName);
+                list = gather(file.toURI().toURL(), list, type);
             }
             return list;
         } catch (Throwable t) {
@@ -50,10 +48,22 @@ public class FileClassUtil {
         return null;
     }
 
-    private static List<Class<?>> gather(JavaPlugin plugin, URL jar, List<Class<?>> list, Class<?> clazz, String dataFolderName) {
-        if (list == null) {
-            list = new ArrayList<>();
+    public static void loadAddonFiles(JavaPlugin plugin, String addonName, String folder, Class<?> type) {
+        try {
+            File f = new File(plugin.getDataFolder(), folder);
+            if (!f.exists()) return;
+            FilenameFilter fileNameFilter = (dir, name) -> name.endsWith(".jar") && name.replace("Addon.jar", "").equalsIgnoreCase(addonName);
+            File[] jars = f.listFiles(fileNameFilter);
+            if (jars == null) return;
+            for (File file : jars) {
+                String dataFolderName = file.getName().split("Addon.jar")[0].toLowerCase(Locale.ROOT);
+                gatherFiles(plugin, file.toURI().toURL(), type, dataFolderName);
+            }
+        } catch (Throwable t) {
         }
+    }
+
+    private static void gatherFiles(JavaPlugin plugin, URL jar, Class<?> clazz, String dataFolderName) {
         try (URLClassLoader cl = new URLClassLoader(new URL[]{jar}, clazz.getClassLoader());
              JarInputStream jis = new JarInputStream(jar.openStream())) {
 
@@ -67,18 +77,6 @@ public class FileClassUtil {
                 if (name == null || name.isEmpty()) {
                     continue;
                 }
-
-                if (name.endsWith(".class")) {
-                    name = name.replace("/", ".");
-                    String cname = name.substring(0, name.lastIndexOf(".class"));
-
-                    Class<?> c = cl.loadClass(cname);
-                    if (clazz.isAssignableFrom(c)) {
-                        list.add(c);
-                    }
-                }
-
-                // bit shit but fuck it, it works
                 if (name.endsWith(".yml")) {
                     File dataFolder = new File(plugin.getDataFolder() + File.separator + dataFolderName);
                     if (!dataFolder.exists()) dataFolder.mkdirs();
@@ -118,10 +116,42 @@ public class FileClassUtil {
                             }
                             // Register the file and the yml config with the file manager
                             YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-                            PluginFileType type = PluginFileType.getFileTypeFromString(configuration.getString("file-type"));
-                            FileManager.getInstance().registerFile(name.replaceAll("/", "-").split(".yml")[0], file, type);
+                            String key = configuration.getString("file-type");
+                            FileManager.getInstance().registerFile(key, name.replaceAll("/", "-").split(".yml")[0], file);
                         } catch (IOException e) {
                         }
+                    }
+                }
+            }
+        } catch (Throwable t) {
+        }
+    }
+
+    private static List<Class<?>> gather(URL jar, List<Class<?>> list, Class<?> clazz) {
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        try (URLClassLoader cl = new URLClassLoader(new URL[]{jar}, clazz.getClassLoader());
+             JarInputStream jis = new JarInputStream(jar.openStream())) {
+
+            while (true) {
+                JarEntry j = jis.getNextJarEntry();
+                if (j == null) {
+                    break;
+                }
+
+                String name = j.getName();
+                if (name == null || name.isEmpty()) {
+                    continue;
+                }
+
+                if (name.endsWith(".class")) {
+                    name = name.replace("/", ".");
+                    String cname = name.substring(0, name.lastIndexOf(".class"));
+
+                    Class<?> c = cl.loadClass(cname);
+                    if (clazz.isAssignableFrom(c)) {
+                        list.add(c);
                     }
                 }
             }

@@ -27,7 +27,10 @@ public class PrisonAddonLoader {
         if (classes == null || classes.isEmpty()) return;
         classes.forEach(klass -> {
             PrisonsPlusAddon addon = this.createAddonInstance(klass);
-            if (!PrisonAddonManager.getInstance().isUnregistered(addon.getIdentifier())) this.registerAddon(addon);
+            if (!PrisonAddonManager.getInstance().isUnregistered(addon.getIdentifier())) {
+                FileClassUtil.loadAddonFiles(this.sPlugin.getPlugin(), addon.getAddonName(), "addons", PrisonsPlusAddon.class);
+                this.registerAddon(addon);
+            }
         });
     }
 

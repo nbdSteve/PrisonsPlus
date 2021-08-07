@@ -7,6 +7,7 @@ import gg.steve.mc.pp.db.SQLDatabaseHandler;
 import gg.steve.mc.pp.economy.EconomyManager;
 import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.file.FileManager;
+import gg.steve.mc.pp.file.PluginFileTypeManager;
 import gg.steve.mc.pp.gui.GuiManager;
 import gg.steve.mc.pp.gui.action.InventoryClickActionManager;
 import gg.steve.mc.pp.manager.AbstractManager;
@@ -28,6 +29,7 @@ public final class SPlugin {
     // Store if the plugin is in debug mode
     private final boolean debugMode;
     // Store manager instances to be accessed by addons
+    private final PluginFileTypeManager pluginFileTypeManager;
     private final MessageManager messageManager;
     private final CommandManager commandManager;
     private final PermissionManager permissionManager;
@@ -50,6 +52,7 @@ public final class SPlugin {
         // Set debug mode
         this.debugMode = true;
         // Register managers
+        this.pluginFileTypeManager = new PluginFileTypeManager(instance);
         this.messageManager = new MessageManager();
         this.economyManager = new EconomyManager();
         this.placeholderManager = new PlaceholderManager();

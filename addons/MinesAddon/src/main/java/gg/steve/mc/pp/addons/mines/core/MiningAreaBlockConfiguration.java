@@ -56,24 +56,32 @@ public class MiningAreaBlockConfiguration {
         for (Map.Entry<ItemStack, Double> itemSet : this.materialAndSpawnRate.entrySet()) {
             blocksToPlacePerMaterial.put(itemSet.getKey(), (int) Math.ceil(itemSet.getValue() * totalBlocks));
         }
-        for (Location location : miningArea.getCoordinates().values()) {
-//            boolean skip = false;
-//            for (ItemStack itemStack : this.itemStackList) {
-//                if (location.getBlock().getType() == itemStack.getType() && location.getBlock().getState().getRawData() == (byte) itemStack.getDurability()) {
-//                    skip = true;
-//                    break;
-//                }
-//            }
-//            if (skip) continue;
+        List<Location> locations = new ArrayList<>(miningArea.getCoordinates().values());
+        for (int i = 0; i < miningArea.getCoordinates().values().size(); i++) {
+            Location location = locations.get(this.random.nextInt(locations.size()));
             ItemStack randomItemStack = this.getRandomItemStack();
             location.getBlock().setType(randomItemStack.getType());
             location.getBlock().getState().setRawData((byte) randomItemStack.getDurability());
+            locations.remove(location);
         }
+//        for (Location location : miningArea.getCoordinates().values()) {
+////            boolean skip = false;
+////            for (ItemStack itemStack : this.itemStackList) {
+////                if (location.getBlock().getType() == itemStack.getType() && location.getBlock().getState().getRawData() == (byte) itemStack.getDurability()) {
+////                    skip = true;
+////                    break;
+////                }
+////            }
+////            if (skip) continue;
+//            ItemStack randomItemStack = this.getRandomItemStack();
+//            location.getBlock().setType(randomItemStack.getType());
+//            location.getBlock().getState().setRawData((byte) randomItemStack.getDurability());
+//        }
         return true;
     }
 
     private ItemStack getRandomItemStack() {
-        ItemStack randomItemStack = this.itemStackList.size() > 1 ? this.itemStackList.get(0) : this.itemStackList.get(random.nextInt(itemStackList.size()));
+        ItemStack randomItemStack = this.itemStackList.size() <= 1 ? this.itemStackList.get(0) : this.itemStackList.get(random.nextInt(itemStackList.size()));
         if (!this.blocksToPlacePerMaterial.containsKey(randomItemStack)) {
             this.itemStackList.remove(randomItemStack);
             return this.getRandomItemStack();

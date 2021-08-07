@@ -79,48 +79,35 @@ public final class FileManager extends AbstractManager {
         this.files.clear();
     }
 
+    @Override
+    protected String getManagerName() {
+        return "File";
+    }
+
+    public static FileManager getInstance() {
+        return instance;
+    }
+
     public boolean registerFile(String name, String path) {
         if (this.files == null) this.files = new HashMap<>();
         if (this.files.containsKey(name)) return false;
-//        InputStream input = this.getClass().getClassLoader().getResourceAsStream(path);
         File file = new File(this.sPlugin.getPlugin().getDataFolder(), path);
         if (!file.exists()) {
             this.sPlugin.getPlugin().saveResource(path, false);
         }
-//        try {
-//            if (!file.exists()) file.createNewFile();
-//            FileOutputStream output = new FileOutputStream(file);
-//            int length;
-//            byte[] bytes = new byte[1024];
-//            while ((length = input.read(bytes)) != -1) {
-//                output.write(bytes, 0, length);
-//            }
-//        } catch (IOException e) {
-//            LogUtil.warning("Unable to copy the file, " + name + ", to the plugins directory. Please contact the developer.");
-//            e.printStackTrace();
-//        }
         YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-        PluginFileType type = PluginFileType.getFileTypeFromString(configuration.getString("file-type"));
-        return this.registerFile(name, file, type);
+        String key = configuration.getString("file-type");
+        return this.registerFile(key, name, file);
     }
 
-    public boolean registerFile(String name, File file, PluginFileType type) {
+    public boolean registerFile(String key, String name, File file) {
         if (this.files == null) this.files = new HashMap<>();
         this.files.remove(name);
-        switch (type) {
-            case GUI:
-                return this.files.put(name, new GuiPluginFile(name, file, this.sPlugin)) != null;
-            case DATA:
-                return this.files.put(name, new DataPluginFile(name, file, this.sPlugin)) != null;
-            case MESSAGE:
-                return this.files.put(name, new MessagePluginFile(name, file, this.sPlugin)) != null;
-            case PERMISSION:
-                return this.files.put(name, new PermissionPluginFile(name, file, this.sPlugin)) != null;
-            case CONFIGURATION:
-                return this.files.put(name, new ConfigurationPluginFile(name, file, this.sPlugin)) != null;
-            default:
-                return false;
+        if (!PluginFileTypeManager.getInstance().isRegisterFileTypeKey(key)) {
+            Log.severe("Attempted to create plugin file, but the type " + key + " is not a registered type.");
+            return false;
         }
+        return this.files.put(name, PluginFileTypeManager.getInstance().getNewPluginInstanceFileByKeyForFile(key, name, file)) != null;
     }
 
     /**
@@ -158,14 +145,5 @@ public final class FileManager extends AbstractManager {
     public void reload() {
         if (this.files == null || this.files.isEmpty()) return;
         for (AbstractPluginFile file : files.values()) file.reload();
-    }
-
-    public static FileManager getInstance() {
-        return instance;
-    }
-
-    @Override
-    protected String getManagerName() {
-        return "File";
     }
 }

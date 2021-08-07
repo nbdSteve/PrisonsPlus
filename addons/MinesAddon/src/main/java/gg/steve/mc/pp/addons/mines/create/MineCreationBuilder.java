@@ -4,6 +4,7 @@ import gg.steve.mc.pp.addons.mines.box.BorderBoundingBox;
 import gg.steve.mc.pp.addons.mines.box.MiningAreaBoundingBox;
 import gg.steve.mc.pp.addons.mines.coords.Coordinate;
 import gg.steve.mc.pp.addons.mines.core.Mine;
+import gg.steve.mc.pp.addons.mines.core.MineManager;
 import gg.steve.mc.pp.addons.mines.core.MiningAreaBlockConfiguration;
 import gg.steve.mc.pp.addons.mines.location.MineSpawnLocation;
 import lombok.Data;
@@ -16,9 +17,8 @@ import java.util.UUID;
 public class MineCreationBuilder {
     private UUID creatorId;
     private String name;
-    private MineSpawnLocation spawnLocation;
     private BorderBoundingBox borderBoundingBox;
-    private MiningAreaBoundingBox miningArea;
+    private MiningAreaBoundingBox miningAreaBoundingBox;
     private MineSpawnLocation mineSpawnLocation;
     private MineCreationState currentState;
     // vars
@@ -86,7 +86,7 @@ public class MineCreationBuilder {
                 this.blockConfigurationInventory = null;
                 break;
             case SELECTING_SPAWN_LOCATION:
-                this.spawnLocation = null;
+                this.mineSpawnLocation = null;
                 break;
             case SELECTING_NAME:
                 this.name = "";
@@ -105,16 +105,5 @@ public class MineCreationBuilder {
 
     public boolean isComplete() {
         return this.currentState == MineCreationState.SELECTION_COMPLETE;
-    }
-
-    public Mine create() {
-        // handle actual logic for creating the mine & files n shit
-        this.borderBoundingBox = new BorderBoundingBox(this.worldName, this.borderPosition1, this.borderPosition2);
-        this.miningArea = new MiningAreaBoundingBox(this.worldName, this.miningPosition1, this.miningPosition2);
-        MiningAreaBlockConfiguration miningAreaBlockConfiguration = new MiningAreaBlockConfiguration();
-        miningAreaBlockConfiguration.convertContainerToItemsMap(this.blockConfigurationInventory);
-        this.miningArea.setMiningBlockConfiguration(miningAreaBlockConfiguration);
-        Mine mine = new Mine(this.name, this.spawnLocation, this.borderBoundingBox, this.miningArea);
-        return mine;
     }
 }

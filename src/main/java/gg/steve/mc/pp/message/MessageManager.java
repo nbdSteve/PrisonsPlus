@@ -44,7 +44,7 @@ public final class MessageManager extends AbstractManager {
     public boolean registerMessage(MessagePluginFile file, String key) {
         if (this.messages == null) this.messages = new HashMap<>();
         String name = file.get().getString(key + ".unique-name");
-        if (this.messages.containsKey(name)) return false;
+//        if (this.messages.containsKey(name)) return false;
         List<String> placeholders = file.get().getStringList(key + ".placeholders");
         PluginMessage message = new PluginMessage(file, key, name);
         for (String placeholder : placeholders) {

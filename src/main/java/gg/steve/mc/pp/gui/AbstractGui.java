@@ -3,7 +3,6 @@ package gg.steve.mc.pp.gui;
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.event.EventManager;
 import gg.steve.mc.pp.file.AbstractPluginFile;
-import gg.steve.mc.pp.file.PluginFileType;
 import gg.steve.mc.pp.gui.component.GuiComponent;
 import gg.steve.mc.pp.gui.exception.InvalidConfigurationFileTypeException;
 import gg.steve.mc.pp.gui.exception.UnableToCreateBukkitInventoryException;
@@ -37,7 +36,7 @@ public abstract class AbstractGui implements Loadable {
     private GuiEventListener listener;
 
     public AbstractGui(String guiUniqueName, AbstractPluginFile configuration, SPlugin sPlugin) throws InvalidConfigurationFileTypeException {
-        if (configuration.getFileType() != PluginFileType.GUI) {
+        if (!configuration.getKey().equalsIgnoreCase("gui")) {
             throw new InvalidConfigurationFileTypeException(configuration);
         }
         this.guiId = UUID.randomUUID();

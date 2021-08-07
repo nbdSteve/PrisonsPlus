@@ -17,6 +17,7 @@ public class Mine {
     private MineSpawnLocation spawnLocation;
     private BorderBoundingBox borderBoundingBox;
     private MiningAreaBoundingBox miningArea;
+    private BukkitTask miningAreaFillTask;
 
     public Mine(String name, MineSpawnLocation spawnLocation, BorderBoundingBox borderBoundingBox, MiningAreaBoundingBox miningArea) {
         this.mineId = UUID.randomUUID();
@@ -24,7 +25,7 @@ public class Mine {
         this.spawnLocation = spawnLocation;
         this.borderBoundingBox = borderBoundingBox;
         this.miningArea = miningArea;
-        this.registerMiningAreaFillTask();
+        this.miningAreaFillTask = this.registerMiningAreaFillTask();
     }
 
     public Mine(UUID mineId, String name, MineSpawnLocation spawnLocation, BorderBoundingBox borderBoundingBox, MiningAreaBoundingBox miningArea) {
@@ -33,12 +34,21 @@ public class Mine {
         this.spawnLocation = spawnLocation;
         this.borderBoundingBox = borderBoundingBox;
         this.miningArea = miningArea;
-        this.registerMiningAreaFillTask();
+        this.miningAreaFillTask = this.registerMiningAreaFillTask();
     }
 
     private BukkitTask registerMiningAreaFillTask() {
         return Bukkit.getScheduler().runTaskTimer(SPlugin.getSPluginInstance().getPlugin(), () -> {
             this.miningArea.getBlockConfiguration().fillMiningArea(this.miningArea);
         }, 0L, 100L);
+    }
+
+    public boolean save() {
+        if (this.miningAreaFillTask != null) {
+            this.miningAreaFillTask.cancel();
+            this.miningAreaFillTask = null;
+        }
+
+        return true;
     }
 }

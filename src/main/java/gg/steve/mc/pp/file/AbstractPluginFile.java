@@ -12,21 +12,19 @@ import java.io.IOException;
 
 @Data
 public abstract class AbstractPluginFile {
+    private String key;
     private String name;
     private String fileName;
     private File file;
     private SPlugin sPlugin;
-    private PluginFileType fileType;
     private YamlConfiguration configuration;
 
-    public AbstractPluginFile(String name, File file, PluginFileType fileType, SPlugin sPlugin) {
-        this.name = name;
-        this.file = file;
-        this.fileName = this.file.getName();
-        this.fileType = fileType;
+    public AbstractPluginFile(String key, SPlugin sPlugin) {
+        this.key = key;
         this.sPlugin = sPlugin;
-        this.loadFromFile(this.file, this.sPlugin);
     }
+
+    public abstract AbstractPluginFile createPluginNewFileInstance(String name, File file);
 
     /**
      * Creates the provided yml file, the filename must be that of a file in the resources folder
@@ -58,10 +56,10 @@ public abstract class AbstractPluginFile {
         return true;
     }
 
-    public boolean loadFromFile(File file, SPlugin sPlugin) {
+    public boolean loadFromFile(String name, File file) {
+        this.name = name;
         this.file = file;
         this.fileName = this.file.getName();
-        this.sPlugin = sPlugin;
         this.configuration = YamlConfiguration.loadConfiguration(file);
         return this.configuration != null;
     }
@@ -111,5 +109,9 @@ public abstract class AbstractPluginFile {
      */
     public YamlConfiguration get() {
         return this.configuration;
+    }
+
+    public boolean doesKeyMatch(String keyToMatch) {
+        return this.key.equalsIgnoreCase(keyToMatch);
     }
 }

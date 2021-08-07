@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.addons.mines.listener;
 
 import gg.steve.mc.pp.addons.mines.coords.Coordinate;
+import gg.steve.mc.pp.addons.mines.core.MineManager;
 import gg.steve.mc.pp.addons.mines.create.CreationStateManager;
 import gg.steve.mc.pp.addons.mines.create.MineCreationBuilder;
 import gg.steve.mc.pp.addons.mines.create.MineCreationState;
@@ -94,7 +95,7 @@ public class CreationToolInteractionListener implements Listener {
         MineCreationBuilder creationBuilder = CreationStateManager.getInstance().getCreationBuilderForStatePlayer(event.getPlayer().getUniqueId());
         if (creationBuilder.getCurrentState() != MineCreationState.SELECTION_COMPLETE) return;
         event.setCancelled(true);
-        creationBuilder.create();
+        MineManager.getInstance().createAndRegisterMineFromCreationBuilder(creationBuilder);
         CreationStateManager.getInstance().unregisterCreationStatePlayer(event.getPlayer().getUniqueId());
         event.getPlayer().sendMessage("You have just created that mine.");
     }
