@@ -2,6 +2,7 @@ package gg.steve.mc.pp.addons.mines.core;
 
 import gg.steve.mc.pp.addons.mines.box.MiningAreaBoundingBox;
 import gg.steve.mc.pp.utility.Log;
+import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+@Data
 public class MiningAreaBlockConfiguration {
     private Map<ItemStack, Double> materialAndSpawnRate;
     private List<ItemStack> itemStackList;
@@ -26,6 +28,20 @@ public class MiningAreaBlockConfiguration {
         for (int slot = 0; slot < inventory.getSize(); slot++) {
             ItemStack item = inventory.getItem(slot);
             if (item == null || item.getType() == Material.AIR) continue;
+            int current = 0;
+            if (itemAndAmount.containsKey(item)) current += itemAndAmount.get(item);
+            itemAndAmount.put(item, (double) (item.getAmount() + current));
+            total += item.getAmount();
+        }
+        if (total != 0) for (Map.Entry<ItemStack, Double> itemSet : itemAndAmount.entrySet()) {
+            this.registerMiningAreaBlock(itemSet.getKey(), itemSet.getValue() / total);
+        }
+    }
+
+    public void setMaterialAndSpawnRateMap(List<ItemStack> items) {
+        Map<ItemStack, Double> itemAndAmount = new HashMap<>();
+        double total = 0;
+        for(ItemStack item : items) {
             int current = 0;
             if (itemAndAmount.containsKey(item)) current += itemAndAmount.get(item);
             itemAndAmount.put(item, (double) (item.getAmount() + current));

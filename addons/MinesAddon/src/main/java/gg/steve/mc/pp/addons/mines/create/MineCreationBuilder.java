@@ -3,9 +3,6 @@ package gg.steve.mc.pp.addons.mines.create;
 import gg.steve.mc.pp.addons.mines.box.BorderBoundingBox;
 import gg.steve.mc.pp.addons.mines.box.MiningAreaBoundingBox;
 import gg.steve.mc.pp.addons.mines.coords.Coordinate;
-import gg.steve.mc.pp.addons.mines.core.Mine;
-import gg.steve.mc.pp.addons.mines.core.MineManager;
-import gg.steve.mc.pp.addons.mines.core.MiningAreaBlockConfiguration;
 import gg.steve.mc.pp.addons.mines.location.MineSpawnLocation;
 import lombok.Data;
 import org.bukkit.Location;
@@ -17,12 +14,14 @@ import java.util.UUID;
 public class MineCreationBuilder {
     private UUID creatorId;
     private String name;
+    private String displayName;
     private BorderBoundingBox borderBoundingBox;
     private MiningAreaBoundingBox miningAreaBoundingBox;
     private MineSpawnLocation mineSpawnLocation;
     private MineCreationState currentState;
     // vars
     private String worldName;
+    private int miningAreaFillTimer;
     private Coordinate borderPosition1;
     private Coordinate borderPosition2;
     private Coordinate miningPosition1;
@@ -55,6 +54,16 @@ public class MineCreationBuilder {
 
     public void doNameSelection(String name) {
         this.name = name;
+        this.progressCreationState();
+    }
+
+    public void doDisplayNameSelection(String displayName) {
+        this.displayName = displayName;
+        this.progressCreationState();
+    }
+
+    public void doTimerDelaySelection(int delay) {
+        this.miningAreaFillTimer = delay;
         this.progressCreationState();
     }
 

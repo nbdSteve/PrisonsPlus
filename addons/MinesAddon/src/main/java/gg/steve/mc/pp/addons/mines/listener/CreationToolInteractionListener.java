@@ -82,9 +82,24 @@ public class CreationToolInteractionListener implements Listener {
         if (!CreationStateManager.getInstance().isRegisteredCreationStatePlayer(event.getPlayer().getUniqueId()))
             return;
         MineCreationBuilder creationBuilder = CreationStateManager.getInstance().getCreationBuilderForStatePlayer(event.getPlayer().getUniqueId());
-        if (creationBuilder.getCurrentState() != MineCreationState.SELECTING_NAME) return;
+        if (creationBuilder.getCurrentState() == MineCreationState.SELECTING_NAME) {
+            creationBuilder.doNameSelection(ColorUtil.strip(event.getMessage()));
+        } else if (creationBuilder.getCurrentState() == MineCreationState.SELECTING_MINING_AREA_FILL_DELAY) {
+            int delay;
+            try {
+                delay = Integer.parseInt(event.getMessage());
+                if (delay <= 0) throw new NumberFormatException();
+            } catch (NumberFormatException e) {
+                MessageManager.getInstance().sendMessage("invalid-amount", event.getPlayer());
+                return;
+            }
+            creationBuilder.doTimerDelaySelection(delay);
+        } else if (creationBuilder.getCurrentState() == MineCreationState.SELECTING_DISPLAY_NAME) {
+            creationBuilder.doDisplayNameSelection(event.getMessage());
+        } else {
+            return;
+        }
         event.setCancelled(true);
-        creationBuilder.doNameSelection(ColorUtil.colorize(event.getMessage()));
         MessageManager.getInstance().sendMessage("progress-mine-creation-state", event.getPlayer(), creationBuilder.getCurrentState().getNiceName());
     }
 
