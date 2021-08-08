@@ -1,6 +1,7 @@
 package gg.steve.mc.pp.addons.tokens.cmd.subs;
 
 import gg.steve.mc.pp.addons.tokens.api.TokensAddonApi;
+import gg.steve.mc.pp.addons.tokens.core.TokenPlayerManager;
 import gg.steve.mc.pp.addons.tokens.core.TokenType;
 import gg.steve.mc.pp.cmd.AbstractCommand;
 import gg.steve.mc.pp.cmd.AbstractSubCommand;
@@ -13,6 +14,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @SubCommandClass
@@ -21,6 +24,23 @@ public class TokensPaySubCommand extends AbstractSubCommand {
     public TokensPaySubCommand(AbstractCommand parent) {
         super(parent, "pay", "token-pay", 4, 4);
         this.registerAlias("p");
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender executor, String[] arguments) {
+        List<String> completions = new ArrayList<>();
+        if (arguments.length == 2) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!player.getName().equalsIgnoreCase(executor.getName())) completions.add(player.getName());
+            }
+        } else if (arguments.length == 3) {
+            for (TokenType tokenType : TokenType.values()) {
+                completions.add(tokenType.name().toLowerCase(Locale.ROOT));
+            }
+        } else if (arguments.length == 4) {
+            completions.add(String.valueOf(1));
+        }
+        return completions;
     }
 
     @Override

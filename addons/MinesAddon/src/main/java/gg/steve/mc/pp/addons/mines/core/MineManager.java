@@ -3,6 +3,7 @@ package gg.steve.mc.pp.addons.mines.core;
 import gg.steve.mc.pp.SPlugin;
 import gg.steve.mc.pp.addons.mines.box.BorderBoundingBox;
 import gg.steve.mc.pp.addons.mines.box.MiningAreaBoundingBox;
+import gg.steve.mc.pp.addons.mines.core.exception.MineNotFoundException;
 import gg.steve.mc.pp.addons.mines.create.MineCreationBuilder;
 import gg.steve.mc.pp.addons.mines.file.MinePluginFile;
 import gg.steve.mc.pp.file.FileManager;
@@ -15,6 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ import java.util.UUID;
 @ManagerClass
 public final class MineManager extends AbstractManager {
     private static MineManager instance;
-    private Map<UUID, Mine> mines;
+    private Map<String, Mine> mines;
 
     public MineManager() {
         instance = this;
@@ -85,12 +87,18 @@ public final class MineManager extends AbstractManager {
             Log.severe("Tried to input a mine into the internal map but the UUID is already in use, this is critical.");
             return false;
         }
-        return this.mines.put(mine.getMineId(), mine) != null;
+        return this.mines.put(mine.getName(), mine) != null;
     }
 
     public boolean registerMineFromFile(MinePluginFile minePluginFile) {
         Mine mine = new Mine(minePluginFile);
         if (this.mines == null) this.mines = new HashMap<>();
-        return this.mines.put(mine.getMineId(), mine) != null;
+        return this.mines.put(mine.getName(), mine) != null;
+    }
+
+    public Mine getRegisteredMineByName(String name) throws MineNotFoundException {
+        name = name.toLowerCase(Locale.ROOT);
+        if (this.mines == null || this.mines.isEmpty() || !this.mines.containsKey(name)) throw new MineNotFoundException(name);
+        return this.mines.get(name);
     }
 }

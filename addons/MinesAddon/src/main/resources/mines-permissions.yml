@@ -4,3 +4,4 @@ command:
   mines: 'prison.cmd.mines'
   mine-give-tool: 'prison.cmd.mines.give-tool'
   mine-warp: 'prison.cmd.mines.warp'
+  mine-warp-other: 'prison.cmd.mines.warp.other'

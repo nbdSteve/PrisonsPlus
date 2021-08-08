@@ -9,6 +9,9 @@ import gg.steve.mc.pp.xseries.XItemStack;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SubCommandClass
 public class GiveToolSubCommand extends AbstractSubCommand {
 
@@ -17,6 +20,11 @@ public class GiveToolSubCommand extends AbstractSubCommand {
         this.registerAlias("gt");
         this.registerAlias("give");
         this.registerAlias("tool");
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender commandSender, String[] strings) {
+        return new ArrayList<>();
     }
 
     @Override

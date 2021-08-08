@@ -37,6 +37,8 @@ public abstract class AbstractSubCommand {
         if (this.minArgLength == 0) this.isNoArgCommand = true;
     }
 
+    public abstract List<String> setTabCompletion(CommandSender executor, String[] arguments);
+
     public void execute(CommandSender executor, String[] arguments) {
         if (!this.hasPermission(executor)) {
             MessageManager.getInstance().sendMessage("no-permission", executor, this.permission.getPermission());

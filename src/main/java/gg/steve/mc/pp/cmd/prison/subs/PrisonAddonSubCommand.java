@@ -11,7 +11,9 @@ import gg.steve.mc.pp.utility.Log;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @SubCommandClass
@@ -45,6 +47,37 @@ public class PrisonAddonSubCommand extends AbstractSubCommand {
         public String[] getAliases() {
             return aliases;
         }
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender executor, String[] arguments) {
+        List<String> completions = new ArrayList<>();
+        if (arguments.length == 2) {
+            for (Argument argument : Argument.values()) {
+                completions.add(argument.name().toLowerCase(Locale.ROOT));
+            }
+        } else if (arguments.length == 3) {
+           Argument argument = Argument.getArgumentFromString(arguments[2]);
+            if (argument == null) return completions;
+            switch (argument) {
+                case UNREGISTER:
+                case RELOAD:
+                    for (PrisonsPlusAddon addon : PrisonAddonManager.getInstance().getRegisteredAddons()) {
+                        completions.add(addon.getIdentifier().toLowerCase(Locale.ROOT));
+                    }
+                    break;
+                case REGISTER:
+                    completions.addAll(PrisonAddonManager.getInstance().getUnregisteredAddonIdentifiers());
+                    break;
+                case INFO:
+                    for (PrisonsPlusAddon addon : PrisonAddonManager.getInstance().getRegisteredAddons()) {
+                        completions.add(addon.getIdentifier().toLowerCase(Locale.ROOT));
+                    }
+                    completions.addAll(PrisonAddonManager.getInstance().getUnregisteredAddonIdentifiers());
+                    break;
+            }
+        }
+        return completions;
     }
 
     @Override

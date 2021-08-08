@@ -42,7 +42,7 @@ public abstract class AbstractLocation {
     }
 
     public void teleportPlayerToLocation(Player player) {
-        player.teleport(this.location);
+        player.teleport(this.location.add(0, 1, 0));
     }
 
     public boolean isPlayerNearbyLocation(Player player, double distance) {

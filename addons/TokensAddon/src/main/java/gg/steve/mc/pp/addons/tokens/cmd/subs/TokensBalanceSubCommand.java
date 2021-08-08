@@ -16,6 +16,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Locale;
 
 @SubCommandClass
@@ -63,5 +64,11 @@ public class TokensBalanceSubCommand extends AbstractSubCommand {
             balance = TokenPlayerManager.getInstance().getTokenBalanceForPlayer(offlinePlayer.getUniqueId(), tokenType);
             MessageManager.getInstance().sendMessage("get-player-token-balance", executor, offlinePlayer.getName(), tokenType.getNiceName(), NumberFormatUtil.format(balance));
         }
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender executor, String[] arguments) {
+//        if (arguments)
+        return null;
     }
 }

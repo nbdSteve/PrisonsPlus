@@ -13,6 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @SubCommandClass
@@ -47,6 +48,11 @@ public class TokensAdminSubCommand extends AbstractSubCommand {
         protected String[] getAliases() {
             return aliases;
         }
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
     }
 
     @Override

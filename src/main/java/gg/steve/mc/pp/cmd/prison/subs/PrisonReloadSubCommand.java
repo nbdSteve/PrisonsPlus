@@ -9,12 +9,20 @@ import gg.steve.mc.pp.message.MessageManager;
 import gg.steve.mc.pp.utility.NumberFormatUtil;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SubCommandClass
 public class PrisonReloadSubCommand extends AbstractSubCommand {
 
     public PrisonReloadSubCommand(AbstractCommand parent) {
         super(parent, "reload", "reload", 1, 1);
         this.registerAlias("r");
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender executor, String[] arguments) {
+        return new ArrayList<>();
     }
 
     @Override

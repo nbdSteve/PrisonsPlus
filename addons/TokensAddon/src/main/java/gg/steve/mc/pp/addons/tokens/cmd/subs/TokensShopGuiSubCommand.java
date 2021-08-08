@@ -9,6 +9,8 @@ import gg.steve.mc.pp.utility.Log;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 @SubCommandClass
 public class TokensShopGuiSubCommand extends AbstractSubCommand {
 
@@ -16,6 +18,11 @@ public class TokensShopGuiSubCommand extends AbstractSubCommand {
         super(parent, "shop", "token-shop", 1, 2);
         this.registerAlias("s");
         this.registerAlias("gui");
+    }
+
+    @Override
+    public List<String> setTabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
     }
 
     @Override
